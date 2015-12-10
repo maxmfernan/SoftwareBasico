@@ -11,6 +11,7 @@
 u4 Execute (Frame *pFrame) {
     u4 *local_iterator = pFrame->local;
     u1 *code_iterator;
+    i4 error=0;
     
     code_iterator = pFrame->code + pFrame->pc;
     
@@ -232,7 +233,11 @@ u4 Execute (Frame *pFrame) {
                 pFrame->sp--;
                 pFrame->pc++;
                 break;
-            case idiv:
+            case idiv://108
+                pFrame->stack[pFrame->sp-1].intValue=pFrame->stack[pFrame->sp-1].intValue / pFrame->stack[pFrame->sp].intValue;
+                pFrame->sp--;
+                pFrame->pc++;
+                break;
             case iinc:// 132 /*(0x84)*/ Increment local variable by constant
                 pFrame->stack[(u1)bc[pFrame->pc+1]].intValue += (char)bc[pFrame->pc+2];
                 pFrame->pc+=3;
@@ -282,134 +287,110 @@ u4 Execute (Frame *pFrame) {
                 //Conditional branch instructions
                 
             case if_icmpeq: // 159 /*(0x9f) */
-                if(pFrame->stack[pFrame->sp -1].intValue == pFrame->stack[pFrame->sp].intValue)
-                {
+                if(pFrame->stack[pFrame->sp -1].intValue == pFrame->stack[pFrame->sp].intValue) {
                     pFrame->pc+= geti2(&bc[pFrame->pc+1]);
                 }
-                else
-                {
+                else {
                     pFrame->pc+=3;
                 }
                 pFrame->sp-=2;
                 break;
             case if_icmpne: //160 /*(0xa0) */
-                if(pFrame->stack[pFrame->sp -1].intValue != pFrame->stack[pFrame->sp].intValue)
-                {
+                if(pFrame->stack[pFrame->sp -1].intValue != pFrame->stack[pFrame->sp].intValue) {
                     pFrame->pc+= geti2(&bc[pFrame->pc+1]);
                 }
-                else
-                {
+                else {
                     pFrame->pc+=3;
                 }
                 pFrame->sp-=2;
                 break;
             case if_icmplt: // 161 /*(0xa1) */
-                if(pFrame->stack[pFrame->sp -1].intValue < pFrame->stack[pFrame->sp].intValue)
-                {
+                if(pFrame->stack[pFrame->sp -1].intValue < pFrame->stack[pFrame->sp].intValue) {
                     pFrame->pc+= geti2(&bc[pFrame->pc+1]);
                 }
-                else
-                {
+                else {
                     pFrame->pc+=3;
                 }
                 pFrame->sp-=2;
                 break;
             case if_icmpge: // 162 /*(0xa2) */
-                if(pFrame->stack[pFrame->sp -1].intValue >= pFrame->stack[pFrame->sp].intValue)
-                {
+                if(pFrame->stack[pFrame->sp -1].intValue >= pFrame->stack[pFrame->sp].intValue) {
                     pFrame->pc+= geti2(&bc[pFrame->pc+1]);
                 }
-                else
-                {
+                else {
                     pFrame->pc+=3;
                 }
                 pFrame->sp-=2;
                 break;
             case if_icmpgt: // 163 /*(0xa3) */
-                if(pFrame->stack[pFrame->sp -1].intValue > pFrame->stack[pFrame->sp].intValue)
-                {
+                if(pFrame->stack[pFrame->sp -1].intValue > pFrame->stack[pFrame->sp].intValue) {
                     pFrame->pc+= geti2(&bc[pFrame->pc+1]);
                 }
-                else
-                {
+                else {
                     pFrame->pc+=3;
                 }
                 pFrame->sp-=2;
                 break;
             case if_icmple: // 164 /*(0xa4)*/
-                if(pFrame->stack[pFrame->sp -1].intValue <= pFrame->stack[pFrame->sp].intValue)
-                {
+                if(pFrame->stack[pFrame->sp -1].intValue <= pFrame->stack[pFrame->sp].intValue) {
                     pFrame->pc+= geti2(&bc[pFrame->pc+1]);
                 }
-                else
-                {
+                else {
                     pFrame->pc+=3;
                 }
                 pFrame->sp-=2;
                 break;
                 
             case ifeq:// 153 /*(0x99) */
-                if(pFrame->stack[pFrame->sp].intValue == 0)
-                {
+                if(pFrame->stack[pFrame->sp].intValue == 0) {
                     pFrame->pc+= geti2(&bc[pFrame->pc+1]);
                 }
-                else
-                {
+                else {
                     pFrame->pc+=3;
                 }
                 pFrame->sp--;
                 break;
             case ifne:// 154 /*(0x9a) */
-                if(pFrame->stack[pFrame->sp].intValue != 0)
-                {
+                if(pFrame->stack[pFrame->sp].intValue != 0) {
                     pFrame->pc+= geti2(&bc[pFrame->pc+1]);
                 }
-                else
-                {
+                else {
                     pFrame->pc+=3;
                 }
                 pFrame->sp--;
                 break;
             case iflt:// 155 /*(0x9b) */
-                if(pFrame->stack[pFrame->sp].intValue < 0)
-                {
+                if(pFrame->stack[pFrame->sp].intValue < 0) {
                     pFrame->pc+= geti2(&bc[pFrame->pc+1]);
                 }
-                else
-                {
+                else {
                     pFrame->pc+=3;
                 }
                 pFrame->sp--;
                 break;
             case ifge:// 156 /*(0x9c) */
-                if(pFrame->stack[pFrame->sp].intValue >= 0)
-                {
+                if(pFrame->stack[pFrame->sp].intValue >= 0) {
                     pFrame->pc+= geti2(&bc[pFrame->pc+1]);
                 }
-                else
-                {
+                else {
                     pFrame->pc+=3;
                 }
                 pFrame->sp--;
                 break;
             case ifgt:// 157 /*(0x9d) */
-                if(pFrame->stack[pFrame->sp].intValue > 0)
-                {
+                if(pFrame->stack[pFrame->sp].intValue > 0) {
                     pFrame->pc+= geti2(&bc[pFrame->pc+1]);
                 }
-                else
-                {
+                else {
                     pFrame->pc+=3;
                 }
                 pFrame->sp--;
                 break;
             case ifle:// 158 /*(0x9e)*/
-                if(pFrame->stack[pFrame->sp].intValue <= 0)
-                {
+                if(pFrame->stack[pFrame->sp].intValue <= 0) {
                     pFrame->pc+= geti2(&bc[pFrame->pc+1]);
                 }
-                else
-                {
+                else {
                     pFrame->pc+=3;
                 }
                 pFrame->sp--;
@@ -418,13 +399,13 @@ u4 Execute (Frame *pFrame) {
                 
                 //Unconditional branch instructions
             case  _goto: // 167 /*(0xa7)*/
-                pFrame->pc += geti2(&bc[pFrame->pc+1]);
+                pFrame->pc += geti2(&code_iterator[pFrame->pc+1]);
                 break;
                 //Table jumping instructions
                 
                 ////////////// Exceptions ///////////////////////
             case athrow:
-                error =1;
+                error = 1;
                 break;
                 
                 //////////////////////// Method Invocation and Return ////////
@@ -471,6 +452,29 @@ u4 Execute (Frame *pFrame) {
     }
     
     
+}
+
+int ExecuteNew(Frame *pFrame) {
+    pFrame->sp++;
+    u1 *code_iterator = pFrame->pMethod->pCode_attr->code;
+    u2 index = getu2(&code_iterator[pFrame->pc+1]);
+    
+    //if(!pFrame->pClass->CreateObject(index, this->pObjectHeap, pFrame->stack[pFrame->sp].object))
+    //    return -1;
+    
+    
+    return 0;
+}
+
+Variable *CreateNewArray(u1 type, i4 count) {
+    Variable *pVar= new Variable[count+1];
+    
+    if(pVar) {
+        memset(pVar, 0, sizeof(Variable)*(count+1));
+        pVar[0].intValue = type;
+    }
+    
+    return pVar;
 }
 
 Variable getArrayVariable(Array_t *array, int index, int type) {
@@ -526,4 +530,87 @@ Variable LoadConstant(ClasFile *pClass, u1 nIndex) {
             break;		
     }
     return v;
+}
+
+
+void ExecuteInvokeVirtual(Frame* pFrameStack, u2 type) {
+    u2 mi = getu2(&pFrameStack[0].pMethod->pCode_attr->code[pFrameStack[0].pc+1]);
+    Variable objectRef = pFrameStack[0].stack[pFrameStack[0].sp];
+    char *pConstPool = (char *)pFrameStack[0].pClass->constant_pool[mi];
+    
+    u2 classIndex = getu2(&pConstPool[1]);
+    u2 nameAndTypeIndex = getu2(&pConstPool[3]);
+    
+    //get class at pool index
+    pConstPool = (char *)pFrameStack[0].pClass->constant_pool[classIndex];
+    
+    ASSERT(pConstPool[0] == CONSTANT_Class);
+    
+    u2 ni=getu2(&pConstPool[1]);
+    
+    u1 *strClassName;
+    pFrameStack[0].pClass->GetStringFromConstPool(ni, strClassName);
+    
+    
+    ClassFile *pClass = pClassHeap->fetchClass(strClassName);
+    
+    //ShowClassInfo(pClass);
+    
+    pConstPool = (char *)pFrameStack[0].pClass->constant_pool[nameAndTypeIndex];
+    
+    method_info_ex method;
+    
+    
+    method.name_index = getu2(&pConstPool[1]);
+    method.descriptor_index = getu2(&pConstPool[3]);
+    
+    method.access_flags = 0; // todo set
+    
+    CString strName, strDesc;
+    pFrameStack[0].pClass->GetStringFromConstPool(method.name_index, strName);
+    pFrameStack[0].pClass->GetStringFromConstPool(method.descriptor_index, strDesc);
+    
+    
+    //printf("SuperClass - %s",(method.access_flags& ACC_SUPER)?"Yes":"No");
+    JavaClass *pVirtualClass=pClass;
+    int nIndex=pClass->GetMethodIndex(strName, strDesc, pVirtualClass);
+    
+    memset(&pFrameStack[1],0,sizeof(pFrameStack[1]));
+    pFrameStack[1].pMethod = &pClass->methods[nIndex];
+    
+    method.access_flags = getu2((char *)pFrameStack[1].pMethod);
+    if( ACC_SUPER & method.access_flags) {
+        pFrameStack[1].pClass = pVirtualClass->GetSuperClass();
+        //ShowClassInfo(pFrameStack[1].pClass);
+    }
+    else {
+        pFrameStack[1].pClass=pVirtualClass;
+    }
+    
+    //pFrameStack[1].pOpStack[++pFrameStack[1].sp]=pFrameStack[0].pOpStack[pFrameStack[0].sp--];
+    int params=GetMethodParametersStackCount(strDesc)+1;
+    
+    //static
+    if(type==invokestatic) params--;
+    
+    int nDiscardStack =params;
+    if(pFrameStack[1].pMethod->access_flags & ACC_NATIVE) {
+    }
+    else {
+        nDiscardStack+=pFrameStack[1].pMethod->pCode_attr->max_locals;
+    }
+    
+    pFrameStack[1].stack = &Frame::pOpStack[pFrameStack->stack-Frame::pOpStack+pFrameStack[0].sp-params+1];
+    pFrameStack[1].sp=nDiscardStack-1;
+    DbgPrint(_T("Invoking method %s%s, \n"), strName, strDesc);
+    DbgPrint(_T("Last Frame Stack %d Params %d Stack start at %d\n"),pFrameStack[0].stack-Frame::pOpStack+pFrameStack[0].sp,pFrameStack[1].sp,pFrameStack[1].stack-Frame::pOpStack );
+    
+    this->Execute(&pFrameStack[1]);
+    
+    //if returns then get on stack	
+    if(strDesc.Find(_T(")V")) < 0) {
+        nDiscardStack--;		
+    }
+    
+    pFrameStack[0].sp-=nDiscardStack;
 }

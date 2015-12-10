@@ -12,6 +12,28 @@
  * 
  */
 
+
+ClassFile *fetchClass(ClassFile *classHeap, u1 *strClassName, u2 classHeap_lenght) {
+    u2 i = 0;
+    found = 0;
+    
+    while (i < classHeap_lenght && found == 0) {
+        if (strcmp(strClassName, classHeap[i].className) == 0) {
+            found = 1;
+        }
+        else {
+        ++i;
+        }
+    }
+    if (found == 0) {
+        return NULL;
+    }
+    else {
+        return classHeap[i];
+    }
+    
+}
+
 attribute_info *readAttributeInfo (u2 attr_count, FILE *arq, cp_info *pool, int method);
 void print_attributes (attribute_info *attributes, u2 attr_count, cp_info *pool);
 
