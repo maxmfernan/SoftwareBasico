@@ -545,15 +545,15 @@ Variable ExecutionEngine::LoadConstant(JavaClass *pClass, u1 nIndex)
 	Object object;
 	switch(cp[0])
 	{
-	case CONSTANT_Integer:
+	case 3: //Integer
 		v.intValue = getu4(&cp[1]);
 		break;
 
-	case CONSTANT_Float:
+	case 4: //Float
 		v.floatValue = getf4((char *)&cp[1]);
 		break;
 
-	case CONSTANT_String:
+    case 8: //String
 		i=getu2((char *)&cp[1]);
 
 		pStrVal = new CString();
@@ -564,10 +564,10 @@ Variable ExecutionEngine::LoadConstant(JavaClass *pClass, u1 nIndex)
 		v.ptrValue=object.heapPtr;
 		break;
 
-	case CONSTANT_Double:
+	case CONSTANT_DOUBLE:
 		break;
 
-	case CONSTANT_Long:
+	case CONSTANT_LONG:
 
 		break;		
 	}

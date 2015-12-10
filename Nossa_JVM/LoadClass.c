@@ -26,7 +26,7 @@ ClassFile* loadClass( ClassFile* classHeap_ptr ) {
 	u2* interface;
 	u2 interface_offset = 0;
 		
-	strcpy (nomeClass, "SubInt.class");
+	strcpy (nomeClass, "HelloWorld.class");
 	arq = fopen(nomeClass, "rb");
 	magic = read_magic(arq);
 	minor = read_minor_version(arq);

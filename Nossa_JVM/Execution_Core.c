@@ -62,7 +62,7 @@ u4 Execute (Frame *pFrame) {
                 break;
                 
             case ldc: //Push item from constant pool
-                pFrame->stack[++pFrame->sp] =LoadConstant(pFrame->pClass, (u1)bc[pFrame->pc+1]);
+                pFrame->stack[++pFrame->sp] = LoadConstant(pFrame->pClass, (u1)bc[pFrame->pc+1]);
                 pFrame->pc+=2;
                 break;
                 
@@ -475,4 +475,46 @@ u4 Execute (Frame *pFrame) {
     }
     
     
+}
+
+Variable LoadConstant(ClasFile *pClass, u1 nIndex) {
+    Variable v;
+    v.ptrValue = 0;
+    CString *pStrVal=NULL, strTemp;
+    //CString strClass= pClass->GetName();
+    //ShowClassInfo(pClass);
+    u1 *bytes;
+    u1 *cp = (u1 *) pClass->constant_pool[nIndex - 1];
+    u2 i;
+    switch(cp[0])
+    {
+        case CONSTANT_Integer:
+            v.intValue = getu4(&cp[1]);
+            break;
+            
+        case CONSTANT_Float:
+            v.floatValue = getf4((char *)&cp[1]);
+            break;
+            
+        case CONSTANT_String:
+            bytes = pClass->constant_pool[pClass->constant_pool[nIndex - 1].info.CONSTANT_String_info.string_index - 1];
+            
+            i=getu2((char *)&cp[1]);
+            
+            pStrVal = new CString();
+            
+            pClass->GetStringFromConstPool(i, strTemp);
+            pStrVal->Append(strTemp);
+            object = this->pObjectHeap->CreateStringObject(pStrVal, pClassHeap);
+            v.ptrValue=object.heapPtr;
+            break;
+            
+        case CONSTANT_Double:
+            break;
+            
+        case CONSTANT_Long:
+            
+            break;		
+    }
+    return v;
 }

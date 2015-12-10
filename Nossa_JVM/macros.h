@@ -30,6 +30,13 @@ typedef int32_t i4;
 typedef float f4;
 
 #define getu2(p) (u2)((p)[0]<< 8 & 0x0000FF00 |(p)[1])
+#define getu4(p) (u4)( (u4)((p)[0])<<24 & 0xFF000000 | (u4)((p)[1])<<16 & 0x00FF0000 | (u4)((p)[2])<<8 & 0x0000FF00| (u4)((p)[3]) & 0x000000FF)
+
+//getf4 depents on geti4 : carefull when changing...
+#define geti4(p) (i4)( (u4)((p)[0])<<24 | (u4)((p)[1])<<16 | (u4)((p)[2])<<8 | (u4)((p)[3]) )
+#define geti2(p) (i2)(((p)[0]<<8)|(p)[1])
+
+f4 getf4(char *p);
 
 
 /** Definição valores máximos */
@@ -496,19 +503,12 @@ typedef struct {
     
 }ClassFile;
 
-typedef struct{
-    ClassFile * classRef; ///Referencia para a classe alocada na memoria
-    field_info * fields; ///Espaco de memoria alocado para os fields do Objeto
-    structArrayList *arrayList;
-    Field_Value * field_value;
-}ClassHandler; ///Objeto
-
 
 typedef struct {
     ClassFile * classRef; ///Referencia para a classe alocada na memoria
     field_info * fields; ///Espaco de memoria alocado para os fields do Objeto
-    structArrayList *arrayList;
-    Field_Value * field_value;
+    //structArrayList *arrayList;
+    //Field_Value * field_value;
     u2 field_size;
 }Object; ///Objeto
 
@@ -518,7 +518,7 @@ union Variable
     u2 shortValue;
     u4 intValue;
     f4 floatValue;
-    LONG_PTR ptrValue;
+    //LONG_PTR ptrValue;
     Object object;
 };
 
