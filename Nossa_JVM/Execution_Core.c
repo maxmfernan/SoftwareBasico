@@ -503,6 +503,27 @@ Variable getArrayVariable(Array_t *array, int index, int type) {
     return v;
 }
 
+u1 *GetSuperClassName(CLassFile *pClass) {
+    u1 *retVal = _T("");
+    if(super_class < 1) return retVal;
+    
+    if(constant_pool[super_class-1]->tag != CONSTANT_Class)
+        return retVal;
+    
+    char *bc = (char*)constant_pool[super_class-1];
+    u2 name_index = getu2(&bc[1]);
+    GetStringFromConstPool(name_index, retVal, pClass.constant_pool);
+    return retVal;
+}
+
+JavaClass* JavaClass::GetSuperClass(ClassFile *pClass) {
+    u1  *superClass = GetSuperClassName(pClass);
+    
+    ClassFile *pSuperClass = fetchClass(pClassHeap, superClass, classHeapLength);
+    
+    return pSuperClass;
+}
+
 BOOL GetStringFromConstPool(int nIndex, u1 *strValue, cp_info *pool) {
     
     if(pool[nIndex - 1]->tag != CONSTANT_UTF8)
@@ -530,9 +551,9 @@ int GetMethodIndex(u1 *strMethodName, u1 *strMethodDesc, ClassFile * &pClass, Cl
             GetStringFromConstPool(pCurClass->methods[i].name_index, name, pCurClass.constant_pool);
             if(name.Compare(strMethodName)) continue;
             
-            pCurClass->GetStringFromConstPool(pCurClass->methods[i].descriptor_index, desc);
+            GetStringFromConstPool(pCurClass->methods[i].descriptor_index, desc, pCurClass.constant_pool);
             
-            if(!desc.Compare(strMethodDesc)) {
+            if(strcmp(desc,strMethodDesc) != 0) {
                 if(pClass)
                     pClass = pCurClass;
                 
@@ -541,7 +562,7 @@ int GetMethodIndex(u1 *strMethodName, u1 *strMethodDesc, ClassFile * &pClass, Cl
         }
         
         if(pClass != NULL) {
-            pCurClass = pCurClass->GetSuperClass();
+            pCurClass = GetSuperClass(pCurClass);
         }
         else {
             break;
@@ -580,6 +601,26 @@ Variable LoadConstant(ClasFile *pClass, u1 nIndex) {
     return v;
 }
 
+u2 GetMethodParametersStackCount(u1 *strMethodDesc) {
+    u2 count=0;
+    
+    int i, len = strlen(strMethodDesc);
+    
+    for(i = 1; i < len; i++) {
+        if(strMethodDesc[i] =='L') {
+            while(strMethodDesc[i] !=';') {
+                i++;
+            }
+        }
+        if(strMethodDesc[i] ==')') break;
+        if(strMethodDesc[i] =='J' || strMethodDesc[i] =='D')
+            count++;
+        count++;
+    }
+    
+    return count;
+}
+
 
 void ExecutionEngine::ExecuteInvokeSpecial(Frame *pFrameStack) {
     ExecuteInvokeVirtual(pFrameStack, invokespecial);
@@ -604,7 +645,7 @@ void ExecuteInvokeVirtual(Frame *pFrameStack, u2 type) {
     pFrameStack[0].pClass->GetStringFromConstPool(ni, strClassName);
     
     
-    ClassFile *pClass = pClassHeap->fetchClass(pClassHeap, strClassName, classHeapLength);
+    ClassFile *pClass = fetchClass(pClassHeap, strClassName, classHeapLength);
     
     pConstPool = (char *) pFrameStack[0].pClass->constant_pool[nameAndTypeIndex -1];
     
@@ -620,45 +661,46 @@ void ExecuteInvokeVirtual(Frame *pFrameStack, u2 type) {
     GetStringFromConstPool(method.name_index, strName, pFrameStack[0].pClass.constant_pool);
     GetStringFromConstPool(method.descriptor_index, strDesc, pFrameStack[0].pClass.constant_pool);
     
-    JavaClass *pVirtualClass=pClass;
-    int nIndex=pClass->GetMethodIndex(strName, strDesc, pVirtualClass);
+    ClassFile *pVirtualClass = pClass;
+    int nIndex = GetMethodIndex(strName, strDesc, pVirtualClass, pClass);
     
-    memset(&pFrameStack[1],0,sizeof(pFrameStack[1]));
+    //memset(&pFrameStack[1],0,sizeof(pFrameStack[1]));
+    &pFrameStack[1] = calloc(1, sizeof(pFrameStack[1]);
+    
     pFrameStack[1].pMethod = &pClass->methods[nIndex];
     
     method.access_flags = getu2((char *)pFrameStack[1].pMethod);
     if( ACC_SUPER & method.access_flags) {
-        pFrameStack[1].pClass = pVirtualClass->GetSuperClass();
+        pFrameStack[1].pClass = GetSuperClass(pVirtualClass);
         //ShowClassInfo(pFrameStack[1].pClass);
     }
     else {
-        pFrameStack[1].pClass=pVirtualClass;
+        pFrameStack[1].pClass = pVirtualClass;
     }
     
     //pFrameStack[1].pOpStack[++pFrameStack[1].sp]=pFrameStack[0].pOpStack[pFrameStack[0].sp--];
-    int params=GetMethodParametersStackCount(strDesc)+1;
+    int params = GetMethodParametersStackCount(strDesc)+1;
     
     //static
-    if(type==invokestatic) params--;
+    if(type==invokestatic)
+        params--;
     
-    int nDiscardStack =params;
+    int nDiscardStack = params;
     if(pFrameStack[1].pMethod->access_flags & ACC_NATIVE) {
     }
     else {
-        nDiscardStack+=pFrameStack[1].pMethod->pCode_attr->max_locals;
+        nDiscardStack += pFrameStack[1]code->max_locals;
     }
     
-    pFrameStack[1].stack = &Frame::pOpStack[pFrameStack->stack-Frame::pOpStack+pFrameStack[0].sp-params+1];
-    pFrameStack[1].sp=nDiscardStack-1;
-    DbgPrint(_T("Invoking method %s%s, \n"), strName, strDesc);
-    DbgPrint(_T("Last Frame Stack %d Params %d Stack start at %d\n"),pFrameStack[0].stack-Frame::pOpStack+pFrameStack[0].sp,pFrameStack[1].sp,pFrameStack[1].stack-Frame::pOpStack );
+    //pFrameStack[1].stack = &Frame::pOpStack[pFrameStack->stack-Frame::pOpStack+pFrameStack[0].sp-params+1];
+    pFrameStack[1].sp = nDiscardStack-1;
     
-    this->Execute(&pFrameStack[1]);
+    Execute(pFrameStack[1]);
     
     //if returns then get on stack	
     if(strDesc.Find(_T(")V")) < 0) {
         nDiscardStack--;		
     }
     
-    pFrameStack[0].sp-=nDiscardStack;
+    pFrameStack[0].sp -= nDiscardStack;
 }
