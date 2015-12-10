@@ -18,32 +18,32 @@ u4 Execute (Frame *pFrame) {
     while (pFrame->pc < pFrame->code_lenght) {
         
         switch (code_iterator[pFrame->pc]) {
-            case nop:
+            case op_nop:
                 pFrame->pc++;
                 break;
                 
                 ///////////////// Stack Operations ////////////////
                 //Instructions that push a constant onto the stack
-            case iconst_m1:
-            case iconst_0:
-            case iconst_1:
-            case iconst_2:
-            case iconst_3:
-            case iconst_4:
-            case iconst_5:
+            case op_iconst_m1:
+            case op_iconst_0:
+            case op_iconst_1:
+            case op_iconst_2:
+            case op_iconst_3:
+            case op_iconst_4:
+            case op_iconst_5:
                 pFrame->sp++;
                 pFrame->stack[pFrame->sp].intValue = (u1)code_iterator[pFrame->pc] - iconst_0;
                 pFrame->pc++;
                 break;
                 
-            case aconst_null:
+            case op_aconst_null:
                 pFrame->sp++;
                 pFrame->stack[pFrame->sp].object = NULL;
                 pFrame->pc++;
                 break;
                 
-            case lconst_0:// 9 /*(0x9)*/
-            case lconst_1:// 10 /*(0xa)*/
+            case op_lconst_0:// 9 /*(0x9)*/
+            case op_lconst_1:// 10 /*(0xa)*/
                 pFrame->sp++;
                 pFrame->stack[pFrame->sp].intValue = 0;
                 pFrame->sp++;
@@ -51,23 +51,23 @@ u4 Execute (Frame *pFrame) {
                 pFrame->pc++;
                 break;
                 
-            case bipush:// 16 /*(0x10)*/
+            case op_bipush:// 16 /*(0x10)*/
                 pFrame->sp++;
                 pFrame->stack[pFrame->sp].charValue = (u1)code_iterator[pFrame->pc+1];
                 pFrame->pc += 2;
                 break;
-            case sipush:// 17 /*(0x11)*/
+            case op_sipush:// 17 /*(0x11)*/
                 pFrame->sp++;
                 pFrame->stack[pFrame->sp].shortValue = getu2(&code_iterator[pFrame->pc+1]);
                 pFrame->pc += 3;
                 break;
                 
-            case ldc: //Push item from constant pool
+            case op_ldc: //Push item from constant pool
                 pFrame->stack[++pFrame->sp] = LoadConstant(pFrame->pClass, (u1)code_iterator[pFrame->pc + 1]);
                 pFrame->pc += 2;
                 break;
                 
-            case ldc2_w:// 20 /*(0x14)*/
+            case op_ldc2_w:// 20 /*(0x14)*/
                 index = getu2(&bc[pFrame->pc+1]);
                 pFrame->sp++;
                 pFrame->stack[pFrame->sp].intValue = getu4(&((char *)pClass->constant_pool[index - 1])[1]);
@@ -77,34 +77,34 @@ u4 Execute (Frame *pFrame) {
                 break;
                 
                 //Instructions that load a local variable onto the stack
-            case aload:// 25 /*(0x19)*/
+            case op_aload:// 25 /*(0x19)*/
                 pFrame->sp++;
                 pFrame->stack[pFrame->sp] = pFrame->local[(u1) code_iterator[pFrame->pc+1]];
                 pFrame->pc += 2;
                 break;
                 
-            case iload:// 21 /*(0x15)*/
+            case op_iload:// 21 /*(0x15)*/
                 pFrame->sp++;
                 pFrame->stack[pFrame->sp] = pFrame->local[(u1) code_iterator[pFrame->pc+1]];
                 pFrame->pc += 2;
                 break;
-            case iload_0: //26 Load int from local variable 0
-            case iload_1: //27 Load int from local variable 1
-            case iload_2: //28 Load int from local variable 2
-            case iload_3: //29 Load int from local variable 3
+            case op_iload_0: //26 Load int from local variable 0
+            case op_iload_1: //27 Load int from local variable 1
+            case op_iload_2: //28 Load int from local variable 2
+            case op_iload_3: //29 Load int from local variable 3
                 pFrame->sp++;
                 pFrame->stack[pFrame->sp] = pFrame->local[(u1) code_iterator[pFrame->pc] - iload_0];
                 pFrame->pc++;
                 break;
                 
                 
-            case lload:// 22 /*(0x16)*/
+            case op_lload:// 22 /*(0x16)*/
                 
                 break;
-            case lload_0:// 30 /*(0x1e) */
-            case lload_1:// 31 /*(0x1f) */
-            case lload_2:// 32 /*(0x20) */
-            case lload_3:// 33 /*(0x21) */
+            case op_lload_0:// 30 /*(0x1e) */
+            case op_lload_1:// 31 /*(0x1f) */
+            case op_lload_2:// 32 /*(0x20) */
+            case op_lload_3:// 33 /*(0x21) */
                 pFrame->sp++;
                 pFrame->stack[pFrame->sp] = pFrame->local[(u1) code_iterator[pFrame->pc] - lload_0];
                 pFrame->sp++;
@@ -112,61 +112,61 @@ u4 Execute (Frame *pFrame) {
                 pFrame->pc++;
                 break;
                 
-            case fload_0: // 34 /*(0x22)*/
-            case fload_1: // 35 /*(0x23)*/
-            case fload_2: // 36 /*(0x24)*/
-            case fload_3: // 37 /*(0x25)*/
+            case op_fload_0: // 34 /*(0x22)*/
+            case op_fload_1: // 35 /*(0x23)*/
+            case op_fload_2: // 36 /*(0x24)*/
+            case op_fload_3: // 37 /*(0x25)*/
                 pFrame->sp++;
                 pFrame->stack[pFrame->sp] = pFrame->local[(u1) code_iterator[pFrame->pc] - fload_0];
                 pFrame->pc++;
                 break;
                 
-            case aload_0:  //42 Load reference from local variable 0
-            case aload_1:  //Load reference from local variable 1
-            case aload_2:  //Load reference from local variable 2
-            case aload_3:  //Load reference from local variable 3
+            case op_aload_0:  //42 Load reference from local variable 0
+            case op_aload_1:  //Load reference from local variable 1
+            case op_aload_2:  //Load reference from local variable 2
+            case op_aload_3:  //Load reference from local variable 3
                 pFrame->sp++;
                 pFrame->stack[pFrame->sp] = pFrame->local[(u1) code_iterator[pFrame->pc] - aload_0];
                 pFrame->pc++;
                 break;
                 
-            case iaload:// 46 /*(0x2e)*/Load int from array
+            case op_iaload:// 46 /*(0x2e)*/Load int from array
                 //..., arrayref, index  => ..., value
                 pFrame->stack[pFrame->sp - 1] = getArrayVariable(pFrame->stack[pFrame->sp - 1]->arrayList, pFrame->stack[pFrame->sp].intValue, 2);
                 pFrame->sp--;
                 pFrame->pc++;
                 break;
-            case aaload://50
+            case op_aaload://50
                 //..., arrayref, index  ..., value
                 pFrame->stack[pFrame->sp - 1] = pFrame->stack[pFrame->sp - 1]->arrayList[pFrame->stack[pFrame->sp].intValue];
                 pFrame->sp--;
                 pFrame->pc++;
                 break;
                 //Instructions that store a value from the stack into a local variable
-            case astore:// 58 (0x3a)
+            case op_astore:// 58 (0x3a)
                 pFrame->local[(u1) code_iterator[pFrame->pc+1]] = pFrame->stack[pFrame->sp];
                 pFrame->sp--;
                 pFrame->pc+=2;
                 break;
                 
-            case istore:// 54 /*(0x36)*/
+            case op_istore:// 54 /*(0x36)*/
                 pFrame->local[(u1) code_iterator[pFrame->pc+1]] = pFrame->stack[pFrame->sp];
                 pFrame->sp--;
                 pFrame->pc+=2;
                 break;
-            case istore_0: // 59 /*(0x3b)*/
-            case istore_1: // 60 /*(0x3c) */
-            case istore_2: // 61 /*(0x3d) */
-            case istore_3: // 62 /*(0x3e)*/
+            case op_istore_0: // 59 /*(0x3b)*/
+            case op_istore_1: // 60 /*(0x3c) */
+            case op_istore_2: // 61 /*(0x3d) */
+            case op_istore_3: // 62 /*(0x3e)*/
                 pFrame->local[(u1) code_iterator[pFrame->pc] - istore_0] = pFrame->stack[pFrame->sp];
                 pFrame->sp--;
                 pFrame->pc++;
                 break;
                 
-            case lstore_0: // 63 /*(0x3f) */
-            case lstore_1: // 64 /*(0x40) */
-            case lstore_2: // 65 /*(0x41) */
-            case lstore_3: // 66 /*(0x42) */
+            case op_lstore_0: // 63 /*(0x3f) */
+            case op_lstore_1: // 64 /*(0x40) */
+            case op_lstore_2: // 65 /*(0x41) */
+            case op_lstore_3: // 66 /*(0x42) */
                 pFrame->local[(u1) code_iterator[pFrame->pc] - lstore_0 + 1] = pFrame->stack[pFrame->sp];
                 pFrame->sp--;
                 pFrame->local[(u1) code_iterator[pFrame->pc] - lstore_0] = pFrame->stack[pFrame->sp];
@@ -174,26 +174,26 @@ u4 Execute (Frame *pFrame) {
                 pFrame->pc++;
                 break;
                 
-            case fstore_0:
-            case fstore_1:
-            case fstore_2:
-            case fstore_3:
+            case op_fstore_0:
+            case op_fstore_1:
+            case op_fstore_2:
+            case op_fstore_3:
                 pFrame->local[(u1)code_iterator[pFrame->pc] - fstore_0] = pFrame->stack[pFrame->sp];
                 pFrame->sp--;
                 pFrame->pc++;
                 break;
                 
-            case astore_0:// 75 /*(0x4b) Store reference into local variable 0*/
-            case astore_1:// 76 /*(0x4c) */
-            case astore_2:// 77 /*(0x4d) */
-            case astore_3:// 78 /*(0x4e)*/
+            case op_astore_0:// 75 /*(0x4b) Store reference into local variable 0*/
+            case op_astore_1:// 76 /*(0x4c) */
+            case op_astore_2:// 77 /*(0x4d) */
+            case op_astore_3:// 78 /*(0x4e)*/
                 pFrame->local[(u1) code_iterator[pFrame->pc] - astore_0] = pFrame->stack[pFrame->sp];
                 pFrame->sp--;
                 pFrame->pc++;
                 break;
                 
-            case iastore:// 79 /*(0x4f)*/
-            case aastore: // 83 - both seems same (TODO: Check it)
+            case op_iastore:// 79 /*(0x4f)*/
+            case op_aastore: // 83 - both seems same (TODO: Check it)
                 pFrame->stack[pFrame->sp-2]->arrrayList[pFrame->stack[pFrame->sp-1].intValue] = pFrame->stack[pFrame->sp];
                 pFrame->sp-=3;
                 pFrame->pc++;
@@ -201,7 +201,7 @@ u4 Execute (Frame *pFrame) {
                 
                 //Generic (typeless) stack operations
                 
-            case dup:// 89 /*(0x59)*/
+            case op_dup:// 89 /*(0x59)*/
                 pFrame->stack[pFrame->sp+1] = pFrame->stack[pFrame->sp];
                 pFrame->sp++;
                 pFrame->pc++;
@@ -211,34 +211,34 @@ u4 Execute (Frame *pFrame) {
                 
                 //Integer Arithmetic
                 
-            case iadd: //96
+            case op_iadd: //96
                 pFrame->stack[pFrame->sp-1].intValue = pFrame->stack[pFrame->sp-1].intValue + pFrame->stack[pFrame->sp].intValue;
                 pFrame->sp--;
                 pFrame->pc++;
                 break;
-            case ladd:// 97 /*(0x61)*/
+            case op_ladd:// 97 /*(0x61)*/
                 longVal = (i8)(((i8)pFrame->stack[pFrame->sp-3].intValue<<32) | (i8)pFrame->stack[pFrame->sp-2].intValue)+(i8)(((i8)pFrame->stack[pFrame->sp-1].intValue<<32) | (i8)pFrame->stack[pFrame->sp].intValue);
                 pFrame->stack[pFrame->sp-3].intValue=HIINT64(longVal);
                 pFrame->stack[pFrame->sp-2].intValue=LOINT64(longVal);
                 pFrame->sp -= 2;
                 pFrame->pc++;
                 break;
-            case isub: //100
+            case op_isub: //100
                 pFrame->stack[pFrame->sp-1].intValue = pFrame->stack[pFrame->sp-1].intValue - pFrame->stack[pFrame->sp].intValue;
                 pFrame->sp--;
                 pFrame->pc++;
                 break;
-            case imul://104
+            case op_imul://104
                 pFrame->stack[pFrame->sp-1].intValue=pFrame->stack[pFrame->sp-1].intValue * pFrame->stack[pFrame->sp].intValue;
                 pFrame->sp--;
                 pFrame->pc++;
                 break;
-            case idiv://108
+            case op_idiv://108
                 pFrame->stack[pFrame->sp-1].intValue=pFrame->stack[pFrame->sp-1].intValue / pFrame->stack[pFrame->sp].intValue;
                 pFrame->sp--;
                 pFrame->pc++;
                 break;
-            case iinc:// 132 /*(0x84)*/ Increment local variable by constant
+            case op_iinc:// 132 /*(0x84)*/ Increment local variable by constant
                 pFrame->stack[(u1)bc[pFrame->pc+1]].intValue += (char)bc[pFrame->pc+2];
                 pFrame->pc+=3;
                 break;
@@ -256,29 +256,29 @@ u4 Execute (Frame *pFrame) {
                 
                 //Instructions that deal with objects
                 
-            case _new:// 187 (0xbb)
+            case op_new:// 187 (0xbb)
                 ExecuteNew(pFrame);
                 pFrame->pc+=3;
                 break;
-            case putfield: //181 (0xb5): Set field in object
+            case op_putfield: //181 (0xb5): Set field in object
                 PutField(pFrame);
                 pFrame->sp-=2;
                 pFrame->pc+=3;
                 break;
                 
-            case getfield: //180 (0xb4) Fetch field from object
+            case op_getfield: //180 (0xb4) Fetch field from object
                 GetField(pFrame);
                 pFrame->pc+=3;
                 break;
                 
                 //Instructions that deal with arrays
                 
-            case newarray:// 188 /*(0xbc)*/
+            case op_newarray:// 188 /*(0xbc)*/
                 ExecuteNewArray(pFrame);
                 pFrame->pc+=2;
                 break;
                 
-            case anewarray: //189
+            case op_anewarray: //189
                 ExecuteANewArray(pFrame);
                 pFrame->pc+=3;
                 break;
@@ -286,7 +286,7 @@ u4 Execute (Frame *pFrame) {
                 
                 //Conditional branch instructions
                 
-            case if_icmpeq: // 159 /*(0x9f) */
+            case op_if_icmpeq: // 159 /*(0x9f) */
                 if(pFrame->stack[pFrame->sp -1].intValue == pFrame->stack[pFrame->sp].intValue) {
                     pFrame->pc+= geti2(&bc[pFrame->pc+1]);
                 }
@@ -295,7 +295,7 @@ u4 Execute (Frame *pFrame) {
                 }
                 pFrame->sp-=2;
                 break;
-            case if_icmpne: //160 /*(0xa0) */
+            case op_if_icmpne: //160 /*(0xa0) */
                 if(pFrame->stack[pFrame->sp -1].intValue != pFrame->stack[pFrame->sp].intValue) {
                     pFrame->pc+= geti2(&bc[pFrame->pc+1]);
                 }
@@ -304,7 +304,7 @@ u4 Execute (Frame *pFrame) {
                 }
                 pFrame->sp-=2;
                 break;
-            case if_icmplt: // 161 /*(0xa1) */
+            case op_if_icmplt: // 161 /*(0xa1) */
                 if(pFrame->stack[pFrame->sp -1].intValue < pFrame->stack[pFrame->sp].intValue) {
                     pFrame->pc+= geti2(&bc[pFrame->pc+1]);
                 }
@@ -313,7 +313,7 @@ u4 Execute (Frame *pFrame) {
                 }
                 pFrame->sp-=2;
                 break;
-            case if_icmpge: // 162 /*(0xa2) */
+            case op_if_icmpge: // 162 /*(0xa2) */
                 if(pFrame->stack[pFrame->sp -1].intValue >= pFrame->stack[pFrame->sp].intValue) {
                     pFrame->pc+= geti2(&bc[pFrame->pc+1]);
                 }
@@ -322,7 +322,7 @@ u4 Execute (Frame *pFrame) {
                 }
                 pFrame->sp-=2;
                 break;
-            case if_icmpgt: // 163 /*(0xa3) */
+            case op_if_icmpgt: // 163 /*(0xa3) */
                 if(pFrame->stack[pFrame->sp -1].intValue > pFrame->stack[pFrame->sp].intValue) {
                     pFrame->pc+= geti2(&bc[pFrame->pc+1]);
                 }
@@ -331,7 +331,7 @@ u4 Execute (Frame *pFrame) {
                 }
                 pFrame->sp-=2;
                 break;
-            case if_icmple: // 164 /*(0xa4)*/
+            case op_if_icmple: // 164 /*(0xa4)*/
                 if(pFrame->stack[pFrame->sp -1].intValue <= pFrame->stack[pFrame->sp].intValue) {
                     pFrame->pc+= geti2(&bc[pFrame->pc+1]);
                 }
@@ -341,7 +341,7 @@ u4 Execute (Frame *pFrame) {
                 pFrame->sp-=2;
                 break;
                 
-            case ifeq:// 153 /*(0x99) */
+            case op_ifeq:// 153 /*(0x99) */
                 if(pFrame->stack[pFrame->sp].intValue == 0) {
                     pFrame->pc+= geti2(&bc[pFrame->pc+1]);
                 }
@@ -350,7 +350,7 @@ u4 Execute (Frame *pFrame) {
                 }
                 pFrame->sp--;
                 break;
-            case ifne:// 154 /*(0x9a) */
+            case op_ifne:// 154 /*(0x9a) */
                 if(pFrame->stack[pFrame->sp].intValue != 0) {
                     pFrame->pc+= geti2(&bc[pFrame->pc+1]);
                 }
@@ -359,7 +359,7 @@ u4 Execute (Frame *pFrame) {
                 }
                 pFrame->sp--;
                 break;
-            case iflt:// 155 /*(0x9b) */
+            case op_iflt:// 155 /*(0x9b) */
                 if(pFrame->stack[pFrame->sp].intValue < 0) {
                     pFrame->pc+= geti2(&bc[pFrame->pc+1]);
                 }
@@ -368,7 +368,7 @@ u4 Execute (Frame *pFrame) {
                 }
                 pFrame->sp--;
                 break;
-            case ifge:// 156 /*(0x9c) */
+            case op_ifge:// 156 /*(0x9c) */
                 if(pFrame->stack[pFrame->sp].intValue >= 0) {
                     pFrame->pc+= geti2(&bc[pFrame->pc+1]);
                 }
@@ -377,7 +377,7 @@ u4 Execute (Frame *pFrame) {
                 }
                 pFrame->sp--;
                 break;
-            case ifgt:// 157 /*(0x9d) */
+            case op_ifgt:// 157 /*(0x9d) */
                 if(pFrame->stack[pFrame->sp].intValue > 0) {
                     pFrame->pc+= geti2(&bc[pFrame->pc+1]);
                 }
@@ -386,7 +386,7 @@ u4 Execute (Frame *pFrame) {
                 }
                 pFrame->sp--;
                 break;
-            case ifle:// 158 /*(0x9e)*/
+            case op_ifle:// 158 /*(0x9e)*/
                 if(pFrame->stack[pFrame->sp].intValue <= 0) {
                     pFrame->pc+= geti2(&bc[pFrame->pc+1]);
                 }
@@ -398,48 +398,48 @@ u4 Execute (Frame *pFrame) {
                 //Comparison instructions
                 
                 //Unconditional branch instructions
-            case  _goto: // 167 /*(0xa7)*/
+            case op_goto: // 167 /*(0xa7)*/
                 pFrame->pc += geti2(&code_iterator[pFrame->pc+1]);
                 break;
                 //Table jumping instructions
                 
                 ////////////// Exceptions ///////////////////////
-            case athrow:
+            case op_athrow:
                 error = 1;
                 break;
                 
                 //////////////////////// Method Invocation and Return ////////
                 
                 //Method invocation instructions
-            case invokespecial:
+            case op_invokespecial:
                 ExecuteInvokeSpecial(pFrame);			
                 pFrame->pc+=3;
                 break;
                 
-            case invokevirtual: //182
+            case op_invokevirtual: //182
                 ExecuteInvokeVirtual(pFrame, invokevirtual);
                 pFrame->pc+=3;
                 break;
                 
-            case invokestatic:// 184 
+            case op_invokestatic:// 184
                 ExecuteInvokeVirtual(pFrame, invokestatic);
                 pFrame->pc+=3;
                 break;
                 //Method return instructions
-            case ireturn: //172 (0xac)			
+            case op_ireturn: //172 (0xac)
                 DbgPrint(_T("----IRETURN------\n"));
                 pFrame->stack[0].intValue=pFrame->stack[pFrame->sp].intValue;			
                 return ireturn;
                 break;
                 
-            case _return: //177 (0xb1): Return (void) from method			
+            case op_return: //177 (0xb1): Return (void) from method
                 DbgPrint(_T("----RETURN------\n"));
                 return 0;//METHOD_RETURN;
                 break;
                 //////////////// Thread Synchronization ////////////////////
                 
-            case monitorenter:// Enter and acquire object monitor 
-            case monitorexit:// Release and exit object monitor
+            case op_monitorenter:// Enter and acquire object monitor
+            case op_monitorexit:// Release and exit object monitor
                 error = 1;
                 break;
                 
