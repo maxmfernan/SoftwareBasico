@@ -39,7 +39,7 @@ int main(int argc, int argv){
 	/** Inicicializa a JVM.
 		Cria espaço para os heaps e para o stackFrame.
 		Carrega a class inicial. */
-	jvmStartup(classHeap_ptr, objectHeap_ptr, stackFrame_ptr, classPathF_ptr, &dmSize);
+	dmSize = jvmStartup(classHeap_ptr, objectHeap_ptr, stackFrame_ptr, classPathF_ptr, &dmSize);
 
 	//Fecha o arquivo do primeiro class file aberto
 	fclose(classPathF_ptr);

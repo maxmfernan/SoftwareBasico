@@ -1,30 +1,50 @@
-#define SEEK_NOTFOUND -1
-/**
-* @brief Inicializa a JVM; Aloca memória para as estruturas principais; 
-	Chama o carregador para a primeira classe; inicializa a primeira classe
-*
-* @param classHeap 
-* @param objectHeap
-* @param stackFrame
-* @param classPathF_ptr
-*/
-void jvmStartup(ClassFile *classHeap_ptr, Object *objectHeap_ptr, Frame *stackFrame_ptr, FILE *classPathF_ptr, dataMSize *dmSize_ptr){
-	classHeap_ptr = malloc( CLSHEAP_MAX*sizeof( ClassFile ) );
-	objectHeap_ptr = malloc( OBJHEAP_MAX*sizeof( Object ) );
-	stackFrame_ptr = malloc( STKFRAME_MAX*sizeof( Frame ) );
+//
+//  main.c
+//  
+//
+//  Created by Luiz Henrique Campos Barboza on 09/12/15.
+//
+//
+#include "macros.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdint.h>
+#include <string.h>
+#include <math.h>
+#include <inttypes.h>
 
-	//Carrega a classe inicial
-	//ok +-
-	loadClass(classPathF_ptr, classHeap_ptr, dmSize_ptr); 
+void loadClass( FILE *classPathF_ptr, ClassFile* clsHeap, dataMSize_t *dmSize ); 
+u2 seekMethodInClass(ClassFile *class_ptr, char *methName_str, char *methDescriptor_str);
 
-	//Checa a consistência da classe
+int main(){
+    ClassFile* classHeap_ptr = malloc( sizeof( ClassFile ) );
+	dataMSize_t dmsize;
+	dmsize.clsHeap_size = 0;
+	dmsize.objHeap_size = 0;
+	dmsize.stkHeap_size = 0;
 
-	//Inicializa a classe inicial, roda clinit
-	initializeClass(classHeap_ptr); //Sei que o primeiro elemento da classHeap é a classe inicial
-}
+	File *classPathF_ptr = open("HelloWorld.class", "rb");
+	if( classPathF_ptr == NULL ){
+		printf("\nErro ao abrir");
+		exit(1);
+	}
 
-void initializeClass(ClassFile *class_ptr){
+    loadClass( classPathF_ptr, classHeap_ptr, dmsize );
 
+    printf("\n\nConteudo do .class");
+    printf("\n--------------------------------");
+    print_ClassFile(classHeap_ptr);
+ 	
+	method_idx = seekMethodInClass(challHeap_ptr, "<clinit>", "()V"); 
+   	if( method_idx == -1 ){
+		printf("\nDeu pau");
+	}
+	else{
+		printf("\n%d", (int*) method_idx);	
+	}   
+    printf("%s\n",classHeap_ptr->className);
+    
+    return 0;
 }
 
 /**
