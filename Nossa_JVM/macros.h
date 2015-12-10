@@ -451,7 +451,9 @@ typedef struct{
 	attribute_info *attributes; //Tabela de attributos
 }field_info;
 
-union Variable {
+/*
+union {
+    u4 type;
     u1 charValue;
     u2 shortValue;
     u4 intValue;
@@ -460,13 +462,8 @@ union Variable {
     
     //LONG_PTR ptrValue;
     Object object;
-};
-
-struct method_info_ex: method_info {
-    method_info *pMethodInfoBase;
-    Code_attribute *pCode_attr;
-};
-
+} Variable;
+*/
 /** Estrutura do arquivo .class */
 typedef struct {
 	u4 magic;
@@ -486,7 +483,7 @@ typedef struct {
    	u2 attributes_count;
    	attribute_info *attributes;
     
-    Variable *variable;
+    //Variable *variable;
     u1 *className;
     
     
@@ -498,22 +495,6 @@ typedef struct{
     structArrayList *arrayList;
     Field_Value * field_value;
 }ClassHandler; ///Objeto
-
-typedef struct{
-    structOperandStack * operandStack; ///Pilha de Operandos
-    LocalVariable * localVariableArray; /**< O indice ZERO do array È uma REFERENCIA para o method_info */
-    cp_info * constant_pool;///Referencia para o constant pool da classe
-    method_info *methods; ///Referencia para o method_info do metodo dono do frame
-    ClassHandler *handler; ///Referencia para o Objeto dono do metodo
-    u4 returnPC; ///Endereco do PC atual do metodo que invocou o metodo corrente.
-} Frame;
-
-#define FRAME_STACK_MAX     100000
-typedef struct StructFrameStack{
-    u4 stackTop;
-    Frame frame[FRAME_STACK_MAX];
-    //struct StructFrameStack *next;
-}StructFrameStack;
 
 
 typedef struct {
@@ -528,12 +509,14 @@ typedef struct {
 typedef struct {
     //Variable *pOpStack;
     ClassFile *pClass;
-    method_info_ex *pMethod;
+    method_info *pMethod;
+    u4 code_length; //Número de bytes do array abaixo
+    u1 *code; //Vetor com a qtd de byte indicada acima
     u4 pc;
     u2 stack_size;
     u2 local_size;
-    Variable *stack;
-    Variable *local;
+    u4 *stack;
+    u4 *local;
 }Frame;
 
 #endif
