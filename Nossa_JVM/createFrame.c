@@ -7,14 +7,20 @@ int findClass(ClassFile *classHeap_ptr, dataMSize_t dmSize, char* ClassName){
 
 	u2 clsHeapSize = dmSize.stkHeap_size;
 	u2 index;
+    int i, achou = 0;
 
-	for(int i=0; i < clsHeapSize; i++) {
+	for(i = 0; i < clsHeapSize; i++) {
 		index = classHeap_ptr[i].this_class;
 		if(strcmp(classHeap_ptr[i].constant_pool[index-1].info.CONSTANT_Utf8_info.bytes, ClassName) == 0) {
-			return i;
+            achou = 1;
 		}
 	}
-	return -1;	
+    if (achou) {
+        return i;
+    }
+    else {
+        return -1;
+    }
 }
 
 void findCode(ClassFile *Class, u2 *codeIndex) {

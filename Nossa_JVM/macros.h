@@ -312,6 +312,11 @@ f4 getf4(char *p);
 //#define DEPRECATED
 
 
+typedef struct attribute_info_e attribute_info; //foward declaration
+typedef union Variable; //foward declaration
+typedef struct Object; //foward declaration
+typedef struct Array_t; //foward declaration
+
 /** Definição das estruturas relacionadas as áreas de memória da JVM (Heap, stack) */
 typedef struct{
 	u2 clsHeap_size;
@@ -395,7 +400,6 @@ typedef struct{
 }LocalVariableForVariable;
 //
 /** Definição da estrutura attribute */
-typedef struct attribute_info_e attribute_info; //foward declaration
 typedef struct attribute_info_e{
 	u2 attribute_name_index;
 	u4 attribute_length; //Número em bytes da informação seguinte
@@ -466,13 +470,13 @@ typedef struct{
 	u2 attributes_count;
 	attribute_info *attribute; //A quantidade é indicada por attributes_count
 }method_info;
-
+/*
 struct method_info_ex: method_info
 {
     method_info *pMethodInfoBase;
     Code_attribute *pCode_attr;
 };
-
+*/
 /** Definição da estutura field */
 typedef struct{
 	u2 access_flag;
@@ -522,7 +526,7 @@ typedef struct {
 
 
 typedef struct {
-    Variable *data;
+    union Variable *data;
 }Array_t;
 
 typedef struct{
@@ -535,7 +539,7 @@ typedef struct{
             u4 high;
             u4 low;
         } U8;
-    }
+    };
 }Field_Value;
 
 typedef struct {
@@ -547,16 +551,14 @@ typedef struct {
     u2 field_length;
 }Object; ///Objeto
 
-union Variable
-{
+typedef union {
     u1 charValue;
     u2 shortValue;
     u4 intValue;
     f4 floatValue;
     u1 *sring;
-    //LONG_PTR ptrValue;
     Object object;
-};
+}Variable;
 
 typedef struct {
     //Variable *pOpStack;
