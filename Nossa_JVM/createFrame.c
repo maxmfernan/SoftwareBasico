@@ -3,41 +3,39 @@
 #include <string.h>
 #include "macros.h"
 
+
+
+
 int findClass(ClassFile *classHeap_ptr, dataMSize_t dmSize, char* ClassName){
 
 	u2 clsHeapSize = dmSize.stkHeap_size;
 	u2 index;
-    int i, achou = 0;
 
-	for(i = 0; i < clsHeapSize; i++) {
+	for(int i=0; i < clsHeapSize; i++) {
 		index = classHeap_ptr[i].this_class;
 		if(strcmp(classHeap_ptr[i].constant_pool[index-1].info.CONSTANT_Utf8_info.bytes, ClassName) == 0) {
-            achou = 1;
+			return i;
 		}
 	}
-    if (achou) {
-        return i;
-    }
-    else {
-        return -1;
-    }
+	return -1;	
 }
 
-void findCode(ClassFile *Class, u2 *codeIndex) {
+u2 findCode(ClassFile *Class) {
 
 	u2 i = 0;
 
 	while(Class->methods->attribute[i].tag != 1){
 		i++;
 	}
-	*codeIndex = i;
+	return i;
 }
 
+//Lembrar de enviar o dataMSize->stkHeap_size para o numFrames
 void createFrame(method_info *method, ClassFile *Class, Frame *frame_ptr, u2 *numFrames) {
     
 	u2 i = *numFrames;
 	u2 codeIndex = 0;
-	findCode(Class, &codeIndex);
+	findCode(Class);
 
 	if (i < STKFRAME_MAX - 1) {
 	    frame_ptr[i].pClass = Class;
@@ -58,4 +56,17 @@ void createFrame(method_info *method, ClassFile *Class, Frame *frame_ptr, u2 *nu
 		printf("Frame não pode ser alocado, tamanho máximo atingido");
 		exit(1);
 	}
+}
+
+//Lembrar de enviar o dataMSize->stkHeap_size para o numFrames
+void destructFrame(Frame *frame_ptr, u2 *numFrames) {
+
+	free(frame_ptr);
+	*numFrames--;
+
+}
+
+int main () {
+	int x = 0;
+	return x;
 }
