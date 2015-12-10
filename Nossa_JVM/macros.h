@@ -513,11 +513,29 @@ typedef struct {
 
 
 typedef struct {
-    ClassFile * classRef; ///Referencia para a classe alocada na memoria
-    field_info * fields; ///Espaco de memoria alocado para os fields do Objeto
-    //structArrayList *arrayList;
-    //Field_Value * field_value;
-    u2 field_size;
+    Variable *data;
+}Array_t;
+
+typedef struct{
+    u2 field_index;
+    union {
+        struct {
+            u4 value;
+        } U4;
+        struct {
+            u4 high;
+            u4 low;
+        } U8;
+    }
+}Field_Value;
+
+typedef struct {
+    ClassFile *classRef ; ///Referencia para a classe alocada na memoria
+    field_info *fields; ///Espaco de memoria alocado para os fields do Objeto
+    Array_t *arrayList;
+    u2 array_lenght;
+    Field_Value *field_value;
+    u2 field_length;
 }Object; ///Objeto
 
 union Variable

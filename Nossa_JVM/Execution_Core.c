@@ -58,41 +58,41 @@ u4 Execute (Frame *pFrame) {
             case sipush:// 17 /*(0x11)*/
                 pFrame->sp++;
                 pFrame->stack[pFrame->sp].shortValue = getu2(&code_iterator[pFrame->pc+1]);
-                pFrame->pc+=3;
+                pFrame->pc += 3;
                 break;
                 
             case ldc: //Push item from constant pool
-                pFrame->stack[++pFrame->sp] = LoadConstant(pFrame->pClass, (u1)bc[pFrame->pc+1]);
-                pFrame->pc+=2;
+                pFrame->stack[++pFrame->sp] = LoadConstant(pFrame->pClass, (u1)code_iterator[pFrame->pc + 1]);
+                pFrame->pc += 2;
                 break;
                 
             case ldc2_w:// 20 /*(0x14)*/
-                index=getu2(&bc[pFrame->pc+1]);
+                index = getu2(&bc[pFrame->pc+1]);
                 pFrame->sp++;
-                pFrame->stack[pFrame->sp].intValue = getu4(&((char *)pClass->constant_pool[index])[1]);
+                pFrame->stack[pFrame->sp].intValue = getu4(&((char *)pClass->constant_pool[index - 1])[1]);
                 pFrame->sp++;
-                pFrame->stack[pFrame->sp].intValue = getu4(&((char *)pClass->constant_pool[index])[5]);
+                pFrame->stack[pFrame->sp].intValue = getu4(&((char *)pClass->constant_pool[index - 1])[5]);
                 pFrame->pc += 3;
                 break;
                 
                 //Instructions that load a local variable onto the stack
             case aload:// 25 /*(0x19)*/
                 pFrame->sp++;
-                pFrame->stack[pFrame->sp]=pFrame->stack[(u1)bc[pFrame->pc+1]];
-                pFrame->pc+=2;
+                pFrame->stack[pFrame->sp] = pFrame->local[(u1) code_iterator[pFrame->pc+1]];
+                pFrame->pc += 2;
                 break;
                 
             case iload:// 21 /*(0x15)*/
                 pFrame->sp++;
-                pFrame->stack[pFrame->sp] = pFrame->stack[(u1)bc[pFrame->pc+1]];
-                pFrame->pc+=2;
+                pFrame->stack[pFrame->sp] = pFrame->local[(u1) code_iterator[pFrame->pc+1]];
+                pFrame->pc += 2;
                 break;
             case iload_0: //26 Load int from local variable 0
             case iload_1: //27 Load int from local variable 1
             case iload_2: //28 Load int from local variable 2
             case iload_3: //29 Load int from local variable 3
                 pFrame->sp++;
-                pFrame->stack[pFrame->sp] = pFrame->stack[(u1)bc[pFrame->pc]-iload_0];
+                pFrame->stack[pFrame->sp] = pFrame->local[(u1) code_iterator[pFrame->pc] - iload_0];
                 pFrame->pc++;
                 break;
                 
@@ -105,9 +105,9 @@ u4 Execute (Frame *pFrame) {
             case lload_2:// 32 /*(0x20) */
             case lload_3:// 33 /*(0x21) */
                 pFrame->sp++;
-                pFrame->stack[pFrame->sp]=pFrame->stack[(u1)bc[pFrame->pc]-lload_0];
+                pFrame->stack[pFrame->sp] = pFrame->local[(u1) code_iterator[pFrame->pc] - lload_0];
                 pFrame->sp++;
-                pFrame->stack[pFrame->sp]=pFrame->stack[(u1)bc[pFrame->pc]-lload_0+1];
+                pFrame->stack[pFrame->sp] = pFrame->local[(u1)code_iterator[pFrame->pc] - lload_0 + 1];
                 pFrame->pc++;
                 break;
                 
@@ -116,7 +116,7 @@ u4 Execute (Frame *pFrame) {
             case fload_2: // 36 /*(0x24) */
             case fload_3: // 37 /*(0x25)*/
                 pFrame->sp++;
-                pFrame->stack[pFrame->sp] = pFrame->stack[(u1)bc[pFrame->pc]-fload_0];
+                pFrame->stack[pFrame->sp] = pFrame->local[(u1) code_iterator[pFrame->pc] - fload_0];
                 pFrame->pc++;
                 break;
                 
@@ -125,14 +125,13 @@ u4 Execute (Frame *pFrame) {
             case aload_2:  //Load reference from local variable 2
             case aload_3:  //Load reference from local variable 3
                 pFrame->sp++;
-                pFrame->stack[pFrame->sp]= pFrame->stack[(u1)bc[pFrame->pc]-aload_0];
-                DumpObject(pFrame->stack[pFrame->sp].object);
+                pFrame->stack[pFrame->sp] = pFrame->local[(u1) code_iterator[pFrame->pc] - aload_0];
                 pFrame->pc++;
                 break;
                 
             case iaload:// 46 /*(0x2e)*/Load int from array
                 //..., arrayref, index  => ..., value
-                pFrame->stack[pFrame->sp-1]=pObjectHeap->GetObjectPointer(pFrame->stack[pFrame->sp-1].object)[pFrame->stack[pFrame->sp].intValue+1];
+                pFrame->stack[pFrame->sp - 1] = pObjectHeap->GetObjectPointer(pFrame->stack[pFrame->sp-1].object)[pFrame->stack[pFrame->sp].intValue + 1];
                 pFrame->sp--;
                 pFrame->pc++;
                 break;
@@ -477,15 +476,19 @@ u4 Execute (Frame *pFrame) {
     
 }
 
+Variable getArrayVariable(Array_t array, int index) {
+    Variable v;
+    
+    
+    
+    return v;
+}
+
 Variable LoadConstant(ClasFile *pClass, u1 nIndex) {
     Variable v;
-    v.ptrValue = 0;
-    CString *pStrVal=NULL, strTemp;
-    //CString strClass= pClass->GetName();
-    //ShowClassInfo(pClass);
     u1 *bytes;
     u1 *cp = (u1 *) pClass->constant_pool[nIndex - 1];
-    u2 i;
+
     switch(cp[0])
     {
         case CONSTANT_INTEGER:
