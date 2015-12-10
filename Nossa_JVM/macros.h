@@ -26,8 +26,10 @@
 typedef uint8_t u1;
 typedef uint16_t u2;
 typedef uint32_t u4;
+typedef int32_t i4;
+typedef float f4;
 
-
+#define getu2(p) (u2)((p)[0]<< 8 & 0x0000FF00 |(p)[1])
 
 
 /** Definição dos nomes dos atributos */
@@ -505,6 +507,15 @@ typedef struct {
     u2 field_size;
 }Object; ///Objeto
 
+union Variable
+{
+    u1 charValue;
+    u2 shortValue;
+    u4 intValue;
+    f4 floatValue;
+    LONG_PTR ptrValue;
+    Object object;
+};
 
 typedef struct {
     //Variable *pOpStack;
@@ -513,6 +524,7 @@ typedef struct {
     u4 code_length; //Número de bytes do array abaixo
     u1 *code; //Vetor com a qtd de byte indicada acima
     u4 pc;
+    i4 sp;
     u2 stack_size;
     u2 local_size;
     u4 *stack;

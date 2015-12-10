@@ -9,8 +9,7 @@
 #include "Execution_Core.h"
 
 u4 Execute (Frame *pFrame) {
-    u1 *stack_iterator = pFrame->stack;
-    u1 *local_iterator = pFrame->local;
+    u4 *local_iterator = pFrame->local;
     u1 *code_iterator;
     
     code_iterator = pFrame->code + pFrame->pc;
@@ -32,33 +31,33 @@ u4 Execute (Frame *pFrame) {
             case iconst_4:
             case iconst_5:
                 pFrame->sp++;
-                pFrame->stack[stack_iterator].intValue = (u1)bc[pFrame->pc]-iconst_0;
+                pFrame->stack[pFrame->sp].intValue = (u1)code_iterator[pFrame->pc] - iconst_0;
                 pFrame->pc++;
                 break;
                 
             case aconst_null:
                 pFrame->sp++;
-                pFrame->stack[pFrame->sp].object.heapPtr = 0;
+                pFrame->stack[pFrame->sp].object = NULL;
                 pFrame->pc++;
                 break;
                 
             case lconst_0:// 9 /*(0x9)*/
             case lconst_1:// 10 /*(0xa)*/
                 pFrame->sp++;
-                pFrame->stack[pFrame->sp].intValue=0;
+                pFrame->stack[pFrame->sp].intValue = 0;
                 pFrame->sp++;
-                pFrame->stack[pFrame->sp].intValue=(u1)bc[pFrame->pc]-lconst_0;
+                pFrame->stack[pFrame->sp].intValue = (u1)code_iterator[pFrame->pc] - lconst_0;
                 pFrame->pc++;
                 break;
                 
             case bipush:// 16 /*(0x10)*/
                 pFrame->sp++;
-                pFrame->stack[pFrame->sp].charValue=(u1)bc[pFrame->pc+1];
-                pFrame->pc+=2;
+                pFrame->stack[pFrame->sp].charValue = (u1)code_iterator[pFrame->pc+1];
+                pFrame->pc += 2;
                 break;
             case sipush:// 17 /*(0x11)*/
                 pFrame->sp++;
-                pFrame->stack[pFrame->sp].shortValue=getu2(&bc[pFrame->pc+1]);
+                pFrame->stack[pFrame->sp].shortValue = getu2(&code_iterator[pFrame->pc+1]);
                 pFrame->pc+=3;
                 break;
                 
