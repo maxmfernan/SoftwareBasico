@@ -39,7 +39,7 @@ typedef float f4;
 #define geti4(p) (i4)( (u4)((p)[0])<<24 | (u4)((p)[1])<<16 | (u4)((p)[2])<<8 | (u4)((p)[3]) )
 #define geti2(p) (i2)(((p)[0]<<8)|(p)[1])
 
-f4 getf4(char *p);
+//f4 getf4(char *p);
 
 
 /** Definição valores máximos */
@@ -313,9 +313,9 @@ f4 getf4(char *p);
 
 
 typedef struct attribute_info_e attribute_info; //foward declaration
-typedef union Variable; //foward declaration
-typedef struct Object; //foward declaration
-typedef struct Array_t; //foward declaration
+typedef union Variable_t Variable; //foward declaration
+typedef struct Object_t Object; //foward declaration
+typedef struct Array_t Array; //foward declaration
 
 /** Definição das estruturas relacionadas as áreas de memória da JVM (Heap, stack) */
 typedef struct{
@@ -526,7 +526,7 @@ typedef struct {
 
 
 typedef struct {
-    union Variable *data;
+    Variable *data;
 }Array_t;
 
 typedef struct{
@@ -545,11 +545,11 @@ typedef struct{
 typedef struct {
     ClassFile *classRef ; ///Referencia para a classe alocada na memoria
     field_info *fields; ///Espaco de memoria alocado para os fields do Objeto
-    Array_t *arrayList;
+    Array *arrayList;
     u2 array_lenght;
     Field_Value *field_value;
     u2 field_length;
-}Object; ///Objeto
+}Object_t; ///Objeto
 
 typedef union {
     u1 charValue;
@@ -557,8 +557,8 @@ typedef union {
     u4 intValue;
     f4 floatValue;
     u1 *sring;
-    Object object;
-}Variable;
+    Object_t object;
+}Variable_t;
 
 typedef struct {
     //Variable *pOpStack;

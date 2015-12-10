@@ -8,14 +8,15 @@
 * @param classHeap_ptr
 * @param dmSize
 */
-void loadClass( File *classPathF_ptr, ClassFile* classHeap_ptr, dataMSize_t *dmSize ) {
+void loadClass( FILE *classPathF_ptr, ClassFile* clsHeap, dataMSize_t *dmSize ) {
+	ClassFile *classHeap_ptr;
 
-	classHeap_ptr = classHeap_ptr + dmSize->clsHeap_size*sizeof( ClassFile );// seto a posição correta
-	if( classHeap_ptr < ( classHeap_ptr + CLSHEAP_MAX*sizeof( ClassFile ) ) ){
-				dmSize->clsHeap_size++;// incremento a qtd de elementos na heap
+	classHeap_ptr = clsHeap + dmSize->clsHeap_size*sizeof( ClassFile );// seto a posição correta
+	if( classHeap_ptr < ( clsHeap + CLSHEAP_MAX*sizeof( ClassFile ) ) ){
+		dmSize->clsHeap_size++;// incremento a qtd de elementos na heap
 	}
 	else{
-		ptrinf("\nClassHeap está cheio\n");
+		printf("\nClassHeap está cheio\n");
 		exit(1);
 	}
 
@@ -46,10 +47,10 @@ void loadClass( File *classPathF_ptr, ClassFile* classHeap_ptr, dataMSize_t *dmS
 
 	//arq = fopen(classPathStr, "rb");
 	magic = read_magic(classPathF_ptr);
-	minor = read_minor_version(arq);
-	major = read_major_version(arq);
+	minor = read_minor_version(classPathF_ptr);
+	major = read_major_version(classPathF_ptr);
     
-	if (arq != NULL) {
+	if (classPathF_ptr != NULL) {
 		pool = createConstantPool (&poolElementsNum, &poolLength, classPathF_ptr);
 	}
 	else {
@@ -98,5 +99,6 @@ void loadClass( File *classPathF_ptr, ClassFile* classHeap_ptr, dataMSize_t *dmS
    	//Quem abriu fecha. 
 	//fclose(classPathF_ptr);
 
+	clsHeap[ dmSize->clsHeap_size - 1] = classHeap_ptr;
 	return ;
 }
