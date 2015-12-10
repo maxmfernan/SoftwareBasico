@@ -518,6 +518,7 @@ union Variable
     u2 shortValue;
     u4 intValue;
     f4 floatValue;
+    u1 *sring;
     //LONG_PTR ptrValue;
     Object object;
 };

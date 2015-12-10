@@ -488,31 +488,23 @@ Variable LoadConstant(ClasFile *pClass, u1 nIndex) {
     u2 i;
     switch(cp[0])
     {
-        case CONSTANT_Integer:
+        case CONSTANT_INTEGER:
             v.intValue = getu4(&cp[1]);
             break;
             
-        case CONSTANT_Float:
+        case CONSTANT_FLOAT:
             v.floatValue = getf4((char *)&cp[1]);
             break;
             
-        case CONSTANT_String:
+        case CONSTANT_STRING:
             bytes = pClass->constant_pool[pClass->constant_pool[nIndex - 1].info.CONSTANT_String_info.string_index - 1];
-            
-            i=getu2((char *)&cp[1]);
-            
-            pStrVal = new CString();
-            
-            pClass->GetStringFromConstPool(i, strTemp);
-            pStrVal->Append(strTemp);
-            object = this->pObjectHeap->CreateStringObject(pStrVal, pClassHeap);
-            v.ptrValue=object.heapPtr;
+            v.string = bytes;
             break;
             
-        case CONSTANT_Double:
+        case CONSTANT_DOUBLE:
             break;
             
-        case CONSTANT_Long:
+        case CONSTANT_LONG:
             
             break;		
     }
