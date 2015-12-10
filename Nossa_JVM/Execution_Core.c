@@ -494,12 +494,60 @@ Variable getArrayVariable(Array_t *array, int index, int type) {
             v.floatValue = array[index];
             break;
         case 4: //string
+            v.string = array[index];
             break;
         case 5: //object
             v.object = NULL;
             break;
     }
     return v;
+}
+
+BOOL GetStringFromConstPool(int nIndex, u1 *strValue, cp_info *pool) {
+    
+    if(pool[nIndex - 1]->tag != CONSTANT_UTF8)
+        return FALSE;
+    
+    u1 *p =(u1 *) pool[nIndex -1];
+    
+    short length = getu2(&p[1]);
+    char *buffer = new char[length+1];
+    buffer[length] = 0;
+    memcpy(buffer, &p[3], length);
+    strValue += buffer;
+    delete buffer;
+    return TRUE;
+}
+
+int GetMethodIndex(u1 *strMethodName, u1 *strMethodDesc, ClassFile * &pClass, ClassFile *thisClass) {
+    
+    ClassFile *pCurClass = thisClass;
+    while(pCurClass) {
+        for(int i=0; i<pCurClass->methods_count; i++) {
+            u1* name, desc;
+            
+            //pCurClass->GetStringFromConstPool(pCurClass->methods[i].name_index, name);
+            GetStringFromConstPool(pCurClass->methods[i].name_index, name, pCurClass.constant_pool);
+            if(name.Compare(strMethodName)) continue;
+            
+            pCurClass->GetStringFromConstPool(pCurClass->methods[i].descriptor_index, desc);
+            
+            if(!desc.Compare(strMethodDesc)) {
+                if(pClass)
+                    pClass = pCurClass;
+                
+                return i;
+            }
+        }
+        
+        if(pClass != NULL) {
+            pCurClass = pCurClass->GetSuperClass();
+        }
+        else {
+            break;
+        }
+    }
+    return -1;
 }
 
 Variable LoadConstant(ClasFile *pClass, u1 nIndex) {
@@ -533,45 +581,45 @@ Variable LoadConstant(ClasFile *pClass, u1 nIndex) {
 }
 
 
-void ExecuteInvokeVirtual(Frame* pFrameStack, u2 type) {
-    u2 mi = getu2(&pFrameStack[0].pMethod->pCode_attr->code[pFrameStack[0].pc+1]);
+void ExecutionEngine::ExecuteInvokeSpecial(Frame *pFrameStack) {
+    ExecuteInvokeVirtual(pFrameStack, invokespecial);
+}
+
+void ExecuteInvokeVirtual(Frame *pFrameStack, u2 type) {
+    u2 mi = getu2(&pFrameStack[0]->code[pFrameStack[0].pc+1]);
     Variable objectRef = pFrameStack[0].stack[pFrameStack[0].sp];
-    char *pConstPool = (char *)pFrameStack[0].pClass->constant_pool[mi];
+    char *pConstPool = (char *)pFrameStack[0].pClass->constant_pool[mi - 1];
     
     u2 classIndex = getu2(&pConstPool[1]);
     u2 nameAndTypeIndex = getu2(&pConstPool[3]);
     
     //get class at pool index
-    pConstPool = (char *)pFrameStack[0].pClass->constant_pool[classIndex];
+    pConstPool = (char *)pFrameStack[0].pClass->constant_pool[classIndex - 1];
     
-    ASSERT(pConstPool[0] == CONSTANT_Class);
-    
-    u2 ni=getu2(&pConstPool[1]);
+    u2 ni = getu2(&pConstPool[1]);
     
     u1 *strClassName;
+    GetStringFromConstPool(ni, srtClassName, pFrameStack[0].pClass.constant_pool);
+    
     pFrameStack[0].pClass->GetStringFromConstPool(ni, strClassName);
     
     
-    ClassFile *pClass = pClassHeap->fetchClass(strClassName);
+    ClassFile *pClass = pClassHeap->fetchClass(pClassHeap, strClassName, classHeapLength);
     
-    //ShowClassInfo(pClass);
+    pConstPool = (char *) pFrameStack[0].pClass->constant_pool[nameAndTypeIndex -1];
     
-    pConstPool = (char *)pFrameStack[0].pClass->constant_pool[nameAndTypeIndex];
-    
-    method_info_ex method;
+    method_info method;
     
     
     method.name_index = getu2(&pConstPool[1]);
     method.descriptor_index = getu2(&pConstPool[3]);
     
-    method.access_flags = 0; // todo set
+    method.access_flags = 0; // Nao sei
     
-    CString strName, strDesc;
-    pFrameStack[0].pClass->GetStringFromConstPool(method.name_index, strName);
-    pFrameStack[0].pClass->GetStringFromConstPool(method.descriptor_index, strDesc);
+    u1 *strName, *strDesc;
+    GetStringFromConstPool(method.name_index, strName, pFrameStack[0].pClass.constant_pool);
+    GetStringFromConstPool(method.descriptor_index, strDesc, pFrameStack[0].pClass.constant_pool);
     
-    
-    //printf("SuperClass - %s",(method.access_flags& ACC_SUPER)?"Yes":"No");
     JavaClass *pVirtualClass=pClass;
     int nIndex=pClass->GetMethodIndex(strName, strDesc, pVirtualClass);
     
