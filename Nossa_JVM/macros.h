@@ -32,6 +32,11 @@ typedef float f4;
 #define getu2(p) (u2)((p)[0]<< 8 & 0x0000FF00 |(p)[1])
 
 
+/** Definição valores máximos */
+#define CLSHEAP_MAX 50
+#define OBJHEAP_MAX 50
+#define STKFRAME_MAX 50
+
 /** Definição dos nomes dos atributos */
 #define CONSTANTVALUE_STR "ConstantValue"
 #define SYNTHETIC_STR "Synthetic"
