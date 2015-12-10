@@ -467,6 +467,12 @@ typedef struct{
 	attribute_info *attribute; //A quantidade é indicada por attributes_count
 }method_info;
 
+struct method_info_ex: method_info
+{
+    method_info *pMethodInfoBase;
+    Code_attribute *pCode_attr;
+};
+
 /** Definição da estutura field */
 typedef struct{
 	u2 access_flag;
