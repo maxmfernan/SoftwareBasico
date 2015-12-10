@@ -503,7 +503,7 @@ Variable getArrayVariable(Array_t *array, int index, int type) {
     return v;
 }
 
-BOOL GetStringFromConstPool(int nIndex, CString& strValue, cp_info *pool) {
+BOOL GetStringFromConstPool(int nIndex, u1 *strValue, cp_info *pool) {
     
     if(pool[nIndex - 1]->tag != CONSTANT_UTF8)
         return FALSE;
@@ -517,6 +517,37 @@ BOOL GetStringFromConstPool(int nIndex, CString& strValue, cp_info *pool) {
     strValue += buffer;
     delete buffer;
     return TRUE;
+}
+
+int GetMethodIndex(u1 *strMethodName, u1 *strMethodDesc, ClassFile * &pClass, ClassFile *thisClass) {
+    
+    ClassFile *pCurClass = thisClass;
+    while(pCurClass) {
+        for(int i=0; i<pCurClass->methods_count; i++) {
+            u1* name, desc;
+            
+            //pCurClass->GetStringFromConstPool(pCurClass->methods[i].name_index, name);
+            GetStringFromConstPool(pCurClass->methods[i].name_index, name, pCurClass.constant_pool);
+            if(name.Compare(strMethodName)) continue;
+            
+            pCurClass->GetStringFromConstPool(pCurClass->methods[i].descriptor_index, desc);
+            
+            if(!desc.Compare(strMethodDesc)) {
+                if(pClass)
+                    pClass = pCurClass;
+                
+                return i;
+            }
+        }
+        
+        if(pClass != NULL) {
+            pCurClass = pCurClass->GetSuperClass();
+        }
+        else {
+            break;
+        }
+    }
+    return -1;
 }
 
 Variable LoadConstant(ClasFile *pClass, u1 nIndex) {
