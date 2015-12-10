@@ -308,6 +308,14 @@ f4 getf4(char *p);
 //#define LOCALVARIABLETABLE
 //#define DEPRECATED
 
+
+/** Definição das estruturas relacionadas as áreas de memória da JVM (Heap, stack) */
+typedef struct{
+	u2 clsHeap_size;
+	u2 objHeap_size;
+	u2 stkHeap_size;
+}dataMSize_t;
+
 /** Definição das estruturas de todos os componentes da constant poll */
 /** Nessas estruturas não foram inseridos os campos de tag. Eles já existem no cp_info */
 
