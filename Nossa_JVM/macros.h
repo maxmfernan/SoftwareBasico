@@ -581,6 +581,20 @@ typedef struct {
     u2 field_length;
 }Object_t; ///Objeto
 
+typedef struct {
+    union {
+        u1* stringValue;
+        u2 shortValue;
+        u4 intValue;
+        f4 floatValue;
+        struct {
+            u4 high;
+            u4 low;
+        } DoubleValue;
+        Object_t object;
+    }info;
+}Stack;
+
 typedef union {
     u1 charValue;
     u2 shortValue;

@@ -14,6 +14,6 @@
 #endif /* Execution_Core_h */
 
 u1 * getFieldName(u2 index, cp_info *pool);
-u4 LoadConstant(ClassFile *pClass, u1 nIndex);
+u4 LoadConstant(ClassFile *pClass, u2 nIndex);
 Field_Value *getFieldValue(u1 *name, Field_Value *pField, u2 static_values_size);
 u1 *GetStringFromConstPool(u2 nIndex, cp_info *pool);

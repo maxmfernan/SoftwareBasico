@@ -66,9 +66,8 @@ u4 Execute (Frame *pFrame, ClassFile *pClassHeap, dataMSize_t *dmSize_ptr) {
 //                break;
                 
             case op_bipush:// 16 /*(0x10)*/
-                printf("bipush\n");
                 pFrame->sp++;
-                pFrame->stack[pFrame->sp] = (u1)code_iterator[pFrame->pc+1];
+                pFrame->stack[pFrame->sp] = code_iterator[pFrame->pc+1];
                 pFrame->pc += 2;
                 break;
 //            case op_sipush:// 17 /*(0x11)*/
@@ -78,14 +77,12 @@ u4 Execute (Frame *pFrame, ClassFile *pClassHeap, dataMSize_t *dmSize_ptr) {
 //                break;
 //                
             case op_ldc: //Push item from constant pool
-                printf("ldc\n");
                 pFrame->sp++;
-                pFrame->stack[pFrame->sp] = LoadConstant(pFrame->pClass, (u1)code_iterator[pFrame->pc + 1]);
+                pFrame->stack[pFrame->sp] = LoadConstant(pFrame->pClass, code_iterator[pFrame->pc + 1]);
                 pFrame->pc += 2;
                 break;
                 
             case op_ldc2_w:// 20 /*(0x14)*/
-                printf("ldc2_w\n");
                 i = getu2(&code_iterator[pFrame->pc + 1]);
                 pFrame->sp++;
                 pFrame->stack[pFrame->sp] = pFrame->pClass->constant_pool[i - 1].info.CONSTANT_LongDouble_info.high_bytes;
@@ -218,13 +215,13 @@ u4 Execute (Frame *pFrame, ClassFile *pClassHeap, dataMSize_t *dmSize_ptr) {
 //                break;
                 
                 //Generic (typeless) stack operations
-//                
-//            case op_dup:// 89 /*(0x59)*/
-//                pFrame->stack[pFrame->sp+1] = pFrame->stack[pFrame->sp];
-//                pFrame->sp++;
-//                pFrame->pc++;
-//                break;
-//                
+                
+            case op_dup:// 89 /*(0x59)*/
+                pFrame->stack[pFrame->sp+1] = pFrame->stack[pFrame->sp];
+                pFrame->sp++;
+                pFrame->pc++;
+                break;
+                
 //                //Type Conversion
 //                
 //                //Integer Arithmetic
@@ -270,37 +267,29 @@ u4 Execute (Frame *pFrame, ClassFile *pClassHeap, dataMSize_t *dmSize_ptr) {
                 
                 
             case op_putstatic:
-                printf("putstatic\n");
                 i = getu2(&code_iterator[pFrame->pc+1]);
                 u1 *field_name = getFieldName(i, pFrame->pClass->constant_pool);
-                printf("Field Name = %s\n",field_name);
-                getchar();
                 Field_Value *fv = getFieldValue(field_name, pFrame->pClass->static_values, pFrame->pClass->static_values_size);
                 if (strcmp(fv->descriptor,"Ljava/lang/String;") == 0) {
                     fv->info.UTF8.bytes = pFrame->stack[pFrame->sp];
-                    printf("Valor = %s\n",fv->info.UTF8.bytes);
                     pFrame->sp--;
                 }
                 else {
                     if (strcmp(fv->descriptor,"I") == 0 || strcmp(fv->descriptor,"F") == 0) {
                         fv->info.I4.value = pFrame->stack[pFrame->sp];
-                        printf("Valor = %d\n",fv->info.I4.value);
                         pFrame->sp--;
                     }
                     else {
                         if (strcmp(fv->descriptor,"D") == 0 || strcmp(fv->descriptor,"J") == 0) {
-                            fv->info.U8.high = pFrame->stack[pFrame->sp];
-                            printf("Valor = %f\n",fv->info.U8.high);
-                            pFrame->sp--;
                             fv->info.U8.low = pFrame->stack[pFrame->sp];
-                            printf("Valor = %f\n",fv->info.U8.low);
+                            pFrame->sp--;
+                            fv->info.U8.high = pFrame->stack[pFrame->sp];
                             pFrame->sp--;
                         }
 
                     }
 
                 }
-                getchar();
                 pFrame->pc += 3;
                 break;
                 /////////////// Objects and Arrays  ////////////
@@ -685,24 +674,20 @@ Field_Value *getFieldValue(u1 *name, Field_Value *pField, u2 static_values_size)
 // */
 
 
-u4 LoadConstant(ClassFile *pClass, u1 nIndex) {
+u4 LoadConstant(ClassFile *pClass, u2 nIndex) {
     u4 v = 0;
     u1 *bytes;
 
-    printf("tag = %d\n",pClass->constant_pool[nIndex -1].tag);
     switch(pClass->constant_pool[nIndex - 1].tag)
     {
         case CONSTANT_INTEGER:
         case CONSTANT_FLOAT:
             v = pClass->constant_pool[nIndex -1].info.CONSTANT_IntegerFloat_info.bytes;
-            printf("é int = d\t ou é float = %f\n",pClass->constant_pool[nIndex].info.CONSTANT_IntegerFloat_info.bytes);
-            getchar();
             break;
             
         case CONSTANT_STRING:
             bytes = pClass->constant_pool[pClass->constant_pool[nIndex - 1].info.CONSTANT_String_info.string_index - 1].info.CONSTANT_Utf8_info.bytes;
-            v = v | bytes;
-            printf("String = %s\n",bytes);
+            v = bytes;
 
             break;
             

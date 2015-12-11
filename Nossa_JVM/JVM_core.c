@@ -26,7 +26,9 @@ void jvmStartup(ClassFile *classHeap_ptr, Object *objectHeap_ptr, Frame *stackFr
 	for(int i = 0; i < classHeap_ptr->static_values_size; i++)
 		printf("\nname %s", classHeap_ptr->static_values[i].field_name);
     //Checa a consistência da classe
-    
+    printf("\n\nConteudo do .class");
+    printf("\n--------------------------------");
+    print_ClassFile(classHeap_ptr);
     //Inicializa a classe inicial, roda clinit
 	//OK!
     initializeClass(classHeap_ptr, stackFrame_ptr, dmSize_ptr, classHeap_ptr);
