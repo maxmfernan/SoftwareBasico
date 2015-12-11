@@ -20,22 +20,34 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "macros.h"
+#include "JVM_core.h"
 
 
-int main(int argc, int argv){
+int main(int argc, char **argv){
 	ClassFile *classHeap_ptr;
 	Object *objectHeap_ptr;
 	Frame *stackFrame_ptr;
-	File *classPathF_ptr;	
-	char *classPathStr;
+	FILE *classPathF_ptr;	
+	char *classPathStr = malloc( sizeof(char)*100 );
 	dataMSize_t dmSize;
 	
 
 	if( argc > 1){
-		classPathStr_ptr = argv[1];	
+		classPathStr = argv[1];	
 	}
-	classPathF_ptr = fopen(classPathStr, "rb");
+	else{
+		printf("\nDigite o nome do arquivo: ");
+		scanf("%s", classPathStr);
+	}
 	
+	printf("\n%s", classPathStr);	
+	classPathF_ptr = fopen(classPathStr, "rb");
+	if( classPathF_ptr == NULL){
+		printf("\nArquivo não encontrado");
+		exit(1);
+	}		
+	printf("\nPassei1");
 	/** Inicicializa a JVM.
 		Cria espaço para os heaps e para o stackFrame.
 		Carrega a class inicial. */

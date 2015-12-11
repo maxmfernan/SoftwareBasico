@@ -99,6 +99,6 @@ void loadClass( FILE *classPathF_ptr, ClassFile* clsHeap, dataMSize_t *dmSize ) 
    	//Quem abriu fecha. 
 	//fclose(classPathF_ptr);
 
-	clsHeap[ dmSize->clsHeap_size - 1] = classHeap_ptr;
+		clsHeap[ dmSize->clsHeap_size - 1] = *classHeap_ptr;
 	return ;
 }

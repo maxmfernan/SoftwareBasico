@@ -12,7 +12,7 @@
 #include <string.h>
 #include <math.h>
 #include <inttypes.h>
-
+#include "LoadClass_ui.h"
 void loadClass( FILE *classPathF_ptr, ClassFile* clsHeap, dataMSize_t *dmSize ); 
 u2 seekMethodInClass(ClassFile *class_ptr, char *methName_str, char *methDescriptor_str);
 
@@ -23,7 +23,7 @@ int main(){
 	dmsize->objHeap_size = 0;
 	dmsize->stkHeap_size = 0;
 
-	FILE *classPathF_ptr = fopen("HelloWorld.class", "rb");
+	FILE *classPathF_ptr = fopen("testeStatic.class", "rb");
 	if( classPathF_ptr == NULL ){
 		printf("\nErro ao abrir");
 		exit(1);
@@ -35,15 +35,17 @@ int main(){
     printf("\n--------------------------------");
     print_ClassFile(classHeap_ptr);
  	
-	method_idx = seekMethodInClass(challHeap_ptr, "<clinit>", "()V"); 
+	u2 method_idx;
+	method_idx = seekMethodInClass(classHeap_ptr, "<clinit>", "()V"); 
    	if( method_idx == -1 ){
 		printf("\nDeu pau");
 	}
 	else{
-		printf("\n%d", (int*) method_idx);	
+		printf("\n%hu",  method_idx);	
+	 	printf("%d\n",classHeap_ptr->methods[method_idx].name_index);
+
 	}   
-    printf("%s\n",classHeap_ptr->className);
-    
+       
     return 0;
 }
 
@@ -66,6 +68,8 @@ u2 seekMethodInClass(ClassFile *class_ptr, char *methName_str, char *methDescrip
 		//methodN = malloc( (str_size + 1)*sizeof(char) );
 		//bytes = class_ptr->constant_pool[class_ptr->methods[i].name_index - 1].info.CONSTANT_Utf8_info_bytes;
 		
+		printf("\n%hu", i);
+			
 		methodN = class_ptr->constant_pool[class_ptr->methods[i].name_index - 1].info.CONSTANT_Utf8_info.bytes;
 		methodD = class_ptr->constant_pool[class_ptr->methods[i].descriptor_index - 1].info.CONSTANT_Utf8_info.bytes;
 		if( !strcmp(methodN, methName_str) && !strcmp(methodD, methDescriptor_str) ){
@@ -79,3 +83,4 @@ u2 seekMethodInClass(ClassFile *class_ptr, char *methName_str, char *methDescrip
 		*/
 	}
 	return SEEK_NOTFOUND;
+}

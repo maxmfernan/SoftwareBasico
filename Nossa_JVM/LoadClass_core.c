@@ -15,7 +15,7 @@
 
 ClassFile *fetchClass(ClassFile *classHeap, u1 *strClassName, u2 classHeap_lenght) {
     u2 i = 0;
-    found = 0;
+    u2 found = 0;
     
     while (i < classHeap_lenght && found == 0) {
         if (strcmp(strClassName, classHeap[i].className) == 0) {
@@ -29,7 +29,7 @@ ClassFile *fetchClass(ClassFile *classHeap, u1 *strClassName, u2 classHeap_lengh
         return NULL;
     }
     else {
-        return classHeap[i];
+        return &classHeap[i];
     }
     
 }

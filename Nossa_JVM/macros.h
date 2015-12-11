@@ -22,6 +22,10 @@
 #define HEADER_MACROS
 #include <stdint.h>
 
+#include <string.h>
+#include <stdlib.h>
+#include <stdio.h>
+
 /** Definição dos tipo com formato u#, onde # é um número */
 typedef uint8_t u1;
 typedef uint16_t u2;
@@ -46,6 +50,10 @@ typedef float f4;
 #define CLSHEAP_MAX 50
 #define OBJHEAP_MAX 50
 #define STKFRAME_MAX 50
+
+
+/** Definição de códigos de retorno */
+#define SEEK_NOTFOUND 65535 // -1 se usar inteiro sinalizado, mas estamos usando u2 
 
 /** Definição dos nomes dos atributos */
 #define CONSTANTVALUE_STR "ConstantValue"
