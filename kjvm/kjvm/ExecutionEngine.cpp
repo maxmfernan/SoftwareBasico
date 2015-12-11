@@ -115,7 +115,7 @@ u4 ExecutionEngine::Execute(Frame* pFrameStack)
 			break;
 
 		case ldc2_w:// 20 /*(0x14)*/
-			index=getu2(&bc[pFrame->pc+1]);
+			index = getu2(&bc[pFrame->pc+1]);
 			pFrame->sp++;
 			pFrame->stack[pFrame->sp].intValue = getu4(&((char *)pClass->constant_pool[index])[1]);
 			pFrame->sp++;

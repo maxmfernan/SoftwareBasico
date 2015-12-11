@@ -52,7 +52,7 @@ void initializeClass(ClassFile *class_ptr, Frame *stkFrame_ptr, dataMSize_t *dmS
     u2 aux_idx = dmSize_ptr->stkHeap_size - 1; // o stkFrameTop_ptr na verdade é o stack frame size, que indica a qtd de frames na stkframe.
     
     //Teste
-    //Execute(stkFrame_ptr[aux_idx], classHeap_ptr, dmSize_ptr);
+    Execute(&stkFrame_ptr[aux_idx], classHeap_ptr, dmSize_ptr);
     
     //Deleta o frame.
     printf("\n%d\t%d\n", dmSize_ptr->stkHeap_size, aux_idx);
@@ -136,7 +136,7 @@ void createFrame(method_info *method, ClassFile *Class, Frame *frame_ptr, u2 *nu
         frame_ptr[i].pClass = Class;
         frame_ptr[i].pMethod = method;
         frame_ptr[i].code_length = method->attribute[codeIndex].info.Code_attribute.code_length;
-        frame_ptr[i].code = malloc(frame_ptr[i].code_length * sizeof(u1));
+        frame_ptr[i].code = method->attribute[codeIndex].info.Code_attribute.code;
         
         frame_ptr[i].pc = 0;
         frame_ptr[i].sp = 0;

@@ -33,6 +33,7 @@ typedef uint32_t u4;
 typedef int32_t i4;
 typedef int64_t i8;
 typedef float f4;
+typedef short i2;
 
 #define LOINT64(I8) (u4)(I8 &0xFFFFFFFF)
 #define HIINT64(I8) (u4)(I8 >> 32)
@@ -525,6 +526,9 @@ typedef struct{
             u4 high;
             u4 low;
         } U8;
+        struct {
+            u1 *bytes
+        } UTF8;
     }info;
 }Field_Value;
 

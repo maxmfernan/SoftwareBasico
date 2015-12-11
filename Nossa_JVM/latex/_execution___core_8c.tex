@@ -1,0 +1,318 @@
+\hypertarget{_execution___core_8c}{}\section{Execution\+\_\+\+Core.\+c File Reference}
+\label{_execution___core_8c}\index{Execution\+\_\+\+Core.\+c@{Execution\+\_\+\+Core.\+c}}
+{\ttfamily \#include \char`\"{}Load\+Class\+\_\+core.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}macros.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Execution\+\_\+\+Core.\+h\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{macros_8h_ae5be1f726785414dd1b77d60df074c9d}{u4} \hyperlink{_execution___core_8c_ad708ca274ce4e2a6178fa45a295e0f3b}{Execute} (\hyperlink{struct_frame}{Frame} $\ast$p\+Frame, C\+Lass\+File $\ast$p\+Class\+Heap, \hyperlink{structdata_m_size__t}{data\+M\+Size\+\_\+t} $\ast$dm\+Size\+\_\+ptr)
+\begin{DoxyCompactList}\small\item\em Execução da J\+V\+M. \end{DoxyCompactList}\item 
+int \hyperlink{_execution___core_8c_ad32691c9d7deeedbf03e04b71c75bfa5}{Execute\+New} (\hyperlink{struct_frame}{Frame} $\ast$p\+Frame)
+\item 
+\hyperlink{macros_8h_ae55f415df9a35d64f8a56b9de13845c1}{Variable} $\ast$ \hyperlink{_execution___core_8c_a8742368da54b7e5c02644b6aa5cfd658}{Create\+New\+Array} (\hyperlink{macros_8h_ad9f4cdb6757615aae2fad89dab3c5470}{u1} type, \hyperlink{macros_8h_a7bc084923d20fddbe46335d882c6fda2}{i4} count)
+\item 
+\hyperlink{struct_field___value}{Field\+\_\+\+Value} $\ast$ \hyperlink{_execution___core_8c_a9cab9d899e5c43167d7057f6d48238f9}{get\+Field\+Value} (\hyperlink{macros_8h_ad9f4cdb6757615aae2fad89dab3c5470}{u1} $\ast$name, \hyperlink{struct_field___value}{Field\+\_\+\+Value} $\ast$p\+Field, \hyperlink{macros_8h_a732cde1300aafb73b0ea6c2558a7a54f}{u2} static\+\_\+values\+\_\+size)
+\item 
+\hyperlink{macros_8h_ae55f415df9a35d64f8a56b9de13845c1}{Variable} \hyperlink{_execution___core_8c_ac3f8af5fc43d18520ea590c46b4feb7d}{get\+Array\+Variable} (\hyperlink{struct_array__t}{Array\+\_\+t} $\ast$array, int index, int type)
+\item 
+\hyperlink{macros_8h_ad9f4cdb6757615aae2fad89dab3c5470}{u1} $\ast$ \hyperlink{_execution___core_8c_abcf6264b4b925478fff089d81073db01}{Get\+Super\+Class\+Name} (C\+Lass\+File $\ast$p\+Class)
+\item 
+\hyperlink{struct_class_file}{Class\+File} $\ast$ \hyperlink{_execution___core_8c_ae402c32c7d88ba27cb1c4739c0eff9c5}{Get\+Super\+Class} (\hyperlink{struct_class_file}{Class\+File} $\ast$p\+Class)
+\item 
+B\+O\+O\+L \hyperlink{_execution___core_8c_a32e4929f033a345381c22f9d2d1aa21d}{Get\+String\+From\+Const\+Pool} (int n\+Index, \hyperlink{macros_8h_ad9f4cdb6757615aae2fad89dab3c5470}{u1} $\ast$str\+Value, \hyperlink{structcp__info}{cp\+\_\+info} $\ast$pool)
+\item 
+int \hyperlink{_execution___core_8c_af93c46a2af86644d0f8ecbee487a445b}{Get\+Method\+Index} (\hyperlink{macros_8h_ad9f4cdb6757615aae2fad89dab3c5470}{u1} $\ast$str\+Method\+Name, \hyperlink{macros_8h_ad9f4cdb6757615aae2fad89dab3c5470}{u1} $\ast$str\+Method\+Desc, \hyperlink{struct_class_file}{Class\+File} $\ast$\&p\+Class, \hyperlink{struct_class_file}{Class\+File} $\ast$this\+Class)
+\item 
+\hyperlink{macros_8h_ae55f415df9a35d64f8a56b9de13845c1}{Variable} \hyperlink{_execution___core_8c_a748a86559e3ee1bed18ae112bd9afae2}{Load\+Constant} (Clas\+File $\ast$p\+Class, \hyperlink{macros_8h_ad9f4cdb6757615aae2fad89dab3c5470}{u1} n\+Index)
+\item 
+\hyperlink{macros_8h_ad9f4cdb6757615aae2fad89dab3c5470}{u1} $\ast$ \hyperlink{_execution___core_8c_a0dd59347c7c16b685799030f9936ba83}{get\+Field\+Name} (\hyperlink{macros_8h_a732cde1300aafb73b0ea6c2558a7a54f}{u2} index, \hyperlink{structcp__info}{cp\+\_\+info} $\ast$pool)
+\item 
+\hyperlink{macros_8h_a732cde1300aafb73b0ea6c2558a7a54f}{u2} \hyperlink{_execution___core_8c_acdf3e81e15586353fe6abdfd96fdf3b3}{Get\+Method\+Parameters\+Stack\+Count} (\hyperlink{macros_8h_ad9f4cdb6757615aae2fad89dab3c5470}{u1} $\ast$str\+Method\+Desc)
+\item 
+void \hyperlink{_execution___core_8c_a71c099282ab5079eddce074130bc7046}{Execute\+Invoke\+Special} (\hyperlink{struct_frame}{Frame} $\ast$p\+Frame\+Stack)
+\item 
+void \hyperlink{_execution___core_8c_a6993233a62d369008272ea37be83a7f5}{Execute\+Invoke\+Virtual} (\hyperlink{struct_frame}{Frame} $\ast$p\+Frame\+Stack, \hyperlink{macros_8h_a732cde1300aafb73b0ea6c2558a7a54f}{u2} type)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\hypertarget{_execution___core_8c_a8742368da54b7e5c02644b6aa5cfd658}{}\index{Execution\+\_\+\+Core.\+c@{Execution\+\_\+\+Core.\+c}!Create\+New\+Array@{Create\+New\+Array}}
+\index{Create\+New\+Array@{Create\+New\+Array}!Execution\+\_\+\+Core.\+c@{Execution\+\_\+\+Core.\+c}}
+\subsubsection[{Create\+New\+Array(u1 type, i4 count)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Variable}$\ast$ Create\+New\+Array (
+\begin{DoxyParamCaption}
+\item[{{\bf u1}}]{type, }
+\item[{{\bf i4}}]{count}
+\end{DoxyParamCaption}
+)}\label{_execution___core_8c_a8742368da54b7e5c02644b6aa5cfd658}
+$<$\#\+Description\#$>$
+
+
+\begin{DoxyParams}{Parameters}
+{\em type} & $<$\#type description\#$>$ \\
+\hline
+{\em count} & $<$\#count description\#$>$\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+$<$\#return value description\#$>$ 
+\end{DoxyReturn}
+\hypertarget{_execution___core_8c_ad708ca274ce4e2a6178fa45a295e0f3b}{}\index{Execution\+\_\+\+Core.\+c@{Execution\+\_\+\+Core.\+c}!Execute@{Execute}}
+\index{Execute@{Execute}!Execution\+\_\+\+Core.\+c@{Execution\+\_\+\+Core.\+c}}
+\subsubsection[{Execute(\+Frame $\ast$p\+Frame, C\+Lass\+File $\ast$p\+Class\+Heap, data\+M\+Size\+\_\+t $\ast$dm\+Size\+\_\+ptr)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u4} Execute (
+\begin{DoxyParamCaption}
+\item[{{\bf Frame} $\ast$}]{p\+Frame, }
+\item[{C\+Lass\+File $\ast$}]{p\+Class\+Heap, }
+\item[{{\bf data\+M\+Size\+\_\+t} $\ast$}]{dm\+Size\+\_\+ptr}
+\end{DoxyParamCaption}
+)}\label{_execution___core_8c_ad708ca274ce4e2a6178fa45a295e0f3b}
+
+
+Execução da J\+V\+M. 
+
+Description 
+\begin{DoxyParams}{Parameters}
+{\em p\+Frame} & $<$\#p\+Frame description\#$>$ \\
+\hline
+{\em p\+Class\+Heap} & $<$\#p\+Class\+Heap description\#$>$ \\
+\hline
+{\em dm\+Size\+\_\+ptr} & $<$\#dm\+Size\+\_\+ptr description\#$>$\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+$<$\#return value description\#$>$ 
+\end{DoxyReturn}
+\hypertarget{_execution___core_8c_a71c099282ab5079eddce074130bc7046}{}\index{Execution\+\_\+\+Core.\+c@{Execution\+\_\+\+Core.\+c}!Execute\+Invoke\+Special@{Execute\+Invoke\+Special}}
+\index{Execute\+Invoke\+Special@{Execute\+Invoke\+Special}!Execution\+\_\+\+Core.\+c@{Execution\+\_\+\+Core.\+c}}
+\subsubsection[{Execute\+Invoke\+Special(\+Frame $\ast$p\+Frame\+Stack)}]{\setlength{\rightskip}{0pt plus 5cm}void Execute\+Invoke\+Special (
+\begin{DoxyParamCaption}
+\item[{{\bf Frame} $\ast$}]{p\+Frame\+Stack}
+\end{DoxyParamCaption}
+)}\label{_execution___core_8c_a71c099282ab5079eddce074130bc7046}
+$<$\#\+Description\#$>$
+
+
+\begin{DoxyParams}{Parameters}
+{\em p\+Frame\+Stack} & $<$\#p\+Frame\+Stack description\#$>$ \\
+\hline
+\end{DoxyParams}
+\hypertarget{_execution___core_8c_a6993233a62d369008272ea37be83a7f5}{}\index{Execution\+\_\+\+Core.\+c@{Execution\+\_\+\+Core.\+c}!Execute\+Invoke\+Virtual@{Execute\+Invoke\+Virtual}}
+\index{Execute\+Invoke\+Virtual@{Execute\+Invoke\+Virtual}!Execution\+\_\+\+Core.\+c@{Execution\+\_\+\+Core.\+c}}
+\subsubsection[{Execute\+Invoke\+Virtual(\+Frame $\ast$p\+Frame\+Stack, u2 type)}]{\setlength{\rightskip}{0pt plus 5cm}void Execute\+Invoke\+Virtual (
+\begin{DoxyParamCaption}
+\item[{{\bf Frame} $\ast$}]{p\+Frame\+Stack, }
+\item[{{\bf u2}}]{type}
+\end{DoxyParamCaption}
+)}\label{_execution___core_8c_a6993233a62d369008272ea37be83a7f5}
+$<$\#\+Description\#$>$
+
+
+\begin{DoxyParams}{Parameters}
+{\em p\+Frame\+Stack} & $<$\#p\+Frame\+Stack description\#$>$ \\
+\hline
+{\em type} & $<$\#type description\#$>$ \\
+\hline
+\end{DoxyParams}
+\hypertarget{_execution___core_8c_ad32691c9d7deeedbf03e04b71c75bfa5}{}\index{Execution\+\_\+\+Core.\+c@{Execution\+\_\+\+Core.\+c}!Execute\+New@{Execute\+New}}
+\index{Execute\+New@{Execute\+New}!Execution\+\_\+\+Core.\+c@{Execution\+\_\+\+Core.\+c}}
+\subsubsection[{Execute\+New(\+Frame $\ast$p\+Frame)}]{\setlength{\rightskip}{0pt plus 5cm}int Execute\+New (
+\begin{DoxyParamCaption}
+\item[{{\bf Frame} $\ast$}]{p\+Frame}
+\end{DoxyParamCaption}
+)}\label{_execution___core_8c_ad32691c9d7deeedbf03e04b71c75bfa5}
+$<$\#\+Description\#$>$
+
+
+\begin{DoxyParams}{Parameters}
+{\em p\+Frame} & $<$\#p\+Frame description\#$>$\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+$<$\#return value description\#$>$ 
+\end{DoxyReturn}
+\hypertarget{_execution___core_8c_ac3f8af5fc43d18520ea590c46b4feb7d}{}\index{Execution\+\_\+\+Core.\+c@{Execution\+\_\+\+Core.\+c}!get\+Array\+Variable@{get\+Array\+Variable}}
+\index{get\+Array\+Variable@{get\+Array\+Variable}!Execution\+\_\+\+Core.\+c@{Execution\+\_\+\+Core.\+c}}
+\subsubsection[{get\+Array\+Variable(\+Array\+\_\+t $\ast$array, int index, int type)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Variable} get\+Array\+Variable (
+\begin{DoxyParamCaption}
+\item[{{\bf Array\+\_\+t} $\ast$}]{array, }
+\item[{int}]{index, }
+\item[{int}]{type}
+\end{DoxyParamCaption}
+)}\label{_execution___core_8c_ac3f8af5fc43d18520ea590c46b4feb7d}
+$<$\#\+Description\#$>$
+
+
+\begin{DoxyParams}{Parameters}
+{\em array} & $<$\#array description\#$>$ \\
+\hline
+{\em index} & $<$\#index description\#$>$ \\
+\hline
+{\em type} & $<$\#type description\#$>$\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+$<$\#return value description\#$>$ 
+\end{DoxyReturn}
+\hypertarget{_execution___core_8c_a0dd59347c7c16b685799030f9936ba83}{}\index{Execution\+\_\+\+Core.\+c@{Execution\+\_\+\+Core.\+c}!get\+Field\+Name@{get\+Field\+Name}}
+\index{get\+Field\+Name@{get\+Field\+Name}!Execution\+\_\+\+Core.\+c@{Execution\+\_\+\+Core.\+c}}
+\subsubsection[{get\+Field\+Name(u2 index, cp\+\_\+info $\ast$pool)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u1}$\ast$ get\+Field\+Name (
+\begin{DoxyParamCaption}
+\item[{{\bf u2}}]{index, }
+\item[{{\bf cp\+\_\+info} $\ast$}]{pool}
+\end{DoxyParamCaption}
+)}\label{_execution___core_8c_a0dd59347c7c16b685799030f9936ba83}
+$<$\#\+Description\#$>$
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & $<$\#index description\#$>$ \\
+\hline
+{\em pool} & $<$\#pool description\#$>$\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+$<$\#return value description\#$>$ 
+\end{DoxyReturn}
+\hypertarget{_execution___core_8c_a9cab9d899e5c43167d7057f6d48238f9}{}\index{Execution\+\_\+\+Core.\+c@{Execution\+\_\+\+Core.\+c}!get\+Field\+Value@{get\+Field\+Value}}
+\index{get\+Field\+Value@{get\+Field\+Value}!Execution\+\_\+\+Core.\+c@{Execution\+\_\+\+Core.\+c}}
+\subsubsection[{get\+Field\+Value(u1 $\ast$name, Field\+\_\+\+Value $\ast$p\+Field, u2 static\+\_\+values\+\_\+size)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Field\+\_\+\+Value}$\ast$ get\+Field\+Value (
+\begin{DoxyParamCaption}
+\item[{{\bf u1} $\ast$}]{name, }
+\item[{{\bf Field\+\_\+\+Value} $\ast$}]{p\+Field, }
+\item[{{\bf u2}}]{static\+\_\+values\+\_\+size}
+\end{DoxyParamCaption}
+)}\label{_execution___core_8c_a9cab9d899e5c43167d7057f6d48238f9}
+$<$\#\+Description\#$>$
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & $<$\#name description\#$>$ \\
+\hline
+{\em p\+Field} & $<$\#p\+Field description\#$>$ \\
+\hline
+{\em static\+\_\+values\+\_\+size} & $<$\#static\+\_\+values\+\_\+size description\#$>$\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+$<$\#return value description\#$>$ 
+\end{DoxyReturn}
+\hypertarget{_execution___core_8c_af93c46a2af86644d0f8ecbee487a445b}{}\index{Execution\+\_\+\+Core.\+c@{Execution\+\_\+\+Core.\+c}!Get\+Method\+Index@{Get\+Method\+Index}}
+\index{Get\+Method\+Index@{Get\+Method\+Index}!Execution\+\_\+\+Core.\+c@{Execution\+\_\+\+Core.\+c}}
+\subsubsection[{Get\+Method\+Index(u1 $\ast$str\+Method\+Name, u1 $\ast$str\+Method\+Desc, Class\+File $\ast$\&p\+Class, Class\+File $\ast$this\+Class)}]{\setlength{\rightskip}{0pt plus 5cm}int Get\+Method\+Index (
+\begin{DoxyParamCaption}
+\item[{{\bf u1} $\ast$}]{str\+Method\+Name, }
+\item[{{\bf u1} $\ast$}]{str\+Method\+Desc, }
+\item[{{\bf Class\+File} $\ast$\&}]{p\+Class, }
+\item[{{\bf Class\+File} $\ast$}]{this\+Class}
+\end{DoxyParamCaption}
+)}\label{_execution___core_8c_af93c46a2af86644d0f8ecbee487a445b}
+$<$\#\+Description\#$>$
+
+
+\begin{DoxyParams}{Parameters}
+{\em str\+Method\+Name} & $<$\#str\+Method\+Name description\#$>$ \\
+\hline
+{\em str\+Method\+Desc} & $<$\#str\+Method\+Desc description\#$>$ \\
+\hline
+{\em p\+Class} & $<$\#p\+Class description\#$>$ \\
+\hline
+{\em this\+Class} & $<$\#this\+Class description\#$>$\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+$<$\#return value description\#$>$ 
+\end{DoxyReturn}
+\hypertarget{_execution___core_8c_acdf3e81e15586353fe6abdfd96fdf3b3}{}\index{Execution\+\_\+\+Core.\+c@{Execution\+\_\+\+Core.\+c}!Get\+Method\+Parameters\+Stack\+Count@{Get\+Method\+Parameters\+Stack\+Count}}
+\index{Get\+Method\+Parameters\+Stack\+Count@{Get\+Method\+Parameters\+Stack\+Count}!Execution\+\_\+\+Core.\+c@{Execution\+\_\+\+Core.\+c}}
+\subsubsection[{Get\+Method\+Parameters\+Stack\+Count(u1 $\ast$str\+Method\+Desc)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u2} Get\+Method\+Parameters\+Stack\+Count (
+\begin{DoxyParamCaption}
+\item[{{\bf u1} $\ast$}]{str\+Method\+Desc}
+\end{DoxyParamCaption}
+)}\label{_execution___core_8c_acdf3e81e15586353fe6abdfd96fdf3b3}
+$<$\#\+Description\#$>$
+
+
+\begin{DoxyParams}{Parameters}
+{\em str\+Method\+Desc} & $<$\#str\+Method\+Desc description\#$>$\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+$<$\#return value description\#$>$ 
+\end{DoxyReturn}
+\hypertarget{_execution___core_8c_a32e4929f033a345381c22f9d2d1aa21d}{}\index{Execution\+\_\+\+Core.\+c@{Execution\+\_\+\+Core.\+c}!Get\+String\+From\+Const\+Pool@{Get\+String\+From\+Const\+Pool}}
+\index{Get\+String\+From\+Const\+Pool@{Get\+String\+From\+Const\+Pool}!Execution\+\_\+\+Core.\+c@{Execution\+\_\+\+Core.\+c}}
+\subsubsection[{Get\+String\+From\+Const\+Pool(int n\+Index, u1 $\ast$str\+Value, cp\+\_\+info $\ast$pool)}]{\setlength{\rightskip}{0pt plus 5cm}B\+O\+O\+L Get\+String\+From\+Const\+Pool (
+\begin{DoxyParamCaption}
+\item[{int}]{n\+Index, }
+\item[{{\bf u1} $\ast$}]{str\+Value, }
+\item[{{\bf cp\+\_\+info} $\ast$}]{pool}
+\end{DoxyParamCaption}
+)}\label{_execution___core_8c_a32e4929f033a345381c22f9d2d1aa21d}
+$<$\#\+Description\#$>$
+
+
+\begin{DoxyParams}{Parameters}
+{\em n\+Index} & $<$\#n\+Index description\#$>$ \\
+\hline
+{\em str\+Value} & $<$\#str\+Value description\#$>$ \\
+\hline
+{\em pool} & $<$\#pool description\#$>$\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+$<$\#return value description\#$>$ 
+\end{DoxyReturn}
+\hypertarget{_execution___core_8c_ae402c32c7d88ba27cb1c4739c0eff9c5}{}\index{Execution\+\_\+\+Core.\+c@{Execution\+\_\+\+Core.\+c}!Get\+Super\+Class@{Get\+Super\+Class}}
+\index{Get\+Super\+Class@{Get\+Super\+Class}!Execution\+\_\+\+Core.\+c@{Execution\+\_\+\+Core.\+c}}
+\subsubsection[{Get\+Super\+Class(\+Class\+File $\ast$p\+Class)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Class\+File}$\ast$ Get\+Super\+Class (
+\begin{DoxyParamCaption}
+\item[{{\bf Class\+File} $\ast$}]{p\+Class}
+\end{DoxyParamCaption}
+)}\label{_execution___core_8c_ae402c32c7d88ba27cb1c4739c0eff9c5}
+$<$\#\+Description\#$>$
+
+
+\begin{DoxyParams}{Parameters}
+{\em p\+Class} & $<$\#p\+Class description\#$>$\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+$<$\#return value description\#$>$ 
+\end{DoxyReturn}
+\hypertarget{_execution___core_8c_abcf6264b4b925478fff089d81073db01}{}\index{Execution\+\_\+\+Core.\+c@{Execution\+\_\+\+Core.\+c}!Get\+Super\+Class\+Name@{Get\+Super\+Class\+Name}}
+\index{Get\+Super\+Class\+Name@{Get\+Super\+Class\+Name}!Execution\+\_\+\+Core.\+c@{Execution\+\_\+\+Core.\+c}}
+\subsubsection[{Get\+Super\+Class\+Name(\+C\+Lass\+File $\ast$p\+Class)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u1}$\ast$ Get\+Super\+Class\+Name (
+\begin{DoxyParamCaption}
+\item[{C\+Lass\+File $\ast$}]{p\+Class}
+\end{DoxyParamCaption}
+)}\label{_execution___core_8c_abcf6264b4b925478fff089d81073db01}
+$<$\#\+Description\#$>$
+
+
+\begin{DoxyParams}{Parameters}
+{\em p\+Class} & $<$\#p\+Class description\#$>$\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+$<$\#return value description\#$>$ 
+\end{DoxyReturn}
+\hypertarget{_execution___core_8c_a748a86559e3ee1bed18ae112bd9afae2}{}\index{Execution\+\_\+\+Core.\+c@{Execution\+\_\+\+Core.\+c}!Load\+Constant@{Load\+Constant}}
+\index{Load\+Constant@{Load\+Constant}!Execution\+\_\+\+Core.\+c@{Execution\+\_\+\+Core.\+c}}
+\subsubsection[{Load\+Constant(\+Clas\+File $\ast$p\+Class, u1 n\+Index)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Variable} Load\+Constant (
+\begin{DoxyParamCaption}
+\item[{Clas\+File $\ast$}]{p\+Class, }
+\item[{{\bf u1}}]{n\+Index}
+\end{DoxyParamCaption}
+)}\label{_execution___core_8c_a748a86559e3ee1bed18ae112bd9afae2}
+$<$\#\+Description\#$>$
+
+
+\begin{DoxyParams}{Parameters}
+{\em p\+Class} & $<$\#p\+Class description\#$>$ \\
+\hline
+{\em n\+Index} & $<$\#n\+Index description\#$>$\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+$<$\#return value description\#$>$ 
+\end{DoxyReturn}

@@ -1,0 +1,161 @@
+\hypertarget{structattribute__info__e}{}\section{attribute\+\_\+info\+\_\+e Struct Reference}
+\label{structattribute__info__e}\index{attribute\+\_\+info\+\_\+e@{attribute\+\_\+info\+\_\+e}}
+
+
+{\ttfamily \#include $<$macros.\+h$>$}
+
+\subsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{macros_8h_a732cde1300aafb73b0ea6c2558a7a54f}{u2} \hyperlink{structattribute__info__e_ab5b819d131cf1a027c1a3557de323356}{attribute\+\_\+name\+\_\+index}
+\item 
+\hyperlink{macros_8h_ae5be1f726785414dd1b77d60df074c9d}{u4} \hyperlink{structattribute__info__e_a2bff602f8458d617a1b4aca0b9b2038e}{attribute\+\_\+length}
+\item 
+\hyperlink{macros_8h_ad9f4cdb6757615aae2fad89dab3c5470}{u1} \hyperlink{structattribute__info__e_a17726ed17c64ec8550633ebf17fd1a98}{tag}
+\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+union \{\\
+\>struct \{\\
+\>\>\hyperlink{macros_8h_a732cde1300aafb73b0ea6c2558a7a54f}{u2} \hyperlink{structattribute__info__e_a424974de8f91ea7fffd9e3b78c55a028}{constantvalue\_index}\\
+\>\} \hyperlink{structattribute__info__e_a870df7603ff8f8df965d0886e2efb0ac}{ConstantValue\_attribute}\\
+\>struct \{\\
+\>\>\hyperlink{macros_8h_a732cde1300aafb73b0ea6c2558a7a54f}{u2} \hyperlink{structattribute__info__e_adbac44dc0fa76325c65aef553a371cdf}{max\_stack}\\
+\>\>\hyperlink{macros_8h_a732cde1300aafb73b0ea6c2558a7a54f}{u2} \hyperlink{structattribute__info__e_af89d2b754585c4aa73f27ed54e9b69de}{max\_locals}\\
+\>\>\hyperlink{macros_8h_ae5be1f726785414dd1b77d60df074c9d}{u4} \hyperlink{structattribute__info__e_a67fc7666df284938e4ce4eb69bd75d10}{code\_length}\\
+\>\>\hyperlink{macros_8h_ad9f4cdb6757615aae2fad89dab3c5470}{u1} $\ast$ \hyperlink{structattribute__info__e_a83424ffc7afb5e85f548fa9a222cbef4}{code}\\
+\>\>\hyperlink{macros_8h_a732cde1300aafb73b0ea6c2558a7a54f}{u2} \hyperlink{structattribute__info__e_a9da5c85df2c7341bf72b86a61d7f8af8}{exception\_table\_length}\\
+\>\>\hyperlink{struct_exception_for_code}{ExceptionForCode} $\ast$ \hyperlink{structattribute__info__e_a6d034b5487efd06631ce3f45124852ce}{exception\_table}\\
+\>\>\hyperlink{macros_8h_a732cde1300aafb73b0ea6c2558a7a54f}{u2} \hyperlink{structattribute__info__e_acd241327151db902e69d1ce0301b47f0}{attribute\_count}\\
+\>\>\hyperlink{macros_8h_a6e3cdeb6f8c542bea1decdee365bffbb}{attribute\_info} $\ast$ \hyperlink{structattribute__info__e_a6f532dd7d830de037d40199f21a548b7}{attribute}\\
+\>\} \hyperlink{structattribute__info__e_ae5ee96bec2cfa7d7a9b3fd6637f6fecd}{Code\_attribute}\\
+\>struct \{\\
+\>\>\hyperlink{macros_8h_a732cde1300aafb73b0ea6c2558a7a54f}{u2} \hyperlink{structattribute__info__e_aebc87f5091eff4de6b60ee94f2f06725}{number\_of\_exceptions}\\
+\>\>\hyperlink{macros_8h_a732cde1300aafb73b0ea6c2558a7a54f}{u2} $\ast$ \hyperlink{structattribute__info__e_a08990d1a2e2a8f502643971c8717f7a5}{exception\_index\_table}\\
+\>\} \hyperlink{structattribute__info__e_ad92df12d7e2213f82e66267fec3be6d2}{Exception\_attribute}\\
+\>struct \{\\
+\>\>\hyperlink{macros_8h_a732cde1300aafb73b0ea6c2558a7a54f}{u2} \hyperlink{structattribute__info__e_aaa0bded35d181ef941c1d5dfbf4ba35e}{number\_of\_classes}\\
+\>\>\hyperlink{struct_classes_for_i_classes}{ClassesForIClasses} $\ast$ \hyperlink{structattribute__info__e_af31ff21ef870b175c5d41fbf0cb14c17}{classes}\\
+\>\} \hyperlink{structattribute__info__e_aded34bfbc23cf25a099ba72c8e534c33}{InnerClasses\_attribute}\\
+\>struct \{\\
+\>\} \hyperlink{structattribute__info__e_a8da49bfad483b7963ee3ed73c52ca549}{Synthetic\_attribute}\\
+\>struct \{\\
+\>\>\hyperlink{macros_8h_a732cde1300aafb73b0ea6c2558a7a54f}{u2} \hyperlink{structattribute__info__e_a84ee4fb337ef79f587712533075a6bbc}{sourcefile\_index}\\
+\>\} \hyperlink{structattribute__info__e_a2f44be9bef7033ae4052290dab6dcb84}{SourceFile\_attribute}\\
+\>struct \{\\
+\>\>\hyperlink{macros_8h_a732cde1300aafb73b0ea6c2558a7a54f}{u2} \hyperlink{structattribute__info__e_ac5528d280b9c73aee17902c9e7e70825}{line\_number\_table\_length}\\
+\>\>\hyperlink{struct_line_number_for_l_number}{LineNumberForLNumber} $\ast$ \hyperlink{structattribute__info__e_a18cef95bbf08bcf802cd99cbd45d8826}{line\_number\_table}\\
+\>\} \hyperlink{structattribute__info__e_a14003560cab12584bbbc83ec4a998b51}{LineNumberTable\_attribute}\\
+\>struct \{\\
+\>\>\hyperlink{macros_8h_a732cde1300aafb73b0ea6c2558a7a54f}{u2} \hyperlink{structattribute__info__e_a3fa7dd7fd2b0f385ecd16252aa64246e}{local\_variable\_length}\\
+\>\>\hyperlink{struct_local_variable_for_variable}{LocalVariableForVariable} $\ast$ \hyperlink{structattribute__info__e_ac992b049f312b1385b995db21e8879ee}{local\_variable\_table}\\
+\>\} \hyperlink{structattribute__info__e_ab860114886cdf67265e6c351b969e0b1}{LocalVariableTable\_attribute}\\
+\>struct \{\\
+\>\} \hyperlink{structattribute__info__e_a8878c862cd9bfb0904ba1bd59e9a7909}{Deprecated\_attribute}\\
+\} \hyperlink{structattribute__info__e_a3f81b6538b6aeb16371eb5dc3db3c3e5}{info}\\
+
+\end{tabbing}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Definição da estrutura attribute 
+
+\subsection{Field Documentation}
+\hypertarget{structattribute__info__e_a6f532dd7d830de037d40199f21a548b7}{}\index{attribute\+\_\+info\+\_\+e@{attribute\+\_\+info\+\_\+e}!attribute@{attribute}}
+\index{attribute@{attribute}!attribute\+\_\+info\+\_\+e@{attribute\+\_\+info\+\_\+e}}
+\subsubsection[{attribute}]{\setlength{\rightskip}{0pt plus 5cm}{\bf attribute\+\_\+info}$\ast$ attribute}\label{structattribute__info__e_a6f532dd7d830de037d40199f21a548b7}
+\hypertarget{structattribute__info__e_acd241327151db902e69d1ce0301b47f0}{}\index{attribute\+\_\+info\+\_\+e@{attribute\+\_\+info\+\_\+e}!attribute\+\_\+count@{attribute\+\_\+count}}
+\index{attribute\+\_\+count@{attribute\+\_\+count}!attribute\+\_\+info\+\_\+e@{attribute\+\_\+info\+\_\+e}}
+\subsubsection[{attribute\+\_\+count}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u2} attribute\+\_\+count}\label{structattribute__info__e_acd241327151db902e69d1ce0301b47f0}
+\hypertarget{structattribute__info__e_a2bff602f8458d617a1b4aca0b9b2038e}{}\index{attribute\+\_\+info\+\_\+e@{attribute\+\_\+info\+\_\+e}!attribute\+\_\+length@{attribute\+\_\+length}}
+\index{attribute\+\_\+length@{attribute\+\_\+length}!attribute\+\_\+info\+\_\+e@{attribute\+\_\+info\+\_\+e}}
+\subsubsection[{attribute\+\_\+length}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u4} attribute\+\_\+length}\label{structattribute__info__e_a2bff602f8458d617a1b4aca0b9b2038e}
+\hypertarget{structattribute__info__e_ab5b819d131cf1a027c1a3557de323356}{}\index{attribute\+\_\+info\+\_\+e@{attribute\+\_\+info\+\_\+e}!attribute\+\_\+name\+\_\+index@{attribute\+\_\+name\+\_\+index}}
+\index{attribute\+\_\+name\+\_\+index@{attribute\+\_\+name\+\_\+index}!attribute\+\_\+info\+\_\+e@{attribute\+\_\+info\+\_\+e}}
+\subsubsection[{attribute\+\_\+name\+\_\+index}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u2} attribute\+\_\+name\+\_\+index}\label{structattribute__info__e_ab5b819d131cf1a027c1a3557de323356}
+\hypertarget{structattribute__info__e_af31ff21ef870b175c5d41fbf0cb14c17}{}\index{attribute\+\_\+info\+\_\+e@{attribute\+\_\+info\+\_\+e}!classes@{classes}}
+\index{classes@{classes}!attribute\+\_\+info\+\_\+e@{attribute\+\_\+info\+\_\+e}}
+\subsubsection[{classes}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Classes\+For\+I\+Classes}$\ast$ classes}\label{structattribute__info__e_af31ff21ef870b175c5d41fbf0cb14c17}
+\hypertarget{structattribute__info__e_a83424ffc7afb5e85f548fa9a222cbef4}{}\index{attribute\+\_\+info\+\_\+e@{attribute\+\_\+info\+\_\+e}!code@{code}}
+\index{code@{code}!attribute\+\_\+info\+\_\+e@{attribute\+\_\+info\+\_\+e}}
+\subsubsection[{code}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u1}$\ast$ code}\label{structattribute__info__e_a83424ffc7afb5e85f548fa9a222cbef4}
+\hypertarget{structattribute__info__e_ae5ee96bec2cfa7d7a9b3fd6637f6fecd}{}\index{attribute\+\_\+info\+\_\+e@{attribute\+\_\+info\+\_\+e}!Code\+\_\+attribute@{Code\+\_\+attribute}}
+\index{Code\+\_\+attribute@{Code\+\_\+attribute}!attribute\+\_\+info\+\_\+e@{attribute\+\_\+info\+\_\+e}}
+\subsubsection[{Code\+\_\+attribute}]{\setlength{\rightskip}{0pt plus 5cm}struct \{ ... \}  Code\+\_\+attribute}\label{structattribute__info__e_ae5ee96bec2cfa7d7a9b3fd6637f6fecd}
+\hypertarget{structattribute__info__e_a67fc7666df284938e4ce4eb69bd75d10}{}\index{attribute\+\_\+info\+\_\+e@{attribute\+\_\+info\+\_\+e}!code\+\_\+length@{code\+\_\+length}}
+\index{code\+\_\+length@{code\+\_\+length}!attribute\+\_\+info\+\_\+e@{attribute\+\_\+info\+\_\+e}}
+\subsubsection[{code\+\_\+length}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u4} code\+\_\+length}\label{structattribute__info__e_a67fc7666df284938e4ce4eb69bd75d10}
+\hypertarget{structattribute__info__e_a870df7603ff8f8df965d0886e2efb0ac}{}\index{attribute\+\_\+info\+\_\+e@{attribute\+\_\+info\+\_\+e}!Constant\+Value\+\_\+attribute@{Constant\+Value\+\_\+attribute}}
+\index{Constant\+Value\+\_\+attribute@{Constant\+Value\+\_\+attribute}!attribute\+\_\+info\+\_\+e@{attribute\+\_\+info\+\_\+e}}
+\subsubsection[{Constant\+Value\+\_\+attribute}]{\setlength{\rightskip}{0pt plus 5cm}struct \{ ... \}  Constant\+Value\+\_\+attribute}\label{structattribute__info__e_a870df7603ff8f8df965d0886e2efb0ac}
+\hypertarget{structattribute__info__e_a424974de8f91ea7fffd9e3b78c55a028}{}\index{attribute\+\_\+info\+\_\+e@{attribute\+\_\+info\+\_\+e}!constantvalue\+\_\+index@{constantvalue\+\_\+index}}
+\index{constantvalue\+\_\+index@{constantvalue\+\_\+index}!attribute\+\_\+info\+\_\+e@{attribute\+\_\+info\+\_\+e}}
+\subsubsection[{constantvalue\+\_\+index}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u2} constantvalue\+\_\+index}\label{structattribute__info__e_a424974de8f91ea7fffd9e3b78c55a028}
+\hypertarget{structattribute__info__e_a8878c862cd9bfb0904ba1bd59e9a7909}{}\index{attribute\+\_\+info\+\_\+e@{attribute\+\_\+info\+\_\+e}!Deprecated\+\_\+attribute@{Deprecated\+\_\+attribute}}
+\index{Deprecated\+\_\+attribute@{Deprecated\+\_\+attribute}!attribute\+\_\+info\+\_\+e@{attribute\+\_\+info\+\_\+e}}
+\subsubsection[{Deprecated\+\_\+attribute}]{\setlength{\rightskip}{0pt plus 5cm}struct \{ ... \}  Deprecated\+\_\+attribute}\label{structattribute__info__e_a8878c862cd9bfb0904ba1bd59e9a7909}
+\hypertarget{structattribute__info__e_ad92df12d7e2213f82e66267fec3be6d2}{}\index{attribute\+\_\+info\+\_\+e@{attribute\+\_\+info\+\_\+e}!Exception\+\_\+attribute@{Exception\+\_\+attribute}}
+\index{Exception\+\_\+attribute@{Exception\+\_\+attribute}!attribute\+\_\+info\+\_\+e@{attribute\+\_\+info\+\_\+e}}
+\subsubsection[{Exception\+\_\+attribute}]{\setlength{\rightskip}{0pt plus 5cm}struct \{ ... \}  Exception\+\_\+attribute}\label{structattribute__info__e_ad92df12d7e2213f82e66267fec3be6d2}
+\hypertarget{structattribute__info__e_a08990d1a2e2a8f502643971c8717f7a5}{}\index{attribute\+\_\+info\+\_\+e@{attribute\+\_\+info\+\_\+e}!exception\+\_\+index\+\_\+table@{exception\+\_\+index\+\_\+table}}
+\index{exception\+\_\+index\+\_\+table@{exception\+\_\+index\+\_\+table}!attribute\+\_\+info\+\_\+e@{attribute\+\_\+info\+\_\+e}}
+\subsubsection[{exception\+\_\+index\+\_\+table}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u2}$\ast$ exception\+\_\+index\+\_\+table}\label{structattribute__info__e_a08990d1a2e2a8f502643971c8717f7a5}
+\hypertarget{structattribute__info__e_a6d034b5487efd06631ce3f45124852ce}{}\index{attribute\+\_\+info\+\_\+e@{attribute\+\_\+info\+\_\+e}!exception\+\_\+table@{exception\+\_\+table}}
+\index{exception\+\_\+table@{exception\+\_\+table}!attribute\+\_\+info\+\_\+e@{attribute\+\_\+info\+\_\+e}}
+\subsubsection[{exception\+\_\+table}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Exception\+For\+Code}$\ast$ exception\+\_\+table}\label{structattribute__info__e_a6d034b5487efd06631ce3f45124852ce}
+\hypertarget{structattribute__info__e_a9da5c85df2c7341bf72b86a61d7f8af8}{}\index{attribute\+\_\+info\+\_\+e@{attribute\+\_\+info\+\_\+e}!exception\+\_\+table\+\_\+length@{exception\+\_\+table\+\_\+length}}
+\index{exception\+\_\+table\+\_\+length@{exception\+\_\+table\+\_\+length}!attribute\+\_\+info\+\_\+e@{attribute\+\_\+info\+\_\+e}}
+\subsubsection[{exception\+\_\+table\+\_\+length}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u2} exception\+\_\+table\+\_\+length}\label{structattribute__info__e_a9da5c85df2c7341bf72b86a61d7f8af8}
+\hypertarget{structattribute__info__e_a3f81b6538b6aeb16371eb5dc3db3c3e5}{}\index{attribute\+\_\+info\+\_\+e@{attribute\+\_\+info\+\_\+e}!info@{info}}
+\index{info@{info}!attribute\+\_\+info\+\_\+e@{attribute\+\_\+info\+\_\+e}}
+\subsubsection[{info}]{\setlength{\rightskip}{0pt plus 5cm}union \{ ... \}  info}\label{structattribute__info__e_a3f81b6538b6aeb16371eb5dc3db3c3e5}
+\hypertarget{structattribute__info__e_aded34bfbc23cf25a099ba72c8e534c33}{}\index{attribute\+\_\+info\+\_\+e@{attribute\+\_\+info\+\_\+e}!Inner\+Classes\+\_\+attribute@{Inner\+Classes\+\_\+attribute}}
+\index{Inner\+Classes\+\_\+attribute@{Inner\+Classes\+\_\+attribute}!attribute\+\_\+info\+\_\+e@{attribute\+\_\+info\+\_\+e}}
+\subsubsection[{Inner\+Classes\+\_\+attribute}]{\setlength{\rightskip}{0pt plus 5cm}struct \{ ... \}  Inner\+Classes\+\_\+attribute}\label{structattribute__info__e_aded34bfbc23cf25a099ba72c8e534c33}
+\hypertarget{structattribute__info__e_a18cef95bbf08bcf802cd99cbd45d8826}{}\index{attribute\+\_\+info\+\_\+e@{attribute\+\_\+info\+\_\+e}!line\+\_\+number\+\_\+table@{line\+\_\+number\+\_\+table}}
+\index{line\+\_\+number\+\_\+table@{line\+\_\+number\+\_\+table}!attribute\+\_\+info\+\_\+e@{attribute\+\_\+info\+\_\+e}}
+\subsubsection[{line\+\_\+number\+\_\+table}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Line\+Number\+For\+L\+Number}$\ast$ line\+\_\+number\+\_\+table}\label{structattribute__info__e_a18cef95bbf08bcf802cd99cbd45d8826}
+\hypertarget{structattribute__info__e_ac5528d280b9c73aee17902c9e7e70825}{}\index{attribute\+\_\+info\+\_\+e@{attribute\+\_\+info\+\_\+e}!line\+\_\+number\+\_\+table\+\_\+length@{line\+\_\+number\+\_\+table\+\_\+length}}
+\index{line\+\_\+number\+\_\+table\+\_\+length@{line\+\_\+number\+\_\+table\+\_\+length}!attribute\+\_\+info\+\_\+e@{attribute\+\_\+info\+\_\+e}}
+\subsubsection[{line\+\_\+number\+\_\+table\+\_\+length}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u2} line\+\_\+number\+\_\+table\+\_\+length}\label{structattribute__info__e_ac5528d280b9c73aee17902c9e7e70825}
+\hypertarget{structattribute__info__e_a14003560cab12584bbbc83ec4a998b51}{}\index{attribute\+\_\+info\+\_\+e@{attribute\+\_\+info\+\_\+e}!Line\+Number\+Table\+\_\+attribute@{Line\+Number\+Table\+\_\+attribute}}
+\index{Line\+Number\+Table\+\_\+attribute@{Line\+Number\+Table\+\_\+attribute}!attribute\+\_\+info\+\_\+e@{attribute\+\_\+info\+\_\+e}}
+\subsubsection[{Line\+Number\+Table\+\_\+attribute}]{\setlength{\rightskip}{0pt plus 5cm}struct \{ ... \}  Line\+Number\+Table\+\_\+attribute}\label{structattribute__info__e_a14003560cab12584bbbc83ec4a998b51}
+\hypertarget{structattribute__info__e_a3fa7dd7fd2b0f385ecd16252aa64246e}{}\index{attribute\+\_\+info\+\_\+e@{attribute\+\_\+info\+\_\+e}!local\+\_\+variable\+\_\+length@{local\+\_\+variable\+\_\+length}}
+\index{local\+\_\+variable\+\_\+length@{local\+\_\+variable\+\_\+length}!attribute\+\_\+info\+\_\+e@{attribute\+\_\+info\+\_\+e}}
+\subsubsection[{local\+\_\+variable\+\_\+length}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u2} local\+\_\+variable\+\_\+length}\label{structattribute__info__e_a3fa7dd7fd2b0f385ecd16252aa64246e}
+\hypertarget{structattribute__info__e_ac992b049f312b1385b995db21e8879ee}{}\index{attribute\+\_\+info\+\_\+e@{attribute\+\_\+info\+\_\+e}!local\+\_\+variable\+\_\+table@{local\+\_\+variable\+\_\+table}}
+\index{local\+\_\+variable\+\_\+table@{local\+\_\+variable\+\_\+table}!attribute\+\_\+info\+\_\+e@{attribute\+\_\+info\+\_\+e}}
+\subsubsection[{local\+\_\+variable\+\_\+table}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Local\+Variable\+For\+Variable}$\ast$ local\+\_\+variable\+\_\+table}\label{structattribute__info__e_ac992b049f312b1385b995db21e8879ee}
+\hypertarget{structattribute__info__e_ab860114886cdf67265e6c351b969e0b1}{}\index{attribute\+\_\+info\+\_\+e@{attribute\+\_\+info\+\_\+e}!Local\+Variable\+Table\+\_\+attribute@{Local\+Variable\+Table\+\_\+attribute}}
+\index{Local\+Variable\+Table\+\_\+attribute@{Local\+Variable\+Table\+\_\+attribute}!attribute\+\_\+info\+\_\+e@{attribute\+\_\+info\+\_\+e}}
+\subsubsection[{Local\+Variable\+Table\+\_\+attribute}]{\setlength{\rightskip}{0pt plus 5cm}struct \{ ... \}  Local\+Variable\+Table\+\_\+attribute}\label{structattribute__info__e_ab860114886cdf67265e6c351b969e0b1}
+\hypertarget{structattribute__info__e_af89d2b754585c4aa73f27ed54e9b69de}{}\index{attribute\+\_\+info\+\_\+e@{attribute\+\_\+info\+\_\+e}!max\+\_\+locals@{max\+\_\+locals}}
+\index{max\+\_\+locals@{max\+\_\+locals}!attribute\+\_\+info\+\_\+e@{attribute\+\_\+info\+\_\+e}}
+\subsubsection[{max\+\_\+locals}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u2} max\+\_\+locals}\label{structattribute__info__e_af89d2b754585c4aa73f27ed54e9b69de}
+\hypertarget{structattribute__info__e_adbac44dc0fa76325c65aef553a371cdf}{}\index{attribute\+\_\+info\+\_\+e@{attribute\+\_\+info\+\_\+e}!max\+\_\+stack@{max\+\_\+stack}}
+\index{max\+\_\+stack@{max\+\_\+stack}!attribute\+\_\+info\+\_\+e@{attribute\+\_\+info\+\_\+e}}
+\subsubsection[{max\+\_\+stack}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u2} max\+\_\+stack}\label{structattribute__info__e_adbac44dc0fa76325c65aef553a371cdf}
+\hypertarget{structattribute__info__e_aaa0bded35d181ef941c1d5dfbf4ba35e}{}\index{attribute\+\_\+info\+\_\+e@{attribute\+\_\+info\+\_\+e}!number\+\_\+of\+\_\+classes@{number\+\_\+of\+\_\+classes}}
+\index{number\+\_\+of\+\_\+classes@{number\+\_\+of\+\_\+classes}!attribute\+\_\+info\+\_\+e@{attribute\+\_\+info\+\_\+e}}
+\subsubsection[{number\+\_\+of\+\_\+classes}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u2} number\+\_\+of\+\_\+classes}\label{structattribute__info__e_aaa0bded35d181ef941c1d5dfbf4ba35e}
+\hypertarget{structattribute__info__e_aebc87f5091eff4de6b60ee94f2f06725}{}\index{attribute\+\_\+info\+\_\+e@{attribute\+\_\+info\+\_\+e}!number\+\_\+of\+\_\+exceptions@{number\+\_\+of\+\_\+exceptions}}
+\index{number\+\_\+of\+\_\+exceptions@{number\+\_\+of\+\_\+exceptions}!attribute\+\_\+info\+\_\+e@{attribute\+\_\+info\+\_\+e}}
+\subsubsection[{number\+\_\+of\+\_\+exceptions}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u2} number\+\_\+of\+\_\+exceptions}\label{structattribute__info__e_aebc87f5091eff4de6b60ee94f2f06725}
+\hypertarget{structattribute__info__e_a2f44be9bef7033ae4052290dab6dcb84}{}\index{attribute\+\_\+info\+\_\+e@{attribute\+\_\+info\+\_\+e}!Source\+File\+\_\+attribute@{Source\+File\+\_\+attribute}}
+\index{Source\+File\+\_\+attribute@{Source\+File\+\_\+attribute}!attribute\+\_\+info\+\_\+e@{attribute\+\_\+info\+\_\+e}}
+\subsubsection[{Source\+File\+\_\+attribute}]{\setlength{\rightskip}{0pt plus 5cm}struct \{ ... \}  Source\+File\+\_\+attribute}\label{structattribute__info__e_a2f44be9bef7033ae4052290dab6dcb84}
+\hypertarget{structattribute__info__e_a84ee4fb337ef79f587712533075a6bbc}{}\index{attribute\+\_\+info\+\_\+e@{attribute\+\_\+info\+\_\+e}!sourcefile\+\_\+index@{sourcefile\+\_\+index}}
+\index{sourcefile\+\_\+index@{sourcefile\+\_\+index}!attribute\+\_\+info\+\_\+e@{attribute\+\_\+info\+\_\+e}}
+\subsubsection[{sourcefile\+\_\+index}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u2} sourcefile\+\_\+index}\label{structattribute__info__e_a84ee4fb337ef79f587712533075a6bbc}
+\hypertarget{structattribute__info__e_a8da49bfad483b7963ee3ed73c52ca549}{}\index{attribute\+\_\+info\+\_\+e@{attribute\+\_\+info\+\_\+e}!Synthetic\+\_\+attribute@{Synthetic\+\_\+attribute}}
+\index{Synthetic\+\_\+attribute@{Synthetic\+\_\+attribute}!attribute\+\_\+info\+\_\+e@{attribute\+\_\+info\+\_\+e}}
+\subsubsection[{Synthetic\+\_\+attribute}]{\setlength{\rightskip}{0pt plus 5cm}struct \{ ... \}  Synthetic\+\_\+attribute}\label{structattribute__info__e_a8da49bfad483b7963ee3ed73c52ca549}
+\hypertarget{structattribute__info__e_a17726ed17c64ec8550633ebf17fd1a98}{}\index{attribute\+\_\+info\+\_\+e@{attribute\+\_\+info\+\_\+e}!tag@{tag}}
+\index{tag@{tag}!attribute\+\_\+info\+\_\+e@{attribute\+\_\+info\+\_\+e}}
+\subsubsection[{tag}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u1} tag}\label{structattribute__info__e_a17726ed17c64ec8550633ebf17fd1a98}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{macros_8h}{macros.\+h}\end{DoxyCompactItemize}

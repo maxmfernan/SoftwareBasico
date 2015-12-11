@@ -1,0 +1,92 @@
+\hypertarget{_load_class__ui_8h}{}\section{Load\+Class\+\_\+ui.\+h File Reference}
+\label{_load_class__ui_8h}\index{Load\+Class\+\_\+ui.\+h@{Load\+Class\+\_\+ui.\+h}}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{_load_class__ui_8h_a470cec42849b708975e8355d06f2f739}{print\+Content} (\hyperlink{structcp__info}{cp\+\_\+info} pool)
+\item 
+void \hyperlink{_load_class__ui_8h_a86a870fadf2afa5a4bfae1f4d759dc90}{print\+Constant\+Pool\+Table} (\hyperlink{macros_8h_a732cde1300aafb73b0ea6c2558a7a54f}{u2} pool\+Elements\+Num, \hyperlink{structcp__info}{cp\+\_\+info} pool\mbox{[}$\,$\mbox{]})
+\item 
+void \hyperlink{_load_class__ui_8h_a7bb7fea5f76312a630988b40ba838b6d}{print\+Field} (\hyperlink{structcp__info}{cp\+\_\+info} $\ast$pool\+\_\+array, \hyperlink{structfield__info}{field\+\_\+info} $\ast$fields\+\_\+array, unsigned int fieldn)
+\begin{DoxyCompactList}\small\item\em imprime os fields do arquivo .class. Assume que o .class está correto \end{DoxyCompactList}\item 
+void \hyperlink{_load_class__ui_8h_aff94a9d099dadadf79982327991eece2}{print\+\_\+\+Methods} (\hyperlink{struct_class_file}{Class\+File} $\ast$class\+File\+Var, \hyperlink{structcp__info}{cp\+\_\+info} $\ast$pool)
+\item 
+void \hyperlink{_load_class__ui_8h_a953b913e9642bba5eae6450beee6ef65}{print\+\_\+attributes} (\hyperlink{macros_8h_a6e3cdeb6f8c542bea1decdee365bffbb}{attribute\+\_\+info} $\ast$attributes, \hyperlink{macros_8h_a732cde1300aafb73b0ea6c2558a7a54f}{u2} attr\+\_\+count, \hyperlink{structcp__info}{cp\+\_\+info} $\ast$pool)
+\item 
+void \hyperlink{_load_class__ui_8h_ab5602b3746430f452fb6b44af8f60ab9}{print\+\_\+interface} (\hyperlink{macros_8h_a732cde1300aafb73b0ea6c2558a7a54f}{u2} interface\mbox{[}$\,$\mbox{]}, \hyperlink{macros_8h_a732cde1300aafb73b0ea6c2558a7a54f}{u2} inter\+\_\+length, \hyperlink{structcp__info}{cp\+\_\+info} pool\mbox{[}$\,$\mbox{]})
+\item 
+void \hyperlink{_load_class__ui_8h_a244f8a5501c170e4c2017d4184d69385}{print\+\_\+\+Class\+File} (\hyperlink{struct_class_file}{Class\+File} $\ast$class\+\_\+file\+\_\+ptr)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\hypertarget{_load_class__ui_8h_a953b913e9642bba5eae6450beee6ef65}{}\index{Load\+Class\+\_\+ui.\+h@{Load\+Class\+\_\+ui.\+h}!print\+\_\+attributes@{print\+\_\+attributes}}
+\index{print\+\_\+attributes@{print\+\_\+attributes}!Load\+Class\+\_\+ui.\+h@{Load\+Class\+\_\+ui.\+h}}
+\subsubsection[{print\+\_\+attributes(attribute\+\_\+info $\ast$attributes, u2 attr\+\_\+count, cp\+\_\+info $\ast$pool)}]{\setlength{\rightskip}{0pt plus 5cm}void print\+\_\+attributes (
+\begin{DoxyParamCaption}
+\item[{{\bf attribute\+\_\+info} $\ast$}]{attributes, }
+\item[{{\bf u2}}]{attr\+\_\+count, }
+\item[{{\bf cp\+\_\+info} $\ast$}]{pool}
+\end{DoxyParamCaption}
+)}\label{_load_class__ui_8h_a953b913e9642bba5eae6450beee6ef65}
+\hypertarget{_load_class__ui_8h_a244f8a5501c170e4c2017d4184d69385}{}\index{Load\+Class\+\_\+ui.\+h@{Load\+Class\+\_\+ui.\+h}!print\+\_\+\+Class\+File@{print\+\_\+\+Class\+File}}
+\index{print\+\_\+\+Class\+File@{print\+\_\+\+Class\+File}!Load\+Class\+\_\+ui.\+h@{Load\+Class\+\_\+ui.\+h}}
+\subsubsection[{print\+\_\+\+Class\+File(\+Class\+File $\ast$class\+\_\+file\+\_\+ptr)}]{\setlength{\rightskip}{0pt plus 5cm}void print\+\_\+\+Class\+File (
+\begin{DoxyParamCaption}
+\item[{{\bf Class\+File} $\ast$}]{class\+\_\+file\+\_\+ptr}
+\end{DoxyParamCaption}
+)}\label{_load_class__ui_8h_a244f8a5501c170e4c2017d4184d69385}
+\hypertarget{_load_class__ui_8h_ab5602b3746430f452fb6b44af8f60ab9}{}\index{Load\+Class\+\_\+ui.\+h@{Load\+Class\+\_\+ui.\+h}!print\+\_\+interface@{print\+\_\+interface}}
+\index{print\+\_\+interface@{print\+\_\+interface}!Load\+Class\+\_\+ui.\+h@{Load\+Class\+\_\+ui.\+h}}
+\subsubsection[{print\+\_\+interface(u2 interface[], u2 inter\+\_\+length, cp\+\_\+info pool[])}]{\setlength{\rightskip}{0pt plus 5cm}void print\+\_\+interface (
+\begin{DoxyParamCaption}
+\item[{{\bf u2}}]{interface\mbox{[}$\,$\mbox{]}, }
+\item[{{\bf u2}}]{inter\+\_\+length, }
+\item[{{\bf cp\+\_\+info}}]{pool\mbox{[}$\,$\mbox{]}}
+\end{DoxyParamCaption}
+)}\label{_load_class__ui_8h_ab5602b3746430f452fb6b44af8f60ab9}
+\hypertarget{_load_class__ui_8h_aff94a9d099dadadf79982327991eece2}{}\index{Load\+Class\+\_\+ui.\+h@{Load\+Class\+\_\+ui.\+h}!print\+\_\+\+Methods@{print\+\_\+\+Methods}}
+\index{print\+\_\+\+Methods@{print\+\_\+\+Methods}!Load\+Class\+\_\+ui.\+h@{Load\+Class\+\_\+ui.\+h}}
+\subsubsection[{print\+\_\+\+Methods(\+Class\+File $\ast$class\+File\+Var, cp\+\_\+info $\ast$pool)}]{\setlength{\rightskip}{0pt plus 5cm}void print\+\_\+\+Methods (
+\begin{DoxyParamCaption}
+\item[{{\bf Class\+File} $\ast$}]{class\+File\+Var, }
+\item[{{\bf cp\+\_\+info} $\ast$}]{pool}
+\end{DoxyParamCaption}
+)}\label{_load_class__ui_8h_aff94a9d099dadadf79982327991eece2}
+\hypertarget{_load_class__ui_8h_a86a870fadf2afa5a4bfae1f4d759dc90}{}\index{Load\+Class\+\_\+ui.\+h@{Load\+Class\+\_\+ui.\+h}!print\+Constant\+Pool\+Table@{print\+Constant\+Pool\+Table}}
+\index{print\+Constant\+Pool\+Table@{print\+Constant\+Pool\+Table}!Load\+Class\+\_\+ui.\+h@{Load\+Class\+\_\+ui.\+h}}
+\subsubsection[{print\+Constant\+Pool\+Table(u2 pool\+Elements\+Num, cp\+\_\+info pool[])}]{\setlength{\rightskip}{0pt plus 5cm}void print\+Constant\+Pool\+Table (
+\begin{DoxyParamCaption}
+\item[{{\bf u2}}]{pool\+Elements\+Num, }
+\item[{{\bf cp\+\_\+info}}]{pool\mbox{[}$\,$\mbox{]}}
+\end{DoxyParamCaption}
+)}\label{_load_class__ui_8h_a86a870fadf2afa5a4bfae1f4d759dc90}
+\hypertarget{_load_class__ui_8h_a470cec42849b708975e8355d06f2f739}{}\index{Load\+Class\+\_\+ui.\+h@{Load\+Class\+\_\+ui.\+h}!print\+Content@{print\+Content}}
+\index{print\+Content@{print\+Content}!Load\+Class\+\_\+ui.\+h@{Load\+Class\+\_\+ui.\+h}}
+\subsubsection[{print\+Content(cp\+\_\+info pool)}]{\setlength{\rightskip}{0pt plus 5cm}void print\+Content (
+\begin{DoxyParamCaption}
+\item[{{\bf cp\+\_\+info}}]{pool}
+\end{DoxyParamCaption}
+)}\label{_load_class__ui_8h_a470cec42849b708975e8355d06f2f739}
+\hypertarget{_load_class__ui_8h_a7bb7fea5f76312a630988b40ba838b6d}{}\index{Load\+Class\+\_\+ui.\+h@{Load\+Class\+\_\+ui.\+h}!print\+Field@{print\+Field}}
+\index{print\+Field@{print\+Field}!Load\+Class\+\_\+ui.\+h@{Load\+Class\+\_\+ui.\+h}}
+\subsubsection[{print\+Field(cp\+\_\+info $\ast$pool\+\_\+array, field\+\_\+info $\ast$fields\+\_\+array, unsigned int fieldn)}]{\setlength{\rightskip}{0pt plus 5cm}void print\+Field (
+\begin{DoxyParamCaption}
+\item[{{\bf cp\+\_\+info} $\ast$}]{pool\+\_\+array, }
+\item[{{\bf field\+\_\+info} $\ast$}]{fields\+\_\+array, }
+\item[{unsigned int}]{fieldn}
+\end{DoxyParamCaption}
+)}\label{_load_class__ui_8h_a7bb7fea5f76312a630988b40ba838b6d}
+
+
+imprime os fields do arquivo .class. Assume que o .class está correto 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pool\+\_\+array} & contém dos os elementos presentes na pool de constantes \\
+\hline
+{\em fields\+\_\+array} & contém todos os fields do arquivo .class \\
+\hline
+{\em fieldn} & a quantidade de fields, i.\+e, o número de elementos do vetor acima \\
+\hline
+\end{DoxyParams}

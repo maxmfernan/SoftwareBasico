@@ -1,0 +1,72 @@
+\hypertarget{main_8c}{}\section{main.\+c File Reference}
+\label{main_8c}\index{main.\+c@{main.\+c}}
+{\ttfamily \#include \char`\"{}macros.\+h\char`\"{}}\\*
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include $<$stdlib.\+h$>$}\\*
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+{\ttfamily \#include $<$string.\+h$>$}\\*
+{\ttfamily \#include $<$math.\+h$>$}\\*
+{\ttfamily \#include $<$inttypes.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}Load\+Class\+\_\+ui.\+h\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{main_8c_a6a71c69bff220a3f181be21f5044d031}{load\+Class} (F\+I\+L\+E $\ast$class\+Path\+F\+\_\+ptr, \hyperlink{struct_class_file}{Class\+File} $\ast$cls\+Heap, \hyperlink{structdata_m_size__t}{data\+M\+Size\+\_\+t} $\ast$dm\+Size)
+\item 
+\hyperlink{macros_8h_a732cde1300aafb73b0ea6c2558a7a54f}{u2} \hyperlink{main_8c_a6d6554dc3f3acd23cf6be25dcade7edc}{seek\+Method\+In\+Class} (\hyperlink{struct_class_file}{Class\+File} $\ast$class\+\_\+ptr, char $\ast$meth\+Name\+\_\+str, char $\ast$meth\+Descriptor\+\_\+str)
+\begin{DoxyCompactList}\small\item\em Busca no class\+File por um métodos específico e retorna o indice para a tabela de métodos. \end{DoxyCompactList}\item 
+int \hyperlink{main_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}{main} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\hypertarget{main_8c_a6a71c69bff220a3f181be21f5044d031}{}\index{main.\+c@{main.\+c}!load\+Class@{load\+Class}}
+\index{load\+Class@{load\+Class}!main.\+c@{main.\+c}}
+\subsubsection[{load\+Class(\+F\+I\+L\+E $\ast$class\+Path\+F\+\_\+ptr, Class\+File $\ast$cls\+Heap, data\+M\+Size\+\_\+t $\ast$dm\+Size)}]{\setlength{\rightskip}{0pt plus 5cm}void load\+Class (
+\begin{DoxyParamCaption}
+\item[{F\+I\+L\+E $\ast$}]{class\+Path\+F\+\_\+ptr, }
+\item[{{\bf Class\+File} $\ast$}]{cls\+Heap, }
+\item[{{\bf data\+M\+Size\+\_\+t} $\ast$}]{dm\+Size}
+\end{DoxyParamCaption}
+)}\label{main_8c_a6a71c69bff220a3f181be21f5044d031}
+
+\begin{DoxyParams}{Parameters}
+{\em class\+Path\+Str} & \\
+\hline
+{\em class\+Heap\+\_\+ptr} & \\
+\hline
+{\em dm\+Size} & \\
+\hline
+\end{DoxyParams}
+\hypertarget{main_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}{}\index{main.\+c@{main.\+c}!main@{main}}
+\index{main@{main}!main.\+c@{main.\+c}}
+\subsubsection[{main()}]{\setlength{\rightskip}{0pt plus 5cm}int main (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{main_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}
+\hypertarget{main_8c_a6d6554dc3f3acd23cf6be25dcade7edc}{}\index{main.\+c@{main.\+c}!seek\+Method\+In\+Class@{seek\+Method\+In\+Class}}
+\index{seek\+Method\+In\+Class@{seek\+Method\+In\+Class}!main.\+c@{main.\+c}}
+\subsubsection[{seek\+Method\+In\+Class(\+Class\+File $\ast$class\+\_\+ptr, char $\ast$meth\+Name\+\_\+str, char $\ast$meth\+Descriptor\+\_\+str)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf u2} seek\+Method\+In\+Class (
+\begin{DoxyParamCaption}
+\item[{{\bf Class\+File} $\ast$}]{class\+\_\+ptr, }
+\item[{char $\ast$}]{meth\+Name\+\_\+str, }
+\item[{char $\ast$}]{meth\+Descriptor\+\_\+str}
+\end{DoxyParamCaption}
+)}\label{main_8c_a6d6554dc3f3acd23cf6be25dcade7edc}
+
+
+Busca no class\+File por um métodos específico e retorna o indice para a tabela de métodos. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em class\+\_\+ptr} & ponteiro para um class\+File \\
+\hline
+{\em meth\+Name\+\_\+str} & nome do método que se deseja buscar \\
+\hline
+{\em meth\+Descriptor\+\_\+str} & descritor do método, ()V por exemplo\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+retorna o índice na tabela de métodos do class\+File 
+\end{DoxyReturn}
