@@ -5,17 +5,20 @@
 //  Created by Luiz Henrique Campos Barboza on 09/12/15.
 //
 //
-
+#include "LoadClass_core.h"
+#include "macros.h"
 #include "Execution_Core.h"
 
 u4 Execute (Frame *pFrame) {
     u4 *local_iterator = pFrame->local;
     u1 *code_iterator;
-    i4 error=0;
+    i4 error = 0;
+    i8 longVal;
+    u2 i;
     
     code_iterator = pFrame->code + pFrame->pc;
     
-    while (pFrame->pc < pFrame->code_lenght) {
+    while (pFrame->pc < pFrame->code_length) {
         
         switch (code_iterator[pFrame->pc]) {
             case op_nop:
@@ -32,33 +35,33 @@ u4 Execute (Frame *pFrame) {
             case op_iconst_4:
             case op_iconst_5:
                 pFrame->sp++;
-                pFrame->stack[pFrame->sp].intValue = (u1)code_iterator[pFrame->pc] - iconst_0;
+                pFrame->stack[pFrame->sp] = code_iterator[pFrame->pc] - op_iconst_0;
                 pFrame->pc++;
                 break;
                 
             case op_aconst_null:
                 pFrame->sp++;
-                pFrame->stack[pFrame->sp].object = NULL;
+                pFrame->stack[pFrame->sp] = 0;
                 pFrame->pc++;
                 break;
                 
             case op_lconst_0:// 9 /*(0x9)*/
             case op_lconst_1:// 10 /*(0xa)*/
                 pFrame->sp++;
-                pFrame->stack[pFrame->sp].intValue = 0;
+                pFrame->stack[pFrame->sp] = 0;
                 pFrame->sp++;
-                pFrame->stack[pFrame->sp].intValue = (u1)code_iterator[pFrame->pc] - lconst_0;
+                pFrame->stack[pFrame->sp] = code_iterator[pFrame->pc] - op_lconst_0;
                 pFrame->pc++;
                 break;
                 
             case op_bipush:// 16 /*(0x10)*/
                 pFrame->sp++;
-                pFrame->stack[pFrame->sp].charValue = (u1)code_iterator[pFrame->pc+1];
+                pFrame->stack[pFrame->sp] = (u1)code_iterator[pFrame->pc+1];
                 pFrame->pc += 2;
                 break;
             case op_sipush:// 17 /*(0x11)*/
                 pFrame->sp++;
-                pFrame->stack[pFrame->sp].shortValue = getu2(&code_iterator[pFrame->pc+1]);
+                pFrame->stack[pFrame->sp] = getu2(&code_iterator[pFrame->pc+1]);
                 pFrame->pc += 3;
                 break;
                 
@@ -68,11 +71,11 @@ u4 Execute (Frame *pFrame) {
                 break;
                 
             case op_ldc2_w:// 20 /*(0x14)*/
-                index = getu2(&bc[pFrame->pc+1]);
+                i = getu2(&code_iterator[pFrame->pc + 1]);
                 pFrame->sp++;
-                pFrame->stack[pFrame->sp].intValue = getu4(&((char *)pClass->constant_pool[index - 1])[1]);
+                pFrame->stack[pFrame->sp] = getu4(&((char *)pFrame->pClass->constant_pool[i - 1])[1]);
                 pFrame->sp++;
-                pFrame->stack[pFrame->sp].intValue = getu4(&((char *)pClass->constant_pool[index - 1])[5]);
+                pFrame->stack[pFrame->sp] = getu4(&((char *)pFrame->pClass.constant_pool[i - 1])[5]);
                 pFrame->pc += 3;
                 break;
                 
@@ -93,7 +96,7 @@ u4 Execute (Frame *pFrame) {
             case op_iload_2: //28 Load int from local variable 2
             case op_iload_3: //29 Load int from local variable 3
                 pFrame->sp++;
-                pFrame->stack[pFrame->sp] = pFrame->local[(u1) code_iterator[pFrame->pc] - iload_0];
+                pFrame->stack[pFrame->sp] = pFrame->local[(u1) code_iterator[pFrame->pc] - op_iload_0];
                 pFrame->pc++;
                 break;
                 
@@ -106,9 +109,9 @@ u4 Execute (Frame *pFrame) {
             case op_lload_2:// 32 /*(0x20) */
             case op_lload_3:// 33 /*(0x21) */
                 pFrame->sp++;
-                pFrame->stack[pFrame->sp] = pFrame->local[(u1) code_iterator[pFrame->pc] - lload_0];
+                pFrame->stack[pFrame->sp] = pFrame->local[(u1) code_iterator[pFrame->pc] - op_lload_0];
                 pFrame->sp++;
-                pFrame->stack[pFrame->sp] = pFrame->local[(u1)code_iterator[pFrame->pc] - lload_0 + 1];
+                pFrame->stack[pFrame->sp] = pFrame->local[(u1)code_iterator[pFrame->pc] - op_lload_0 + 1];
                 pFrame->pc++;
                 break;
                 
@@ -117,7 +120,7 @@ u4 Execute (Frame *pFrame) {
             case op_fload_2: // 36 /*(0x24)*/
             case op_fload_3: // 37 /*(0x25)*/
                 pFrame->sp++;
-                pFrame->stack[pFrame->sp] = pFrame->local[(u1) code_iterator[pFrame->pc] - fload_0];
+                pFrame->stack[pFrame->sp] = pFrame->local[(u1) code_iterator[pFrame->pc] - op_fload_0];
                 pFrame->pc++;
                 break;
                 
@@ -126,22 +129,22 @@ u4 Execute (Frame *pFrame) {
             case op_aload_2:  //Load reference from local variable 2
             case op_aload_3:  //Load reference from local variable 3
                 pFrame->sp++;
-                pFrame->stack[pFrame->sp] = pFrame->local[(u1) code_iterator[pFrame->pc] - aload_0];
+                pFrame->stack[pFrame->sp] = pFrame->local[(u1) code_iterator[pFrame->pc] - op_aload_0];
                 pFrame->pc++;
                 break;
                 
             case op_iaload:// 46 /*(0x2e)*/Load int from array
                 //..., arrayref, index  => ..., value
-                pFrame->stack[pFrame->sp - 1] = getArrayVariable(pFrame->stack[pFrame->sp - 1]->arrayList, pFrame->stack[pFrame->sp].intValue, 2);
+                pFrame->stack[pFrame->sp - 1] = getArrayVariable(pFrame->stack[pFrame->sp - 1], pFrame->stack[pFrame->sp], 2);
                 pFrame->sp--;
                 pFrame->pc++;
                 break;
-            case op_aaload://50
-                //..., arrayref, index  ..., value
-                pFrame->stack[pFrame->sp - 1] = pFrame->stack[pFrame->sp - 1]->arrayList[pFrame->stack[pFrame->sp].intValue];
-                pFrame->sp--;
-                pFrame->pc++;
-                break;
+//            case op_aaload://50
+//                //..., arrayref, index  ..., value
+//                pFrame->stack[pFrame->sp - 1] = pFrame->stack[pFrame->sp - 1]->arrayList[pFrame->stack[pFrame->sp]];
+//                pFrame->sp--;
+//                pFrame->pc++;
+//                break;
                 //Instructions that store a value from the stack into a local variable
             case op_astore:// 58 (0x3a)
                 pFrame->local[(u1) code_iterator[pFrame->pc+1]] = pFrame->stack[pFrame->sp];
@@ -158,7 +161,7 @@ u4 Execute (Frame *pFrame) {
             case op_istore_1: // 60 /*(0x3c) */
             case op_istore_2: // 61 /*(0x3d) */
             case op_istore_3: // 62 /*(0x3e)*/
-                pFrame->local[(u1) code_iterator[pFrame->pc] - istore_0] = pFrame->stack[pFrame->sp];
+                pFrame->local[(u1) code_iterator[pFrame->pc] - op_istore_0] = pFrame->stack[pFrame->sp];
                 pFrame->sp--;
                 pFrame->pc++;
                 break;
@@ -167,9 +170,9 @@ u4 Execute (Frame *pFrame) {
             case op_lstore_1: // 64 /*(0x40) */
             case op_lstore_2: // 65 /*(0x41) */
             case op_lstore_3: // 66 /*(0x42) */
-                pFrame->local[(u1) code_iterator[pFrame->pc] - lstore_0 + 1] = pFrame->stack[pFrame->sp];
+                pFrame->local[(u1) code_iterator[pFrame->pc] - op_lstore_0 + 1] = pFrame->stack[pFrame->sp];
                 pFrame->sp--;
-                pFrame->local[(u1) code_iterator[pFrame->pc] - lstore_0] = pFrame->stack[pFrame->sp];
+                pFrame->local[(u1) code_iterator[pFrame->pc] - op_lstore_0] = pFrame->stack[pFrame->sp];
                 pFrame->sp--;
                 pFrame->pc++;
                 break;
@@ -178,7 +181,7 @@ u4 Execute (Frame *pFrame) {
             case op_fstore_1:
             case op_fstore_2:
             case op_fstore_3:
-                pFrame->local[(u1)code_iterator[pFrame->pc] - fstore_0] = pFrame->stack[pFrame->sp];
+                pFrame->local[(u1)code_iterator[pFrame->pc] - op_fstore_0] = pFrame->stack[pFrame->sp];
                 pFrame->sp--;
                 pFrame->pc++;
                 break;
@@ -187,17 +190,17 @@ u4 Execute (Frame *pFrame) {
             case op_astore_1:// 76 /*(0x4c) */
             case op_astore_2:// 77 /*(0x4d) */
             case op_astore_3:// 78 /*(0x4e)*/
-                pFrame->local[(u1) code_iterator[pFrame->pc] - astore_0] = pFrame->stack[pFrame->sp];
+                pFrame->local[(u1) code_iterator[pFrame->pc] - op_astore_0] = pFrame->stack[pFrame->sp];
                 pFrame->sp--;
                 pFrame->pc++;
                 break;
                 
             case op_iastore:// 79 /*(0x4f)*/
-            case op_aastore: // 83 - both seems same (TODO: Check it)
-                pFrame->stack[pFrame->sp-2]->arrrayList[pFrame->stack[pFrame->sp-1].intValue] = pFrame->stack[pFrame->sp];
-                pFrame->sp-=3;
-                pFrame->pc++;
-                break;
+//            case op_aastore: // 83 - both seems same (TODO: Check it)
+//                pFrame->stack[pFrame->sp-2]->arrrayList[pFrame->stack[pFrame->sp-1]] = pFrame->stack[pFrame->sp];
+//                pFrame->sp-=3;
+//                pFrame->pc++;
+//                break;
                 
                 //Generic (typeless) stack operations
                 
@@ -212,34 +215,34 @@ u4 Execute (Frame *pFrame) {
                 //Integer Arithmetic
                 
             case op_iadd: //96
-                pFrame->stack[pFrame->sp-1].intValue = pFrame->stack[pFrame->sp-1].intValue + pFrame->stack[pFrame->sp].intValue;
+                pFrame->stack[pFrame->sp-1] = pFrame->stack[pFrame->sp-1] + pFrame->stack[pFrame->sp];
                 pFrame->sp--;
                 pFrame->pc++;
                 break;
             case op_ladd:// 97 /*(0x61)*/
-                longVal = (i8)(((i8)pFrame->stack[pFrame->sp-3].intValue<<32) | (i8)pFrame->stack[pFrame->sp-2].intValue)+(i8)(((i8)pFrame->stack[pFrame->sp-1].intValue<<32) | (i8)pFrame->stack[pFrame->sp].intValue);
-                pFrame->stack[pFrame->sp-3].intValue=HIINT64(longVal);
-                pFrame->stack[pFrame->sp-2].intValue=LOINT64(longVal);
+                longVal = (i8)(((i8)pFrame->stack[pFrame->sp-3]<<32) | (i8)pFrame->stack[pFrame->sp-2])+(i8)(((i8)pFrame->stack[pFrame->sp-1]<<32) | (i8)pFrame->stack[pFrame->sp]);
+                pFrame->stack[pFrame->sp-3] = HIINT64(longVal);
+                pFrame->stack[pFrame->sp-2] = LOINT64(longVal);
                 pFrame->sp -= 2;
                 pFrame->pc++;
                 break;
             case op_isub: //100
-                pFrame->stack[pFrame->sp-1].intValue = pFrame->stack[pFrame->sp-1].intValue - pFrame->stack[pFrame->sp].intValue;
+                pFrame->stack[pFrame->sp-1] = pFrame->stack[pFrame->sp-1] - pFrame->stack[pFrame->sp];
                 pFrame->sp--;
                 pFrame->pc++;
                 break;
             case op_imul://104
-                pFrame->stack[pFrame->sp-1].intValue=pFrame->stack[pFrame->sp-1].intValue * pFrame->stack[pFrame->sp].intValue;
+                pFrame->stack[pFrame->sp-1] = pFrame->stack[pFrame->sp-1] * pFrame->stack[pFrame->sp];
                 pFrame->sp--;
                 pFrame->pc++;
                 break;
             case op_idiv://108
-                pFrame->stack[pFrame->sp-1].intValue=pFrame->stack[pFrame->sp-1].intValue / pFrame->stack[pFrame->sp].intValue;
+                pFrame->stack[pFrame->sp-1] = pFrame->stack[pFrame->sp-1] / pFrame->stack[pFrame->sp];
                 pFrame->sp--;
                 pFrame->pc++;
                 break;
             case op_iinc:// 132 /*(0x84)*/ Increment local variable by constant
-                pFrame->stack[(u1)bc[pFrame->pc+1]].intValue += (char)bc[pFrame->pc+2];
+                pFrame->stack[(u1)code_iterator[pFrame->pc+1]] += (char)code_iterator[pFrame->pc+2];
                 pFrame->pc+=3;
                 break;
                 ////////////////////// Logic ///////////////////
@@ -251,7 +254,14 @@ u4 Execute (Frame *pFrame) {
                 //Floating Point Arithmetic
                 
                 
-                
+            case op_putstatic:
+                i = getu2(&code_iterator[pFrame->pc]);
+                u1 *field_name = getFieldName(i, pFrame->pClass->constant_pool);
+                Field_Value *fv = getFieldValue(field_name, pFrame->pClass->static_values, pFrame->pClass->static_values_size);
+                fv->info.U4.value = pFrame->stack[pFrame->sp];
+                pFrame->sp--;
+                pFrame->pc += 3;
+                break;
                 /////////////// Objects and Arrays  ////////////
                 
                 //Instructions that deal with objects
@@ -287,8 +297,8 @@ u4 Execute (Frame *pFrame) {
                 //Conditional branch instructions
                 
             case op_if_icmpeq: // 159 /*(0x9f) */
-                if(pFrame->stack[pFrame->sp -1].intValue == pFrame->stack[pFrame->sp].intValue) {
-                    pFrame->pc+= geti2(&bc[pFrame->pc+1]);
+                if(pFrame->stack[pFrame->sp -1] == pFrame->stack[pFrame->sp]) {
+                    pFrame->pc += geti2(&code_iterator[pFrame->pc+1]);
                 }
                 else {
                     pFrame->pc+=3;
@@ -296,8 +306,8 @@ u4 Execute (Frame *pFrame) {
                 pFrame->sp-=2;
                 break;
             case op_if_icmpne: //160 /*(0xa0) */
-                if(pFrame->stack[pFrame->sp -1].intValue != pFrame->stack[pFrame->sp].intValue) {
-                    pFrame->pc+= geti2(&bc[pFrame->pc+1]);
+                if(pFrame->stack[pFrame->sp -1] != pFrame->stack[pFrame->sp]) {
+                    pFrame->pc+= geti2(&code_iterator[pFrame->pc+1]);
                 }
                 else {
                     pFrame->pc+=3;
@@ -305,8 +315,8 @@ u4 Execute (Frame *pFrame) {
                 pFrame->sp-=2;
                 break;
             case op_if_icmplt: // 161 /*(0xa1) */
-                if(pFrame->stack[pFrame->sp -1].intValue < pFrame->stack[pFrame->sp].intValue) {
-                    pFrame->pc+= geti2(&bc[pFrame->pc+1]);
+                if(pFrame->stack[pFrame->sp -1] < pFrame->stack[pFrame->sp]) {
+                    pFrame->pc+= geti2(&code_iterator[pFrame->pc+1]);
                 }
                 else {
                     pFrame->pc+=3;
@@ -314,8 +324,8 @@ u4 Execute (Frame *pFrame) {
                 pFrame->sp-=2;
                 break;
             case op_if_icmpge: // 162 /*(0xa2) */
-                if(pFrame->stack[pFrame->sp -1].intValue >= pFrame->stack[pFrame->sp].intValue) {
-                    pFrame->pc+= geti2(&bc[pFrame->pc+1]);
+                if(pFrame->stack[pFrame->sp -1] >= pFrame->stack[pFrame->sp]) {
+                    pFrame->pc+= geti2(&code_iterator[pFrame->pc+1]);
                 }
                 else {
                     pFrame->pc+=3;
@@ -323,8 +333,8 @@ u4 Execute (Frame *pFrame) {
                 pFrame->sp-=2;
                 break;
             case op_if_icmpgt: // 163 /*(0xa3) */
-                if(pFrame->stack[pFrame->sp -1].intValue > pFrame->stack[pFrame->sp].intValue) {
-                    pFrame->pc+= geti2(&bc[pFrame->pc+1]);
+                if(pFrame->stack[pFrame->sp -1] > pFrame->stack[pFrame->sp]) {
+                    pFrame->pc+= geti2(&code_iterator[pFrame->pc+1]);
                 }
                 else {
                     pFrame->pc+=3;
@@ -332,8 +342,8 @@ u4 Execute (Frame *pFrame) {
                 pFrame->sp-=2;
                 break;
             case op_if_icmple: // 164 /*(0xa4)*/
-                if(pFrame->stack[pFrame->sp -1].intValue <= pFrame->stack[pFrame->sp].intValue) {
-                    pFrame->pc+= geti2(&bc[pFrame->pc+1]);
+                if(pFrame->stack[pFrame->sp -1] <= pFrame->stack[pFrame->sp]) {
+                    pFrame->pc+= geti2(&code_iterator[pFrame->pc+1]);
                 }
                 else {
                     pFrame->pc+=3;
@@ -342,8 +352,8 @@ u4 Execute (Frame *pFrame) {
                 break;
                 
             case op_ifeq:// 153 /*(0x99) */
-                if(pFrame->stack[pFrame->sp].intValue == 0) {
-                    pFrame->pc+= geti2(&bc[pFrame->pc+1]);
+                if(pFrame->stack[pFrame->sp] == 0) {
+                    pFrame->pc+= geti2(&code_iterator[pFrame->pc+1]);
                 }
                 else {
                     pFrame->pc+=3;
@@ -351,8 +361,8 @@ u4 Execute (Frame *pFrame) {
                 pFrame->sp--;
                 break;
             case op_ifne:// 154 /*(0x9a) */
-                if(pFrame->stack[pFrame->sp].intValue != 0) {
-                    pFrame->pc+= geti2(&bc[pFrame->pc+1]);
+                if(pFrame->stack[pFrame->sp] != 0) {
+                    pFrame->pc+= geti2(&code_iterator[pFrame->pc+1]);
                 }
                 else {
                     pFrame->pc+=3;
@@ -360,8 +370,8 @@ u4 Execute (Frame *pFrame) {
                 pFrame->sp--;
                 break;
             case op_iflt:// 155 /*(0x9b) */
-                if(pFrame->stack[pFrame->sp].intValue < 0) {
-                    pFrame->pc+= geti2(&bc[pFrame->pc+1]);
+                if(pFrame->stack[pFrame->sp] < 0) {
+                    pFrame->pc+= geti2(&code_iterator[pFrame->pc+1]);
                 }
                 else {
                     pFrame->pc+=3;
@@ -369,8 +379,8 @@ u4 Execute (Frame *pFrame) {
                 pFrame->sp--;
                 break;
             case op_ifge:// 156 /*(0x9c) */
-                if(pFrame->stack[pFrame->sp].intValue >= 0) {
-                    pFrame->pc+= geti2(&bc[pFrame->pc+1]);
+                if(pFrame->stack[pFrame->sp] >= 0) {
+                    pFrame->pc+= geti2(&code_iterator[pFrame->pc+1]);
                 }
                 else {
                     pFrame->pc+=3;
@@ -378,8 +388,8 @@ u4 Execute (Frame *pFrame) {
                 pFrame->sp--;
                 break;
             case op_ifgt:// 157 /*(0x9d) */
-                if(pFrame->stack[pFrame->sp].intValue > 0) {
-                    pFrame->pc+= geti2(&bc[pFrame->pc+1]);
+                if(pFrame->stack[pFrame->sp] > 0) {
+                    pFrame->pc+= geti2(&code_iterator[pFrame->pc+1]);
                 }
                 else {
                     pFrame->pc+=3;
@@ -387,8 +397,8 @@ u4 Execute (Frame *pFrame) {
                 pFrame->sp--;
                 break;
             case op_ifle:// 158 /*(0x9e)*/
-                if(pFrame->stack[pFrame->sp].intValue <= 0) {
-                    pFrame->pc+= geti2(&bc[pFrame->pc+1]);
+                if(pFrame->stack[pFrame->sp] <= 0) {
+                    pFrame->pc+= geti2(&code_iterator[pFrame->pc+1]);
                 }
                 else {
                     pFrame->pc+=3;
@@ -427,13 +437,11 @@ u4 Execute (Frame *pFrame) {
                 break;
                 //Method return instructions
             case op_ireturn: //172 (0xac)
-                DbgPrint(_T("----IRETURN------\n"));
-                pFrame->stack[0].intValue=pFrame->stack[pFrame->sp].intValue;			
+                pFrame->stack[0]=pFrame->stack[pFrame->sp];			
                 return ireturn;
                 break;
                 
             case op_return: //177 (0xb1): Return (void) from method
-                DbgPrint(_T("----RETURN------\n"));
                 return 0;//METHOD_RETURN;
                 break;
                 //////////////// Thread Synchronization ////////////////////
@@ -471,10 +479,25 @@ Variable *CreateNewArray(u1 type, i4 count) {
     
     if(pVar) {
         memset(pVar, 0, sizeof(Variable)*(count+1));
-        pVar[0].intValue = type;
+        pVar[0] = type;
     }
     
     return pVar;
+}
+
+Field_Value *getFieldValue(u1 *name, Field_Value *pField, u2 static_values_size) {
+    u2 count = 0;
+    u2 found = 0;
+    
+    while (count < static_values_size && found == 0) {
+        if (strcmp(pField[count].field_name, name) == 0) {
+            found = 1;
+        }
+        else {
+            ++count;
+        }
+    }
+    return pField[count];
 }
 
 Variable getArrayVariable(Array_t *array, int index, int type) {
@@ -516,7 +539,7 @@ u1 *GetSuperClassName(CLassFile *pClass) {
     return retVal;
 }
 
-JavaClass* JavaClass::GetSuperClass(ClassFile *pClass) {
+ClassFile *GetSuperClass(ClassFile *pClass) {
     u1  *superClass = GetSuperClassName(pClass);
     
     ClassFile *pSuperClass = fetchClass(pClassHeap, superClass, classHeapLength);
@@ -525,18 +548,7 @@ JavaClass* JavaClass::GetSuperClass(ClassFile *pClass) {
 }
 
 BOOL GetStringFromConstPool(int nIndex, u1 *strValue, cp_info *pool) {
-    
-    if(pool[nIndex - 1]->tag != CONSTANT_UTF8)
-        return FALSE;
-    
-    u1 *p =(u1 *) pool[nIndex -1];
-    
-    short length = getu2(&p[1]);
-    char *buffer = new char[length+1];
-    buffer[length] = 0;
-    memcpy(buffer, &p[3], length);
-    strValue += buffer;
-    delete buffer;
+    strValue = pool[nIndex - 1].info.CONSTANT_Utf8_info.bytes;
     return TRUE;
 }
 
@@ -601,6 +613,18 @@ Variable LoadConstant(ClasFile *pClass, u1 nIndex) {
     return v;
 }
 
+u1 * getFieldName(u2 index, cp_info *pool) { //3
+    u2 nameAndType_index = 0;
+    u2 name_index;
+    u1 *string;
+    
+    nameAndType_index = pool[index -1].info.CONSTANT_FieldMethodIMethod_info.name_and_type_index; //24
+    name_index = pool[nameAndType_index -1].info.CONSTANT_NameAndType_info.name_index; //9
+    GetStringFromConstPool(name_index, string, pool);
+    
+    return string;
+}
+
 u2 GetMethodParametersStackCount(u1 *strMethodDesc) {
     u2 count=0;
     
@@ -622,7 +646,7 @@ u2 GetMethodParametersStackCount(u1 *strMethodDesc) {
 }
 
 
-void ExecutionEngine::ExecuteInvokeSpecial(Frame *pFrameStack) {
+void ExecuteInvokeSpecial(Frame *pFrameStack) {
     ExecuteInvokeVirtual(pFrameStack, invokespecial);
 }
 

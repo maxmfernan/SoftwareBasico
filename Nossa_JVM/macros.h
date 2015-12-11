@@ -31,20 +31,27 @@ typedef uint8_t u1;
 typedef uint16_t u2;
 typedef uint32_t u4;
 typedef int32_t i4;
+typedef int64_t i8;
 typedef float f4;
 
 #define LOINT64(I8) (u4)(I8 &0xFFFFFFFF)
 #define HIINT64(I8) (u4)(I8 >> 32)
-
-#define getu2(p) (u2)((p)[0]<< 8 & 0x0000FF00 |(p)[1])
 #define getu4(p) (u4)( (u4)((p)[0])<<24 & 0xFF000000 | (u4)((p)[1])<<16 & 0x00FF0000 | (u4)((p)[2])<<8 & 0x0000FF00| (u4)((p)[3]) & 0x000000FF)
+#define getu2(p) (u2)((p)[0]<< 8 & 0x0000FF00 |(p)[1])
+
+#define MAKEI8(i4high, i4low) (i8) (((i8)i4high) << 32 | (i8)i4low)
 
 //getf4 depents on geti4 : carefull when changing...
 #define geti4(p) (i4)( (u4)((p)[0])<<24 | (u4)((p)[1])<<16 | (u4)((p)[2])<<8 | (u4)((p)[3]) )
 #define geti2(p) (i2)(((p)[0]<<8)|(p)[1])
 
-//f4 getf4(char *p);
+f4 getf4(char *p);
 
+#define castu4(p) *((u4 *)p)
+#define castu2(p) *((u2 *)p)
+
+#define casti4(p) *((i4 *)p)
+#define casti2(p) *((i2 *)p)
 
 /** Definição valores máximos */
 #define CLSHEAP_MAX 50
@@ -507,6 +514,21 @@ union {
     Object object;
 } Variable;
 */
+
+typedef struct{
+    u1 *field_name; //UTF8
+    union {
+        struct {
+            u4 value;
+        } U4;
+        struct {
+            u4 high;
+            u4 low;
+        } U8;
+    }info;
+}Field_Value;
+
+
 /** Estrutura do arquivo .class */
 typedef struct {
 	u4 magic;
@@ -527,6 +549,14 @@ typedef struct {
    	attribute_info *attributes;
     
     //Variable *variable;
+    //field_info *static_fields;
+    
+    u2 object_fields_size;
+    field_info *object_fields;
+    
+    u2 static_values_size;
+    Field_Value *static_values;
+    
     u1 *className;
     
     
@@ -536,19 +566,6 @@ typedef struct {
 typedef struct {
     Variable *data;
 }Array_t;
-
-typedef struct{
-    u2 field_index;
-    union {
-        struct {
-            u4 value;
-        } U4;
-        struct {
-            u4 high;
-            u4 low;
-        } U8;
-    };
-}Field_Value;
 
 typedef struct {
     ClassFile *classRef ; ///Referencia para a classe alocada na memoria
