@@ -64,7 +64,7 @@ void initializeClass(ClassFile *class_ptr, Frame *stkFrame_ptr, dataMSize_t *dmS
     u2 aux_idx = dmSize_ptr->stkHeap_size - 1; // o stkFrameTop_ptr na verdade é o stack frame size, que indica a qtd de frames na stkframe.
     
     //Teste
-    Execute(&stkFrame_ptr[aux_idx], classHeap_ptr, dmSize_ptr);
+    Execute(stkFrame_ptr, classHeap_ptr, dmSize_ptr);
     
     //Deleta o frame.
     printf("\n%d\t%d\n", dmSize_ptr->stkHeap_size, aux_idx);
