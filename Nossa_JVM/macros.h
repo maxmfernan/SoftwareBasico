@@ -528,7 +528,7 @@ typedef struct{
             u4 low;
         } U8;
         struct {
-            u1 *bytes
+            u1 *bytes;
         } UTF8;
     }info;
 }Field_Value;

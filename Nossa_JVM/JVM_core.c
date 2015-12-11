@@ -1,6 +1,8 @@
 #include "macros.h"
 #include "JVM_core.h"
 #include "LoadClass_core.h"
+#include "Execution_Core.h"
+#include "LoadClass_ui.h"
 /**
  * @brief Inicializa a JVM; Aloca memória para as estruturas principais;
  Chama o carregador para a primeira classe; inicializa a primeira classe
@@ -30,9 +32,16 @@ void jvmStartup(ClassFile *classHeap_ptr, Object *objectHeap_ptr, Frame *stackFr
     printf("\n--------------------------------");
     print_ClassFile(classHeap_ptr);
     //Inicializa a classe inicial, roda clinit
+
 	//OK!
     initializeClass(classHeap_ptr, stackFrame_ptr, dmSize_ptr, classHeap_ptr);
     //initializeClass(classHeap_ptr, stackFrame_ptr, &dmSize_ptr->stkHeap_size); //Sei que o primeiro elemento da classHeap é a classe inicial
+	
+	//Chamo o método main
+	printf("\nVou chamar o calssMethod");
+	callMethod(classHeap_ptr, stackFrame_ptr, dmSize_ptr, classHeap_ptr, "main", "([Ljava/lang/String;)V");
+
+
 }
 
 /**
@@ -43,6 +52,7 @@ void jvmStartup(ClassFile *classHeap_ptr, Object *objectHeap_ptr, Frame *stackFr
  * @param stkFrameTop_ptr
  */
 void initializeClass(ClassFile *class_ptr, Frame *stkFrame_ptr, dataMSize_t *dmSize_ptr, ClassFile *classHeap_ptr){
+
     u2 method_idx = seekMethodInClass( class_ptr, "<clinit>", "()V" );
     printf("\nIDX %d", method_idx);
     method_info *method_ptr = &class_ptr->methods[method_idx];
@@ -55,6 +65,44 @@ void initializeClass(ClassFile *class_ptr, Frame *stkFrame_ptr, dataMSize_t *dmS
     
     //Teste
     Execute(&stkFrame_ptr[aux_idx], classHeap_ptr, dmSize_ptr);
+    
+    //Deleta o frame.
+    printf("\n%d\t%d\n", dmSize_ptr->stkHeap_size, aux_idx);
+    deleteFrame(&stkFrame_ptr[aux_idx], &dmSize_ptr->stkHeap_size);
+}
+
+/**
+* @brief 
+*
+* @param class_ptr
+* @param stkFrame_ptr
+* @param dmSize_ptr
+* @param classHeap_ptr
+* @param mth_name
+* @param mth_descriptor
+*/
+void callMethod(ClassFile *class_ptr, Frame *stkFrame_ptr, dataMSize_t *dmSize_ptr, ClassFile *classHeap_ptr, \
+	char *mth_name, char *mth_descriptor){
+    u2 method_idx = seekMethodInClass( class_ptr, mth_name, mth_descriptor );
+	printf("\nPor que?");
+
+    printf("\nIDX %d", method_idx);
+	getchar();
+	getchar();
+	if( method_idx  == SEEK_NOTFOUND){
+		printf("\nDeu pau");
+		exit(1);
+	}
+    method_info *method_ptr = &class_ptr->methods[method_idx];
+    printf("\nOlhe %d", method_ptr->name_index);
+    //Quem cria deleta.
+    
+    createFrame(method_ptr, class_ptr, stkFrame_ptr, &dmSize_ptr->stkHeap_size);//Cria o frame para o método <clinit> da classe.
+    
+    u2 aux_idx = dmSize_ptr->stkHeap_size - 1; // o stkFrameTop_ptr na verdade é o stack frame size, que indica a qtd de frames na stkframe.
+    
+    //Teste
+    //Execute(&stkFrame_ptr[aux_idx], classHeap_ptr, dmSize_ptr);
     
     //Deleta o frame.
     printf("\n%d\t%d\n", dmSize_ptr->stkHeap_size, aux_idx);
@@ -110,7 +158,7 @@ int findClass(ClassFile *classHeap_ptr, dataMSize_t dmSize, char* ClassName){
             return i;
         }
     }
-    return -1;
+    return SEEK_NOTFOUND;
 }
 
 u2 findCode(method_info *method) {
@@ -176,7 +224,7 @@ void createFrame(method_info *method, ClassFile *Class, Frame *frame_ptr, u2 *nu
 //Lembrar de enviar o dataMSize->stkHeap_size para o numFrames
 void deleteFrame(Frame *frame_ptr, u2 *numFrames) {
     
-    free(frame_ptr);
+    //free(frame_ptr);
     (*numFrames)--;
     
 }
