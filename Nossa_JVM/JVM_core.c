@@ -21,7 +21,10 @@ void jvmStartup(ClassFile *classHeap_ptr, Object *objectHeap_ptr, Frame *stackFr
 
 	//Carrega a classe inicial
 	//OK! +-
-	loadClass(classPathF_ptr, classHeap_ptr, dmSize_ptr); 
+	loadClass(classPathF_ptr, classHeap_ptr, dmSize_ptr);
+    printf("\n\nConteudo do .class");
+    printf("\n--------------------------------");
+    print_ClassFile(classHeap_ptr);
 
 	//Checa a consistência da classe
 
@@ -40,7 +43,12 @@ void initializeClass(ClassFile *class_ptr, Frame *stkFrame_ptr, u2 *stkFrameTop_
 	u2 method_idx = seekMethodInClass( class_ptr, "<clinit>", "()V" );
 	printf("\nIDX %d", method_idx);
 	method_info *method_ptr = &class_ptr->methods[method_idx];
+<<<<<<< Updated upstream
 	printf("\nOlhe %d", method_ptr->name_index);	
+=======
+    printf("%d\n",method_idx);
+	
+>>>>>>> Stashed changes
 	//Quem cria deleta.	
 	createFrame(method_ptr, class_ptr, stkFrame_ptr, stkFrameTop_ptr);//Cria o frame para o método <clinit> da classe.
 	
