@@ -521,8 +521,8 @@ typedef struct{
     u1 *descriptor;
     union {
         struct {
-            u4 value;
-        } U4;
+            i4 value;
+        } I4;
         struct {
             u4 high;
             u4 low;

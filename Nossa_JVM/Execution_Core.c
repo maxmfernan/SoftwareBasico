@@ -79,7 +79,8 @@ u4 Execute (Frame *pFrame, ClassFile *pClassHeap, dataMSize_t *dmSize_ptr) {
 //                
             case op_ldc: //Push item from constant pool
                 printf("ldc\n");
-                pFrame->stack[++pFrame->sp] = LoadConstant(pFrame->pClass, (u1)code_iterator[pFrame->pc + 1]);
+                pFrame->sp++;
+                pFrame->stack[pFrame->sp] = LoadConstant(pFrame->pClass, (u1)code_iterator[pFrame->pc + 1]);
                 pFrame->pc += 2;
                 break;
                 
@@ -275,11 +276,31 @@ u4 Execute (Frame *pFrame, ClassFile *pClassHeap, dataMSize_t *dmSize_ptr) {
                 printf("Field Name = %s\n",field_name);
                 getchar();
                 Field_Value *fv = getFieldValue(field_name, pFrame->pClass->static_values, pFrame->pClass->static_values_size);
-                //insertValue(FieldValue *fv)
-                fv->info.U4.value = pFrame->stack[pFrame->sp];
-                printf("Valor = %d\n",fv->info.U4.value);
+                if (strcmp(fv->descriptor,"Ljava/lang/String;") == 0) {
+                    fv->info.UTF8.bytes = pFrame->stack[pFrame->sp];
+                    printf("Valor = %s\n",fv->info.UTF8.bytes);
+                    pFrame->sp--;
+                }
+                else {
+                    if (strcmp(fv->descriptor,"I") == 0 || strcmp(fv->descriptor,"F") == 0) {
+                        fv->info.I4.value = pFrame->stack[pFrame->sp];
+                        printf("Valor = %d\n",fv->info.I4.value);
+                        pFrame->sp--;
+                    }
+                    else {
+                        if (strcmp(fv->descriptor,"D") == 0 || strcmp(fv->descriptor,"J") == 0) {
+                            fv->info.U8.high = pFrame->stack[pFrame->sp];
+                            printf("Valor = %f\n",fv->info.U8.high);
+                            pFrame->sp--;
+                            fv->info.U8.low = pFrame->stack[pFrame->sp];
+                            printf("Valor = %f\n",fv->info.U8.low);
+                            pFrame->sp--;
+                        }
+
+                    }
+
+                }
                 getchar();
-                pFrame->sp--;
                 pFrame->pc += 3;
                 break;
                 /////////////// Objects and Arrays  ////////////
@@ -665,22 +686,24 @@ Field_Value *getFieldValue(u1 *name, Field_Value *pField, u2 static_values_size)
 
 
 u4 LoadConstant(ClassFile *pClass, u1 nIndex) {
-    u4 v;
+    u4 v = 0;
     u1 *bytes;
 
-    switch(pClass->constant_pool[nIndex].tag)
+    printf("tag = %d\n",pClass->constant_pool[nIndex -1].tag);
+    switch(pClass->constant_pool[nIndex - 1].tag)
     {
         case CONSTANT_INTEGER:
-            v = pClass->constant_pool[nIndex].info.CONSTANT_IntegerFloat_info.bytes;
-            break;
-            
         case CONSTANT_FLOAT:
-            v = pClass->constant_pool[nIndex].info.CONSTANT_IntegerFloat_info.bytes;
+            v = pClass->constant_pool[nIndex -1].info.CONSTANT_IntegerFloat_info.bytes;
+            printf("é int = d\t ou é float = %f\n",pClass->constant_pool[nIndex].info.CONSTANT_IntegerFloat_info.bytes);
+            getchar();
             break;
             
         case CONSTANT_STRING:
             bytes = pClass->constant_pool[pClass->constant_pool[nIndex - 1].info.CONSTANT_String_info.string_index - 1].info.CONSTANT_Utf8_info.bytes;
-            v = bytes;
+            v = v | bytes;
+            printf("String = %s\n",bytes);
+
             break;
             
         case CONSTANT_DOUBLE:
@@ -695,12 +718,8 @@ u4 LoadConstant(ClassFile *pClass, u1 nIndex) {
 
 u1 *GetStringFromConstPool(u2 nIndex, cp_info *pool) {
     u1 *string;
-    printf("%d\n",nIndex);
-    printf("%d\n",pool[0].info.CONSTANT_FieldMethodIMethod_info.class_index);
-    getchar();
+    
     string = pool[nIndex - 1].info.CONSTANT_Utf8_info.bytes;
-    printf("%s\n",string);
-    getchar();
     return string;
 
 }
@@ -721,8 +740,6 @@ u1 *getFieldName(u2 index, cp_info *pool) { //3
     nameAndType_index = pool[index -1].info.CONSTANT_FieldMethodIMethod_info.name_and_type_index; //24
     name_index = pool[nameAndType_index -1].info.CONSTANT_NameAndType_info.name_index;
     string = GetStringFromConstPool(name_index, pool);
-    printf("%s\n",string);
-    getchar();
     
     return string;
 }
