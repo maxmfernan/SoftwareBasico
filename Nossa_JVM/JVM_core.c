@@ -26,7 +26,8 @@ void jvmStartup(ClassFile *classHeap_ptr, Object *objectHeap_ptr, Frame *stackFr
     //Checa a consistência da classe
     
     //Inicializa a classe inicial, roda clinit
-    initializeClass(classHeap_ptr, stackFrame_ptr, &dmSize_ptr->stkHeap_size); //Sei que o primeiro elemento da classHeap é a classe inicial
+    initializeClass(classHeap_ptr, stackFrame_ptr, dmSize_ptr, classHeap_ptr);
+    //initializeClass(classHeap_ptr, stackFrame_ptr, &dmSize_ptr->stkHeap_size); //Sei que o primeiro elemento da classHeap é a classe inicial
 }
 
 /**
@@ -36,22 +37,23 @@ void jvmStartup(ClassFile *classHeap_ptr, Object *objectHeap_ptr, Frame *stackFr
  * @param stkFrame_ptr
  * @param stkFrameTop_ptr
  */
-void initializeClass(ClassFile *class_ptr, Frame *stkFrame_ptr, u2 *stkFrameTop_ptr){
+void initializeClass(ClassFile *class_ptr, Frame *stkFrame_ptr, dataMSize_t *dmSize_ptr, ClassFile *classHeap_ptr){
     u2 method_idx = seekMethodInClass( class_ptr, "<clinit>", "()V" );
     printf("\nIDX %d", method_idx);
     method_info *method_ptr = &class_ptr->methods[method_idx];
     printf("\nOlhe %d", method_ptr->name_index);
     //Quem cria deleta.
-    createFrame(method_ptr, class_ptr, stkFrame_ptr, stkFrameTop_ptr);//Cria o frame para o método <clinit> da classe.
     
-    u2 aux_idx = *stkFrameTop_ptr - 1; // o stkFrameTop_ptr na verdade é o stack frame size, que indica a qtd de frames na stkframe.
+    createFrame(method_ptr, class_ptr, stkFrame_ptr, &dmSize_ptr->stkHeap_size);//Cria o frame para o método <clinit> da classe.
+    
+    u2 aux_idx = dmSize_ptr->stkHeap_size - 1; // o stkFrameTop_ptr na verdade é o stack frame size, que indica a qtd de frames na stkframe.
     
     //Teste
-    //execute(stkFrame_ptr[aux_idx]);
+    //Execute(stkFrame_ptr[aux_idx], classHeap_ptr, dmSize_ptr);
     
     //Deleta o frame.
-    printf("\n%d\t%d\n", *stkFrameTop_ptr, aux_idx);
-    deleteFrame(&stkFrame_ptr[aux_idx], stkFrameTop_ptr);
+    printf("\n%d\t%d\n", dmSize_ptr->stkHeap_size, aux_idx);
+    deleteFrame(&stkFrame_ptr[aux_idx], &dmSize_ptr->stkHeap_size);
 }
 
 /** OK!
