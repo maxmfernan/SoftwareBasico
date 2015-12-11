@@ -15,6 +15,10 @@ void jvmStartup(ClassFile *classHeap_ptr, Object *objectHeap_ptr, Frame *stackFr
 	objectHeap_ptr = malloc( OBJHEAP_MAX*sizeof( Object_t ) );
 	stackFrame_ptr = malloc( STKFRAME_MAX*sizeof( Frame ) );
 
+	dmSize_ptr->clsHeap_size = 0;
+	dmSize_ptr->objHeap_size = 0;
+	dmSize_ptr->stkHeap_size = 0;
+
 	//Carrega a classe inicial
 	//OK! +-
 	loadClass(classPathF_ptr, classHeap_ptr, dmSize_ptr); 
@@ -37,7 +41,7 @@ void initializeClass(ClassFile *class_ptr, Frame *stkFrame_ptr, u2 *stkFrameTop_
 	method_info *method_ptr = &class_ptr->methods[method_idx];
 	
 	//Quem cria deleta.	
-//	createFrame(method_ptr, class_ptr, stkFrame_ptr, stkFrameTop_ptr);//Cria o frame para o método <clinit> da classe.
+	createFrame(method_ptr, class_ptr, stkFrame_ptr, stkFrameTop_ptr);//Cria o frame para o método <clinit> da classe.
 	
 	u2 aux_idx = *stkFrameTop_ptr - 1; // o stkFrameTop_ptr na verdade é o stack frame size, que indica a qtd de frames na stkframe.
 
@@ -45,7 +49,8 @@ void initializeClass(ClassFile *class_ptr, Frame *stkFrame_ptr, u2 *stkFrameTop_
 	//execute(stkFrame_ptr[aux_idx]);
 
 	//Deleta o frame.
-//	deleteFrame(&stkFrame_ptr[aux_idx], stkFrameTop_ptr);
+	printf("\n%d\t%d\n", *stkFrameTop_ptr, aux_idx);
+	deleteFrame(&stkFrame_ptr[aux_idx], stkFrameTop_ptr);
 }
 
 /** OK!
@@ -73,6 +78,7 @@ u2 seekMethodInClass(ClassFile *class_ptr, char *methName_str, char *methDescrip
 		methodD = class_ptr->constant_pool[class_ptr->methods[i].descriptor_index - 1].info.CONSTANT_Utf8_info.bytes;
 		if( !strcmp(methodN, methName_str) && !strcmp(methodD, methDescriptor_str) ){
 			return i;
+		
 		}
 		
 		/*for(int j = 0; j < str_size; j++){
@@ -103,9 +109,12 @@ u2 findCode(ClassFile *Class) {
 
 	u2 i = 0;
 
+	printf("\nEntrou findCode");
 	while(Class->methods->attribute[i].tag != 1){
 		i++;
+		
 	}
+	printf("\n%d", Class->methods->attribute[i].tag );
 	return i;
 }
 
@@ -114,7 +123,7 @@ void createFrame(method_info *method, ClassFile *Class, Frame *frame_ptr, u2 *nu
     
 	u2 i = *numFrames;
 	u2 codeIndex = 0;
-	findCode(Class);
+	codeIndex = findCode(Class);
 
 	if (i < STKFRAME_MAX - 1) {
 	    frame_ptr[i].pClass = Class;
@@ -130,7 +139,25 @@ void createFrame(method_info *method, ClassFile *Class, Frame *frame_ptr, u2 *nu
 	    frame_ptr[i].stack = malloc(frame_ptr[i].stack_size * sizeof(u4));
 	    frame_ptr[i].local = malloc(frame_ptr[i].local_size * sizeof(u4));
 
-	    *numFrames++;
+	/*TESTE*/
+//	frame_ptr[i - 1].pClass = Class;
+//	    frame_ptr[i -1].pMethod = method;
+//	    frame_ptr[i -1].code_length = Class->methods->attribute[codeIndex].info.Code_attribute.code_length;
+//	    frame_ptr[i - 1].code = malloc(frame_ptr[i].code_length * sizeof(u1));
+//
+//	    frame_ptr[i - 1].pc = 0;
+//	    frame_ptr[i - 1].sp = 0;
+//
+//	    frame_ptr[i - 1].stack_size = Class->methods->attribute[codeIndex].info.Code_attribute.max_stack;
+//	    frame_ptr[i - 1].local_size = Class->methods->attribute[codeIndex].info.Code_attribute.max_locals;
+//	    frame_ptr[i - 1].stack = malloc(frame_ptr[i].stack_size * sizeof(u4));
+//	    frame_ptr[i - 1].local = malloc(frame_ptr[i].local_size * sizeof(u4));
+//
+
+
+	    (*numFrames)++;
+			printf("\n##%d", frame_ptr[i].pMethod->name_index);
+			printf("\nLength %d", frame_ptr[i].code_length);
 	} else {
 		printf("Frame não pode ser alocado, tamanho máximo atingido");
 		exit(1);
@@ -141,7 +168,7 @@ void createFrame(method_info *method, ClassFile *Class, Frame *frame_ptr, u2 *nu
 void deleteFrame(Frame *frame_ptr, u2 *numFrames) {
 
 	free(frame_ptr);
-	*numFrames--;
+	(*numFrames)--;
 
 }
 
