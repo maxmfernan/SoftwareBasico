@@ -81,5 +81,5 @@ attribute_info *createAttributeInfo (FILE *arq, cp_info *pool, u2 *attr_count);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 u2* interface_decode (FILE *arq, u2 *inter_length, u2 *poll_offset, u2 *interface_offset);
-
+void fillStaticFields(ClassFile *clsFile_ptr);
 #endif

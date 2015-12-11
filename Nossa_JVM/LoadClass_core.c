@@ -881,3 +881,17 @@ u2* interface_decode (FILE *arq, u2 *inter_length, u2 *poll_offset, u2 *interfac
 	}
 return interface;
 }
+
+
+void fillStaticFields(ClassFile *clsFile_ptr){	
+	clsFile_ptr->static_values_size = clsFile_ptr->fields_count;
+	clsFile_ptr->static_values = malloc( clsFile_ptr->static_values_size*sizeof(Field_Value) );
+	int j = 0;
+	for(int i = 0; i < clsFile_ptr->fields_count; i++){
+		if( (clsFile_ptr->fields[i].access_flag && 0x0008) ){
+			clsFile_ptr->static_values[j].field_name = \
+			clsFile_ptr->constant_pool[clsFile_ptr->fields[i].name_index - 1].info.CONSTANT_Utf8_info.bytes;	
+			j++;
+		}
+	}
+}

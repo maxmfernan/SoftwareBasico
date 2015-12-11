@@ -20,12 +20,15 @@ void jvmStartup(ClassFile *classHeap_ptr, Object *objectHeap_ptr, Frame *stackFr
     dmSize_ptr->stkHeap_size = 0;
     
     //Carrega a classe inicial
-    //OK! +-
+    //OK! 
     loadClass(classPathF_ptr, classHeap_ptr, dmSize_ptr);
-    
+   	printf("\nstatic_values_size %d", classHeap_ptr->static_values_size); 
+	for(int i = 0; i < classHeap_ptr->static_values_size; i++)
+		printf("\nname %s", classHeap_ptr->static_values[i].field_name);
     //Checa a consistência da classe
     
     //Inicializa a classe inicial, roda clinit
+	//OK!
     initializeClass(classHeap_ptr, stackFrame_ptr, dmSize_ptr, classHeap_ptr);
     //initializeClass(classHeap_ptr, stackFrame_ptr, &dmSize_ptr->stkHeap_size); //Sei que o primeiro elemento da classHeap é a classe inicial
 }
