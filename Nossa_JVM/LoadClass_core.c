@@ -894,4 +894,5 @@ void fillStaticFields(ClassFile *clsFile_ptr){
 			j++;
 		}
 	}
+	clsFile_ptr->static_values_size = j;
 }
