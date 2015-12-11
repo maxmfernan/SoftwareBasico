@@ -9,7 +9,8 @@
 #include "macros.h"
 #include "Execution_Core.h"
 
-u4 Execute (Frame *pFrame) {
+u4 Execute (Frame *pFrame, CLassFile *pClassHeap, dataMSize_t *dmSize_ptr) {
+    u2 classHeapLength = dmSize_ptr->clsHeap_size;
     u4 *local_iterator = pFrame->local;
     u1 *code_iterator;
     i4 error = 0;
