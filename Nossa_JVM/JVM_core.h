@@ -2,7 +2,7 @@
 
 void jvmStartup(ClassFile *classHeap_ptr, Object *objectHeap_ptr, Frame *stackFrame_ptr, FILE *classPathF_ptr, dataMSize_t *dmSize_ptr);
 
-void initializeClass(ClassFile *class_ptr, Frame *stkFrame_ptr, u2 *stkFrameTop_ptr);
+void initializeClass(ClassFile *class_ptr, Frame *stkFrame_ptr, dataMSize_t *dmSize_ptr, ClassFile *classHeap_ptr);
 
 u2 seekMethodInClass(ClassFile *class_ptr, char *methName_str, char *methDescriptor_str);
 
