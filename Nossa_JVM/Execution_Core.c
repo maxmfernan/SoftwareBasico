@@ -275,6 +275,7 @@ u4 Execute (Frame *pFrame, ClassFile *pClassHeap, dataMSize_t *dmSize_ptr) {
                 printf("Field Name = %s\n",field_name);
                 getchar();
                 Field_Value *fv = getFieldValue(field_name, pFrame->pClass->static_values, pFrame->pClass->static_values_size);
+                //insertValue(FieldValue *fv)
                 fv->info.U4.value = pFrame->stack[pFrame->sp];
                 printf("Valor = %d\n",fv->info.U4.value);
                 getchar();

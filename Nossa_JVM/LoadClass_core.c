@@ -890,8 +890,10 @@ void fillStaticFields(ClassFile *clsFile_ptr){
 	for(int i = 0; i < clsFile_ptr->fields_count; i++){
 		if( (clsFile_ptr->fields[i].access_flag && 0x0008) ){
 			clsFile_ptr->static_values[j].field_name = \
-			clsFile_ptr->constant_pool[clsFile_ptr->fields[i].name_index - 1].info.CONSTANT_Utf8_info.bytes;	
-			j++;
+			clsFile_ptr->constant_pool[clsFile_ptr->fields[i].name_index - 1].info.CONSTANT_Utf8_info.bytes;
+            clsFile_ptr->static_values[j].descriptor = \
+            clsFile_ptr->constant_pool[clsFile_ptr->fields[i].descriptor_index - 1].info.CONSTANT_Utf8_info.bytes;
+            j++;
 		}
 	}
 	clsFile_ptr->static_values_size = j;

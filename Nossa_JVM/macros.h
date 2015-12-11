@@ -518,6 +518,7 @@ union {
 
 typedef struct{
     u1 *field_name; //UTF8
+    u1 *descriptor;
     union {
         struct {
             u4 value;

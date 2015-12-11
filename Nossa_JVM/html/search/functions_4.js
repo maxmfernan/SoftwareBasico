@@ -1,7 +1,0 @@
-var searchData=
-[
-  ['fetchclass',['fetchClass',['../_load_class__core_8c.html#aca3c209f0e8054e6baacad724f2c139c',1,'LoadClass_core.c']]],
-  ['field_5ffunc',['field_func',['../_load_class__core_8c.html#a4fa710dfadc32664d286ac7b8a7f1f83',1,'field_func(FILE *class_f, unsigned int offset, unsigned int *bytes_ptr, cp_info *pool_array, unsigned int *fieldn):&#160;LoadClass_core.c'],['../_load_class__core_8h.html#a4fa710dfadc32664d286ac7b8a7f1f83',1,'field_func(FILE *class_f, unsigned int offset, unsigned int *bytes_ptr, cp_info *pool_array, unsigned int *fieldn):&#160;LoadClass_core.c']]],
-  ['findclass',['findClass',['../create_frame_8c.html#a3d56556871abfdc164485fb5ba4db544',1,'findClass(ClassFile *classHeap_ptr, dataMSize_t dmSize, char *ClassName):&#160;createFrame.c'],['../_j_v_m__core_8c.html#a3d56556871abfdc164485fb5ba4db544',1,'findClass(ClassFile *classHeap_ptr, dataMSize_t dmSize, char *ClassName):&#160;JVM_core.c'],['../_j_v_m__core_8h.html#a3d56556871abfdc164485fb5ba4db544',1,'findClass(ClassFile *classHeap_ptr, dataMSize_t dmSize, char *ClassName):&#160;createFrame.c']]],
-  ['findcode',['findCode',['../create_frame_8c.html#a562c07f087414e789973b60ed724fe90',1,'findCode(ClassFile *Class):&#160;createFrame.c'],['../_j_v_m__core_8c.html#afc7e5b8cf35be6b39a7648e55e9d09f6',1,'findCode(method_info *method):&#160;JVM_core.c'],['../_j_v_m__core_8h.html#afc7e5b8cf35be6b39a7648e55e9d09f6',1,'findCode(method_info *method):&#160;JVM_core.c']]]
-];
