@@ -8,7 +8,7 @@ u2 seekMethodInClass(ClassFile *class_ptr, char *methName_str, char *methDescrip
 
 int findClass(ClassFile *classHeap_ptr, dataMSize_t dmSize, char* ClassName);
 
-u2 findCode(ClassFile *Class); 
+u2 findCode(method_info *method); 
 
 void createFrame(method_info *method, ClassFile *Class, Frame *frame_ptr, u2 *numFrames); 
 

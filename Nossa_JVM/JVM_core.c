@@ -38,8 +38,9 @@ void jvmStartup(ClassFile *classHeap_ptr, Object *objectHeap_ptr, Frame *stackFr
 */
 void initializeClass(ClassFile *class_ptr, Frame *stkFrame_ptr, u2 *stkFrameTop_ptr){
 	u2 method_idx = seekMethodInClass( class_ptr, "<clinit>", "()V" );
+	printf("\nIDX %d", method_idx);
 	method_info *method_ptr = &class_ptr->methods[method_idx];
-	
+	printf("\nOlhe %d", method_ptr->name_index);	
 	//Quem cria deleta.	
 	createFrame(method_ptr, class_ptr, stkFrame_ptr, stkFrameTop_ptr);//Cria o frame para o método <clinit> da classe.
 	
@@ -105,16 +106,17 @@ int findClass(ClassFile *classHeap_ptr, dataMSize_t dmSize, char* ClassName){
 	return -1;	
 }
 
-u2 findCode(ClassFile *Class) {
+u2 findCode(method_info *method) {
 
 	u2 i = 0;
 
 	printf("\nEntrou findCode");
-	while(Class->methods->attribute[i].tag != 1){
+	while(method->attribute[i].tag != 1){
 		i++;
 		
 	}
-	printf("\n%d", Class->methods->attribute[i].tag );
+	printf("\n%d", method->attribute[i].tag );
+	printf("\n%d", i);
 	return i;
 }
 
@@ -123,19 +125,19 @@ void createFrame(method_info *method, ClassFile *Class, Frame *frame_ptr, u2 *nu
     
 	u2 i = *numFrames;
 	u2 codeIndex = 0;
-	codeIndex = findCode(Class);
+	codeIndex = findCode(method);
 
 	if (i < STKFRAME_MAX - 1) {
 	    frame_ptr[i].pClass = Class;
 	    frame_ptr[i].pMethod = method;
-	    frame_ptr[i].code_length = Class->methods->attribute[codeIndex].info.Code_attribute.code_length;
+	    frame_ptr[i].code_length = method->attribute[codeIndex].info.Code_attribute.code_length;
 	    frame_ptr[i].code = malloc(frame_ptr[i].code_length * sizeof(u1));
 
 	    frame_ptr[i].pc = 0;
 	    frame_ptr[i].sp = 0;
 
-	    frame_ptr[i].stack_size = Class->methods->attribute[codeIndex].info.Code_attribute.max_stack;
-	    frame_ptr[i].local_size = Class->methods->attribute[codeIndex].info.Code_attribute.max_locals;
+	    frame_ptr[i].stack_size = method->attribute[codeIndex].info.Code_attribute.max_stack;
+	    frame_ptr[i].local_size = method->attribute[codeIndex].info.Code_attribute.max_locals;
 	    frame_ptr[i].stack = malloc(frame_ptr[i].stack_size * sizeof(u4));
 	    frame_ptr[i].local = malloc(frame_ptr[i].local_size * sizeof(u4));
 
@@ -156,7 +158,7 @@ void createFrame(method_info *method, ClassFile *Class, Frame *frame_ptr, u2 *nu
 
 
 	    (*numFrames)++;
-			printf("\n##%d", frame_ptr[i].pMethod->name_index);
+			printf("\n##%d", frame_ptr[i].pMethod->attribute[0].info.Code_attribute.max_stack);
 			printf("\nLength %d", frame_ptr[i].code_length);
 	} else {
 		printf("Frame não pode ser alocado, tamanho máximo atingido");
