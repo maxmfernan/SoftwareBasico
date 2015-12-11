@@ -22,7 +22,6 @@
  */
 u4 Execute (Frame *stackFrame_ptr, ClassFile *pClassHeap, dataMSize_t *dmSize_ptr) {
     
-    
     Frame *pFrame = &stackFrame_ptr[dmSize_ptr->stkHeap_size - 1];
     u2 classHeapLength = dmSize_ptr->clsHeap_size;
     u4 *local_iterator = pFrame->local;
@@ -60,8 +59,6 @@ u4 Execute (Frame *stackFrame_ptr, ClassFile *pClassHeap, dataMSize_t *dmSize_pt
                 pFrame->sp++;
                 pFrame->stack[pFrame->sp] = code_iterator[pFrame->pc] - op_iconst_0;
                 pFrame->pc++;
-                printf("aloooooooooo");
-                getchar();
                 break;
                 
             case op_aconst_null:
@@ -239,39 +236,39 @@ u4 Execute (Frame *stackFrame_ptr, ClassFile *pClassHeap, dataMSize_t *dmSize_pt
 //                //Type Conversion
 //                
 //                //Integer Arithmetic
-//                
-//            case op_iadd: //96
-//                pFrame->stack[pFrame->sp-1] = pFrame->stack[pFrame->sp-1] + pFrame->stack[pFrame->sp];
-//                pFrame->sp--;
-//                pFrame->pc++;
-//                break;
-//            case op_ladd:// 97 /*(0x61)*/
-//                longVal = (i8)(((i8)pFrame->stack[pFrame->sp-3]<<32) | (i8)pFrame->stack[pFrame->sp-2])+(i8)(((i8)pFrame->stack[pFrame->sp-1]<<32) | (i8)pFrame->stack[pFrame->sp]);
-//                pFrame->stack[pFrame->sp-3] = HIINT64(longVal);
-//                pFrame->stack[pFrame->sp-2] = LOINT64(longVal);
-//                pFrame->sp -= 2;
-//                pFrame->pc++;
-//                break;
-//            case op_isub: //100
-//                pFrame->stack[pFrame->sp-1] = pFrame->stack[pFrame->sp-1] - pFrame->stack[pFrame->sp];
-//                pFrame->sp--;
-//                pFrame->pc++;
-//                break;
-//            case op_imul://104
-//                pFrame->stack[pFrame->sp-1] = pFrame->stack[pFrame->sp-1] * pFrame->stack[pFrame->sp];
-//                pFrame->sp--;
-//                pFrame->pc++;
-//                break;
-//            case op_idiv://108
-//                pFrame->stack[pFrame->sp-1] = pFrame->stack[pFrame->sp-1] / pFrame->stack[pFrame->sp];
-//                pFrame->sp--;
-//                pFrame->pc++;
-//                break;
-//            case op_iinc:// 132 /*(0x84)*/ Increment local variable by constant
-//                pFrame->stack[(u1)code_iterator[pFrame->pc+1]] += (char)code_iterator[pFrame->pc+2];
-//                pFrame->pc+=3;
-//                break;
-                ////////////////////// Logic ///////////////////
+                
+            case op_iadd: //96
+                pFrame->stack[pFrame->sp-1] = pFrame->stack[pFrame->sp-1] + pFrame->stack[pFrame->sp];
+                pFrame->sp--;
+                pFrame->pc++;
+                break;
+            case op_ladd:// 97 /*(0x61)*/
+                longVal = (i8)(((i8)pFrame->stack[pFrame->sp-3]<<32) | (i8)pFrame->stack[pFrame->sp-2])+(i8)(((i8)pFrame->stack[pFrame->sp-1]<<32) | (i8)pFrame->stack[pFrame->sp]);
+                pFrame->stack[pFrame->sp-3] = HIINT64(longVal);
+                pFrame->stack[pFrame->sp-2] = LOINT64(longVal);
+                pFrame->sp -= 2;
+                pFrame->pc++;
+                break;
+            case op_isub: //100
+                pFrame->stack[pFrame->sp-1] = pFrame->stack[pFrame->sp-1] - pFrame->stack[pFrame->sp];
+                pFrame->sp--;
+                pFrame->pc++;
+                break;
+            case op_imul://104
+                pFrame->stack[pFrame->sp-1] = pFrame->stack[pFrame->sp-1] * pFrame->stack[pFrame->sp];
+                pFrame->sp--;
+                pFrame->pc++;
+                break;
+            case op_idiv://108
+                pFrame->stack[pFrame->sp-1] = pFrame->stack[pFrame->sp-1] / pFrame->stack[pFrame->sp];
+                pFrame->sp--;
+                pFrame->pc++;
+                break;
+            case op_iinc:// 132 /*(0x84)*/ Increment local variable by constant
+                pFrame->stack[(u1)code_iterator[pFrame->pc+1]] += (char)code_iterator[pFrame->pc+2];
+                pFrame->pc+=3;
+                break;
+                //////////////////// Logic ///////////////////
                 
                 //Shift operations
                 
@@ -495,12 +492,12 @@ u4 Execute (Frame *stackFrame_ptr, ClassFile *pClassHeap, dataMSize_t *dmSize_pt
                 if (strcmp(strName,"println") == 0) {
                     fv = pFrame->stack[pFrame->sp];
                     if (strcmp(fv->descriptor,"Ljava/lang/String;") == 0) {
-                        printf("string to print = %s\n",fv->info.UTF8.bytes);
+                        printf("%s\n",fv->info.UTF8.bytes);
                         pFrame->sp--;
                     }
                     else {
                         if (strcmp(fv->descriptor,"I") == 0 || strcmp(fv->descriptor,"F") == 0) {
-                            printf("int to print = %d\n",fv->info.I4.value);
+                            printf("%d\n",fv->info.I4.value);
                             pFrame->sp--;
                         }
                         else {
@@ -546,12 +543,12 @@ u4 Execute (Frame *stackFrame_ptr, ClassFile *pClassHeap, dataMSize_t *dmSize_pt
                 if (strcmp(strName,"println") == 0) {
                     fv = pFrame->stack[pFrame->sp];
                     if (strcmp(fv->descriptor,"Ljava/lang/String;") == 0) {
-                        printf("string to print = %s\n",fv->info.UTF8.bytes);
+                        printf("%s\n",fv->info.UTF8.bytes);
                         pFrame->sp--;
                     }
                     else {
                         if (strcmp(fv->descriptor,"I") == 0 || strcmp(fv->descriptor,"F") == 0) {
-                            printf("int to print = %d\n",fv->info.I4.value);
+                            printf("%d\n",fv->info.I4.value);
                             pFrame->sp--;
                         }
                         else {
@@ -571,7 +568,7 @@ u4 Execute (Frame *stackFrame_ptr, ClassFile *pClassHeap, dataMSize_t *dmSize_pt
                     callMethod(pClass, stackFrame_ptr, dmSize_ptr, pClassHeap, strName, strDesc);
                 }
                 pFrame->pc += 3;
-                  break;
+                break;
                 
 //            case op_invokestatic:// 184
 //                //ExecuteInvokeVirtual(pFrame, invokestatic);

@@ -46,8 +46,7 @@ int main(int argc, char **argv){
 	if( classPathF_ptr == NULL){
 		printf("\nArquivo não encontrado");
 		exit(1);
-	}		
-	printf("\nPassei1");
+	}
 	/** Inicicializa a JVM.
 		Cria espaço para os heaps e para o stackFrame.
 		Carrega a class inicial. */

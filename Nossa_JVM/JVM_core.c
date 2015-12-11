@@ -38,7 +38,6 @@ void jvmStartup(ClassFile *classHeap_ptr, Object *objectHeap_ptr, Frame *stackFr
     //initializeClass(classHeap_ptr, stackFrame_ptr, &dmSize_ptr->stkHeap_size); //Sei que o primeiro elemento da classHeap é a classe inicial
 	
 	//Chamo o método main
-	printf("\nVou chamar o calssMethod");
 	callMethod(classHeap_ptr, stackFrame_ptr, dmSize_ptr, classHeap_ptr, "main", "([Ljava/lang/String;)V");
 
 
@@ -54,9 +53,7 @@ void jvmStartup(ClassFile *classHeap_ptr, Object *objectHeap_ptr, Frame *stackFr
 void initializeClass(ClassFile *class_ptr, Frame *stkFrame_ptr, dataMSize_t *dmSize_ptr, ClassFile *classHeap_ptr){
 
     u2 method_idx = seekMethodInClass( class_ptr, "<clinit>", "()V" );
-    printf("\nIDX %d", method_idx);
     method_info *method_ptr = &class_ptr->methods[method_idx];
-    printf("\nOlhe %d", method_ptr->name_index);
     //Quem cria deleta.
     
     createFrame(method_ptr, class_ptr, stkFrame_ptr, &dmSize_ptr->stkHeap_size);//Cria o frame para o método <clinit> da classe.
@@ -67,7 +64,6 @@ void initializeClass(ClassFile *class_ptr, Frame *stkFrame_ptr, dataMSize_t *dmS
     Execute(stkFrame_ptr, classHeap_ptr, dmSize_ptr);
     
     //Deleta o frame.
-    printf("\n%d\t%d\n", dmSize_ptr->stkHeap_size, aux_idx);
     deleteFrame(&stkFrame_ptr[aux_idx], &dmSize_ptr->stkHeap_size);
 }
 
@@ -84,17 +80,11 @@ void initializeClass(ClassFile *class_ptr, Frame *stkFrame_ptr, dataMSize_t *dmS
 void callMethod(ClassFile *class_ptr, Frame *stkFrame_ptr, dataMSize_t *dmSize_ptr, ClassFile *classHeap_ptr, \
 	char *mth_name, char *mth_descriptor){
     u2 method_idx = seekMethodInClass( class_ptr, mth_name, mth_descriptor );
-	printf("\nPor que?");
 
-    printf("\nIDX %d", method_idx);
-	getchar();
-	getchar();
 	if( method_idx  == SEEK_NOTFOUND){
-		printf("\nDeu pau");
 		exit(1);
 	}
     method_info *method_ptr = &class_ptr->methods[method_idx];
-    printf("\nOlhe %d", method_ptr->name_index);
     //Quem cria deleta.
     
     createFrame(method_ptr, class_ptr, stkFrame_ptr, &dmSize_ptr->stkHeap_size);//Cria o frame para o método <clinit> da classe.
@@ -105,7 +95,6 @@ void callMethod(ClassFile *class_ptr, Frame *stkFrame_ptr, dataMSize_t *dmSize_p
     Execute(stkFrame_ptr, classHeap_ptr, dmSize_ptr);
     
     //Deleta o frame.
-    printf("\n%d\t%d\n", dmSize_ptr->stkHeap_size, aux_idx);
     deleteFrame(&stkFrame_ptr[aux_idx], &dmSize_ptr->stkHeap_size);
 }
 
@@ -127,8 +116,6 @@ u2 seekMethodInClass(ClassFile *class_ptr, char *methName_str, char *methDescrip
         //str_size = class_ptr->constant_pool[class_ptr->methods[i].name_inex - 1].info.CONSTANT_Utf8_info.length;
         //methodN = malloc( (str_size + 1)*sizeof(char) );
         //bytes = class_ptr->constant_pool[class_ptr->methods[i].name_index - 1].info.CONSTANT_Utf8_info_bytes;
-        
-        printf("\n%hu", i);
         
         methodN = class_ptr->constant_pool[class_ptr->methods[i].name_index - 1].info.CONSTANT_Utf8_info.bytes;
         methodD = class_ptr->constant_pool[class_ptr->methods[i].descriptor_index - 1].info.CONSTANT_Utf8_info.bytes;
@@ -164,14 +151,10 @@ int findClass(ClassFile *classHeap_ptr, dataMSize_t dmSize, char* ClassName){
 u2 findCode(method_info *method) {
     
     u2 i = 0;
-    
-    printf("\nEntrou findCode");
     while(method->attribute[i].tag != 1){
         i++;
         
     }
-    printf("\n%d", method->attribute[i].tag );
-    printf("\n%d", i);
     return i;
 }
 
@@ -213,8 +196,6 @@ void createFrame(method_info *method, ClassFile *Class, Frame *frame_ptr, u2 *nu
         
         
         (*numFrames)++;
-        printf("\n##%d", frame_ptr[i].pMethod->attribute[0].info.Code_attribute.max_stack);
-        printf("\nLength %d", frame_ptr[i].code_length);
     } else {
         printf("Frame não pode ser alocado, tamanho máximo atingido");
         exit(1);
