@@ -7,4 +7,12 @@
 //
 
 #include <stdio.h>
+<<<<<<< Updated upstream
 jdjfkj dkf 
+=======
+
+
+
+
+asdasdasdasd
+>>>>>>> Stashed changes
