@@ -133,7 +133,15 @@ u2 seekMethodInClass(ClassFile *class_ptr, char *methName_str, char *methDescrip
     return SEEK_NOTFOUND;
 }
 
-/*SAMUEL - início*/
+/**
+ *  @brief Métdodo que acha uma classe dado o classHeap e o nome da classe
+ *
+ *  @param classHeap_ptr <#classHeap_ptr description#>
+ *  @param dmSize        <#dmSize description#>
+ *  @param ClassName     <#ClassName description#>
+ *
+ *  @return <#return value description#>
+ */
 int findClass(ClassFile *classHeap_ptr, dataMSize_t dmSize, char* ClassName){
     
     u2 clsHeapSize = dmSize.stkHeap_size;
@@ -158,6 +166,17 @@ u2 findCode(method_info *method) {
     return i;
 }
 
+
+/**
+ *  @brief Cria o Frame do método a ser executado
+ *
+ *  @param method    <#method description#>
+ *  @param Class     <#Class description#>
+ *  @param frame_ptr <#frame_ptr description#>
+ *  @param numFrames <#numFrames description#>
+ *
+ *  @return <#return value description#>
+ */
 //Lembrar de enviar o dataMSize->stkHeap_size para o numFrames
 void createFrame(method_info *method, ClassFile *Class, Frame *frame_ptr, u2 *numFrames) {
     

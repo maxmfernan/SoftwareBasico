@@ -641,8 +641,6 @@ Field_Value *getFieldValue(u1 *name, Field_Value *pField, u2 static_values_size)
 // *
 // *  @return <#return value description#>
 // */
-
-
 u4 LoadConstant(ClassFile *pClass, u2 nIndex) {
     u4 v = 0;
     u1 *bytes;
@@ -669,7 +667,14 @@ u4 LoadConstant(ClassFile *pClass, u2 nIndex) {
     }
     return v;
 }
-
+/**
+ *  @brief Retorna uma string referente a um tipo UTF8 na pool de constantes
+ *
+ *  @param nIndex <#nIndex description#>
+ *  @param pool   <#pool description#>
+ *
+ *  @return <#return value description#>
+ */
 u1 *GetStringFromConstPool(u2 nIndex, cp_info *pool) {
     u1 *string;
     
@@ -684,7 +689,7 @@ u1 *GetStringFromConstPool(u2 nIndex, cp_info *pool) {
  *  @param index <#index description#>
  *  @param pool  <#pool description#>
  *
- *  @return <#return value description#>
+ *  @return Retorna a string referente ao nome do Field
  */
 u1 *getFieldName(u2 index, cp_info *pool) { //3
     u2 nameAndType_index = 0;

@@ -11,6 +11,12 @@
 //Constant Pool
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Função par imprimir o conteúdo da constante
+
+/**
+ *  @brief Função par imprimir o conteúdo da constante
+ *
+ *  @param pool <#pool description#>
+ */
 void printContent (cp_info pool) {
 	switch (pool.tag) {
 		case 1: // Utf8
@@ -50,8 +56,13 @@ void printContent (cp_info pool) {
     }
 }
 
-// Função para imprimir a tabela da pool de constantes
-//Retirei o segundo argumento u2 poolLength
+
+/**
+ *  @brief Função para imprimir a tabela da pool de constantes
+ *
+ *  @param poolElementsNum <#poolElementsNum description#>
+ *  @param pool            <#pool description#>
+ */
 void printConstantPoolTable (u2 poolElementsNum,  cp_info pool[]) {
 	u2 counter = 0;
 	
@@ -192,7 +203,12 @@ void printField(cp_info* pool_array, field_info* fields_array, unsigned int fiel
 //Methods
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// Imprime os Metodos
+/**
+ *  @brief Imprime os métodos
+ *
+ *  @param classFileVar <#classFileVar description#>
+ *  @param pool         <#pool description#>
+ */
 void print_Methods(ClassFile *classFileVar, cp_info *pool) {
     
      printf("\n*****Methods*****\n\n");
@@ -304,6 +320,13 @@ void print_Methods(ClassFile *classFileVar, cp_info *pool) {
 //Atributos
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+/**
+ *  @brief Printa os atributos
+ *
+ *  @param attributes <#attributes description#>
+ *  @param attr_count <#attr_count description#>
+ *  @param pool       <#pool description#>
+ */
 void print_attributes (attribute_info *attributes, u2 attr_count, cp_info *pool) {
     u2 counter = 0;
     
@@ -392,6 +415,13 @@ void print_attributes (attribute_info *attributes, u2 attr_count, cp_info *pool)
 //Interface
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+/**
+ *  @brief Função que printa interface
+ *
+ *  @param interface    <#interface description#>
+ *  @param inter_length <#inter_length description#>
+ *  @param pool         <#pool description#>
+ */
 void print_interface (u2 interface[], u2 inter_length, cp_info pool[]) {
 	printf("\n\n*****Interface*****");
 	printf("\nInterfaces Number: %d\n", inter_length);
@@ -409,6 +439,12 @@ void print_interface (u2 interface[], u2 inter_length, cp_info pool[]) {
 //ClassFile
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+/**
+ *  @brief Print geral do class file, chama todos os prints
+ *
+ *  @param class_file_ptr <#class_file_ptr description#>
+ */
 void print_ClassFile(ClassFile* class_file_ptr){
     printf("\n\nMagic: %.8x\n\n", class_file_ptr->magic);
 	printf("Minor Version: %.4x\n", class_file_ptr->minor_version);
