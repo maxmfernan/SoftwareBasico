@@ -33,6 +33,7 @@ u4 Execute (Frame *stackFrame_ptr, ClassFile *pClassHeap, dataMSize_t *dmSize_pt
     u1 *strDesc;
     u1 *class_name;
     Field_Value *fv;
+    u4 field_index;
     u1 *field_name;
     ClassFile *pClass;
     u2 nIndex;
@@ -278,9 +279,9 @@ u4 Execute (Frame *stackFrame_ptr, ClassFile *pClassHeap, dataMSize_t *dmSize_pt
             case op_getstatic:
                 i = getu2(&code_iterator[pFrame->pc+1]);
                 field_name = getFieldName(i, pFrame->pClass->constant_pool);
-                fv = getFieldValue(field_name, pFrame->pClass->static_values, pFrame->pClass->static_values_size);
+                field_index = getFieldIndex(field_name, pFrame->pClass->static_values, pFrame->pClass->static_values_size);
                 pFrame->sp++;
-                pFrame->stack[pFrame->sp] = fv;
+                pFrame->stack[pFrame->sp] = field_index;
                 pFrame->pc += 3;
                 break;
                 
@@ -615,6 +616,7 @@ u4 Execute (Frame *stackFrame_ptr, ClassFile *pClassHeap, dataMSize_t *dmSize_pt
  *
  *  @return <#return value description#>
  */
+//
 Field_Value *getFieldValue(u1 *name, Field_Value *pField, u2 static_values_size) {
     u2 count = 0;
     u2 found = 0;
@@ -628,6 +630,22 @@ Field_Value *getFieldValue(u1 *name, Field_Value *pField, u2 static_values_size)
         }
     }
     return &pField[count];
+}
+
+
+u4 *getFieldIndex(u1 *name, Field_Value *pField, u2 static_values_size) {
+    u4 count = 0;
+    u2 found = 0;
+
+    while (count < static_values_size && found == 0) {
+        if (strcmp(pField[count].field_name, name) == 0) {
+            found = 1;
+        }
+        else {
+            ++count;
+        }
+    }
+    return count;
 }
 
 
@@ -667,6 +685,8 @@ u4 LoadConstant(ClassFile *pClass, u2 nIndex) {
     }
     return v;
 }
+
+
 /**
  *  @brief Retorna uma string referente a um tipo UTF8 na pool de constantes
  *

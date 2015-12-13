@@ -530,6 +530,7 @@ typedef struct{
         struct {
             u1 *bytes;
         } UTF8;
+        Object *object;
     }info;
 }Field_Value;
 

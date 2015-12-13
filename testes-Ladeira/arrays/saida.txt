@@ -1,0 +1,301 @@
+Deseja ativar exibidor de .class?[N/s]:Modo debug?[N/s]:
+####################################################
+DETALHES DO ARQUIVO .CLASS
+####################################################
+MAGIC:			 0xcafebabe
+MINOR_VERSION:		 0
+MAJOR_VERSION:		 46
+CONSTANT_POOL_COUNT:	 35
+----------------------------------------------------
+CONSTANT POOL:
+----------------------------------------------------
+1. CONSTANT_Methodref_info {
+	u1 tag: 10
+	u2 class_index: 9 ("java/lang/Object")
+	u2 name_and_type_index: 18 (Name: "<init>" Descr: "()V")
+}
+2. CONSTANT_Class_info {
+	u1 tag: 7
+	u2 name_index: 19 ("[[Ljava/lang/String;")
+}
+3. CONSTANT_String_info {
+	u1 tag: 8
+	u2 string_index: 20 ("teste")
+}
+4. CONSTANT_String_info {
+	u1 tag: 8
+	u2 string_index: 21 ("teste2")
+}
+5. CONSTANT_String_info {
+	u1 tag: 8
+	u2 string_index: 22 ("teste4")
+}
+6. CONSTANT_Fieldref_info {
+	u1 tag: 9
+	u2 class_index: 23 ("java/lang/System")
+	u2 name_and_type_index: 24 (Name: "out" Descr: "Ljava/io/PrintStream;")
+}
+7. CONSTANT_Methodref_info {
+	u1 tag: 10
+	u2 class_index: 25 ("java/io/PrintStream")
+	u2 name_and_type_index: 26 (Name: "println" Descr: "(Ljava/lang/String;)V")
+}
+8. CONSTANT_Class_info {
+	u1 tag: 7
+	u2 name_index: 27 ("multi")
+}
+9. CONSTANT_Class_info {
+	u1 tag: 7
+	u2 name_index: 28 ("java/lang/Object")
+}
+10. CONSTANT_Utf8_info {
+	u1 tag: 1
+	u2 lenght: 6
+	u1 bytes[6]: "<init>"
+}
+11. CONSTANT_Utf8_info {
+	u1 tag: 1
+	u2 lenght: 3
+	u1 bytes[3]: "()V"
+}
+12. CONSTANT_Utf8_info {
+	u1 tag: 1
+	u2 lenght: 4
+	u1 bytes[4]: "Code"
+}
+13. CONSTANT_Utf8_info {
+	u1 tag: 1
+	u2 lenght: 15
+	u1 bytes[15]: "LineNumberTable"
+}
+14. CONSTANT_Utf8_info {
+	u1 tag: 1
+	u2 lenght: 4
+	u1 bytes[4]: "main"
+}
+15. CONSTANT_Utf8_info {
+	u1 tag: 1
+	u2 lenght: 22
+	u1 bytes[22]: "([Ljava/lang/String;)V"
+}
+16. CONSTANT_Utf8_info {
+	u1 tag: 1
+	u2 lenght: 10
+	u1 bytes[10]: "SourceFile"
+}
+17. CONSTANT_Utf8_info {
+	u1 tag: 1
+	u2 lenght: 10
+	u1 bytes[10]: "multi.java"
+}
+18. CONSTANT_NameAndType_info {
+	u1 tag: 12
+	u2 name_index: 10 ("<init>")
+	u2 descriptor_index: 11 ("()V")
+}
+19. CONSTANT_Utf8_info {
+	u1 tag: 1
+	u2 lenght: 20
+	u1 bytes[20]: "[[Ljava/lang/String;"
+}
+20. CONSTANT_Utf8_info {
+	u1 tag: 1
+	u2 lenght: 5
+	u1 bytes[5]: "teste"
+}
+21. CONSTANT_Utf8_info {
+	u1 tag: 1
+	u2 lenght: 6
+	u1 bytes[6]: "teste2"
+}
+22. CONSTANT_Utf8_info {
+	u1 tag: 1
+	u2 lenght: 6
+	u1 bytes[6]: "teste4"
+}
+23. CONSTANT_Class_info {
+	u1 tag: 7
+	u2 name_index: 29 ("java/lang/System")
+}
+24. CONSTANT_NameAndType_info {
+	u1 tag: 12
+	u2 name_index: 30 ("out")
+	u2 descriptor_index: 31 ("Ljava/io/PrintStream;")
+}
+25. CONSTANT_Class_info {
+	u1 tag: 7
+	u2 name_index: 32 ("java/io/PrintStream")
+}
+26. CONSTANT_NameAndType_info {
+	u1 tag: 12
+	u2 name_index: 33 ("println")
+	u2 descriptor_index: 34 ("(Ljava/lang/String;)V")
+}
+27. CONSTANT_Utf8_info {
+	u1 tag: 1
+	u2 lenght: 5
+	u1 bytes[5]: "multi"
+}
+28. CONSTANT_Utf8_info {
+	u1 tag: 1
+	u2 lenght: 16
+	u1 bytes[16]: "java/lang/Object"
+}
+29. CONSTANT_Utf8_info {
+	u1 tag: 1
+	u2 lenght: 16
+	u1 bytes[16]: "java/lang/System"
+}
+30. CONSTANT_Utf8_info {
+	u1 tag: 1
+	u2 lenght: 3
+	u1 bytes[3]: "out"
+}
+31. CONSTANT_Utf8_info {
+	u1 tag: 1
+	u2 lenght: 21
+	u1 bytes[21]: "Ljava/io/PrintStream;"
+}
+32. CONSTANT_Utf8_info {
+	u1 tag: 1
+	u2 lenght: 19
+	u1 bytes[19]: "java/io/PrintStream"
+}
+33. CONSTANT_Utf8_info {
+	u1 tag: 1
+	u2 lenght: 7
+	u1 bytes[7]: "println"
+}
+34. CONSTANT_Utf8_info {
+	u1 tag: 1
+	u2 lenght: 21
+	u1 bytes[21]: "(Ljava/lang/String;)V"
+}
+
+----------------------------------------------------
+ACCESS_FLAGS:	 32 ( super )
+THIS_CLASS:	 8 ("multi")
+SUPER_CLASS:	 9 ("java/lang/Object")
+INTERFACES_COUNT: 0
+----------------------------------------------------
+INTERFACES: 
+----------------------------------------------------
+FIELDS_COUNT:	 0
+----------------------------------------------------
+FIELDS: 
+----------------------------------------------------
+METHODS_COUNT:	 2
+----------------------------------------------------
+METHODS: 
+1.{
+	ACCESS_FLAGS:		 0 ( )
+	NAME_INDEX:		 10 ("<init>")
+	DESCRIPTOR_INDEX:	 11 ("()V")
+	ATTRIBUTES_COUNT:	 1 
+	1.{
+		NAME_INDEX:		 12 ("Code")
+		ATTRIBUTES_LENGHT:	 29 
+		MAX_STACK:		 1 
+		MAX_LOCALS:		 1 
+		CODE_LENGHT:		 5 
+		{ 
+			aload_0
+			invokespecial 0x00 0x01
+			return
+		}
+		EXCEPTION_TABLE_LENGHT:	 0 
+		{
+		}
+		ATTRIBUTES_COUNT:	 1 
+		{
+		NAME_INDEX:		 13 ("LineNumberTable")
+		ATTRIBUTES_LENGHT:	 6 
+		}
+	}
+  }
+2.{
+	ACCESS_FLAGS:		 0 ( public static )
+	NAME_INDEX:		 14 ("main")
+	DESCRIPTOR_INDEX:	 15 ("([Ljava/lang/String;)V")
+	ATTRIBUTES_COUNT:	 1 
+	1.{
+		NAME_INDEX:		 12 ("Code")
+		ATTRIBUTES_LENGHT:	 118 
+		MAX_STACK:		 3 
+		MAX_LOCALS:		 2 
+		CODE_LENGHT:		 66 
+		{ 
+			bipush 0x0a
+			bipush 0x0a
+			multianewarray 0x00 0x02 0x02
+			astore_1
+			aload_1
+			iconst_0
+			aaload
+			iconst_0
+			ldc 0x03
+			aastore
+			aload_1
+			iconst_0
+			aaload
+			iconst_1
+			ldc 0x04
+			aastore
+			aload_1
+			bipush 0x09
+			aaload
+			iconst_5
+			ldc 0x05
+			aastore
+			getstatic 0x00 0x06
+			aload_1
+			iconst_0
+			aaload
+			iconst_0
+			aaload
+			invokevirtual 0x00 0x07
+			getstatic 0x00 0x06
+			aload_1
+			iconst_0
+			aaload
+			iconst_1
+			aaload
+			invokevirtual 0x00 0x07
+			getstatic 0x00 0x06
+			aload_1
+			bipush 0x09
+			aaload
+			iconst_5
+			aaload
+			invokevirtual 0x00 0x07
+			return
+		}
+		EXCEPTION_TABLE_LENGHT:	 0 
+		{
+		}
+		ATTRIBUTES_COUNT:	 1 
+		{
+		NAME_INDEX:		 13 ("LineNumberTable")
+		ATTRIBUTES_LENGHT:	 34 
+		}
+	}
+  }
+----------------------------------------------------
+ATTRIBUTES_COUNT:	 1
+----------------------------------------------------
+ATTRIBUTES: 
+1.{
+		NAME_INDEX:		 16 ("SourceFile")
+		ATTRIBUTES_LENGHT:	 2 
+}
+----------------------------------------------------
+
+####################################################
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+ERRO:
+ Instrucao "multianewarray" nao encontrada.
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+Forcando encerramento da JVM...
+
