@@ -1,0 +1,1 @@
+D:\j2sdk1.4.2_11\bin\javac -target 1.2 -source 1.2 %1

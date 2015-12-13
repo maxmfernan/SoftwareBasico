@@ -530,6 +530,7 @@ typedef struct{
         struct {
             u1 *bytes;
         } UTF8;
+        Object *object;
     }info;
 }Field_Value;
 
@@ -614,8 +615,8 @@ typedef struct {
     i4 sp;
     u2 stack_size;
     u2 local_size;
-    u4 *stack;
-    u4 *local;
+    Pilha *stack;
+    Local *local;
 }Frame;
 
 #endif
