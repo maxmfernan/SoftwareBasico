@@ -1,11 +1,12 @@
 #include "LoadClass_core.h"
 #include "LoadClass_ui.h"
 #include "macros.h"
+
 /**
 * @brief 
 *
-* @param classPathStr
-* @param classHeap_ptr
+* @param classPathF_ptr
+* @param clsHeap
 * @param dmSize
 */
 void loadClass( FILE *classPathF_ptr, ClassFile* clsHeap, dataMSize_t *dmSize ) {
@@ -47,8 +48,13 @@ void loadClass( FILE *classPathF_ptr, ClassFile* clsHeap, dataMSize_t *dmSize ) 
 
     //arq = fopen(classPathStr, "rb");
     magic = read_magic(classPathF_ptr);
+    if( magic != 0xcafebabe)
+        errMsgAndExit(NOTACLASS_ERR);//age apropriadamente
+ 
     minor = read_minor_version(classPathF_ptr);
     major = read_major_version(classPathF_ptr);
+    if( major > 0x2e )
+        errMsgAndExit(INCORRECTVERSION_ERR);//age apropriadamente
     
     if (classPathF_ptr != NULL) {
         pool = createConstantPool (&poolElementsNum, &poolLength, classPathF_ptr);
