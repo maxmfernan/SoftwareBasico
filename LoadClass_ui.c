@@ -12,19 +12,41 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Função par imprimir o conteúdo da constante
 void printContent (cp_info pool) {
+    float *aux_flt;
+    void *aux_dbl;
+    //long int *aux_lng;
+    u4 aux_uint_hi;
+    u4 aux_uint_lo;
+    u8 aux_uint_dbl;
 	switch (pool.tag) {
 		case 1: // Utf8
 			printf("\t%s", pool.info.CONSTANT_Utf8_info.bytes);
 			break;
 		case 3: // Integer
+            printf("\t%"PRId32, pool.info.CONSTANT_IntegerFloat_info.bytes);
+            break;
 		case 4: // Float
-			printf("\t%"PRId32, pool.info.CONSTANT_IntegerFloat_info.bytes);
+            aux_flt = 0;
+            aux_flt = (float*)( (void*)&pool.info.CONSTANT_IntegerFloat_info.bytes ); //punning type
+			printf("\t%f", *aux_flt);
 			break;
 		case 5: // Long
 		case 6: // Double
-			printf("\tHigh: 0x%04"PRIx32" / Low: 0x%04"PRIx32, \
-			pool.info.CONSTANT_LongDouble_info.high_bytes, pool.info.\
-			CONSTANT_LongDouble_info.low_bytes);
+            aux_uint_dbl = aux_uint_hi = aux_uint_lo = 0;
+
+            aux_uint_hi = pool.info.CONSTANT_LongDouble_info.high_bytes;
+            aux_uint_lo = pool.info.CONSTANT_LongDouble_info.low_bytes;
+
+            aux_uint_dbl = aux_uint_hi;
+            aux_uint_dbl = aux_uint_dbl << 32;
+            aux_uint_dbl = aux_uint_dbl | aux_uint_lo;
+            aux_dbl = ( (void*)&aux_uint_dbl );
+            if(pool.tag == 5){
+                printf("\t%lli",(long long) aux_uint_dbl);
+            }
+            else{
+			    printf("\t%f", *(double*)aux_dbl);
+            }
 			break;
 		case 7: // Class
 			printf("\t#%"PRId16, pool.info.CONSTANT_Class_info.name_index);
@@ -62,6 +84,7 @@ void printConstantPoolTable (u2 poolElementsNum,  cp_info pool[]) {
 	printf("Index |\tConstant Type\t|\tContent\n");
 	while (counter < poolElementsNum - 1) {
         if (pool[counter].tag) {
+            
             printf("#%"PRId16"\t", counter+1);
             printf("%s\t\t", searchConstantType(pool[counter].tag));
             printContent(pool[counter]);
